@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     "This is an example site to demonstrate how to use NextAuth.js for authentication",
 };
 
+// #TODO: react query, trpc 클라이언트 추가할 것
 export default function RootLayout({ children }: React.PropsWithChildren) {
   return (
     <html lang="en">

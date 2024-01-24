@@ -5,6 +5,12 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@auth/core':
+    specifier: ^0.22.0
+    version: 0.22.0
+  '@auth/drizzle-adapter':
+    specifier: ^0.3.16
+    version: 0.3.16
   '@radix-ui/react-avatar':
     specifier: ^1.0.4
     version: 1.0.4(@types/react-dom@18.2.18)(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0)
@@ -136,6 +142,31 @@ packages:
       oauth4webapi: 2.8.0
       preact: 10.11.3
       preact-render-to-string: 5.2.3(preact@10.11.3)
+    dev: false
+
+  /@auth/core@0.22.0:
+    resolution: {integrity: sha512-BwngPhtcEtJPV+sfs8pGPZ+RdKnpBeXRk2K2Os10DyMfaL/Vszj2TJU6sRaS38hXzo+xycYX+83olBElqc2Ngw==}
+    peerDependencies:
+      nodemailer: ^6.8.0
+    peerDependenciesMeta:
+      nodemailer:
+        optional: true
+    dependencies:
+      '@panva/hkdf': 1.1.1
+      '@types/cookie': 0.6.0
+      cookie: 0.6.0
+      jose: 5.2.0
+      oauth4webapi: 2.8.0
+      preact: 10.11.3
+      preact-render-to-string: 5.2.3(preact@10.11.3)
+    dev: false
+
+  /@auth/drizzle-adapter@0.3.16:
+    resolution: {integrity: sha512-08uS3j6Omzhshgtn8bjKxZlVOrO2Y3eXdTCYDFdhVAG7KpnotRYFhjrXqVlb9kjaNIxavnyad37+DtpIoOYqmg==}
+    dependencies:
+      '@auth/core': 0.22.0
+    transitivePeerDependencies:
+      - nodemailer
     dev: false
 
   /@babel/runtime@7.23.8:

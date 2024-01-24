@@ -1,6 +1,8 @@
 import NextAuth from "next-auth";
 import type { DefaultSession, NextAuthConfig } from "next-auth";
 import GitHub from "next-auth/providers/github";
+import { db } from "./db";
+import { DrizzleAdapter } from "@auth/drizzle-adapter";
 
 declare module "next-auth" {
   interface Session {
@@ -11,6 +13,7 @@ declare module "next-auth" {
 }
 
 export const config = {
+  adapter: DrizzleAdapter(db),
   providers: [
     GitHub({
       clientId: process.env.GITHUB_ID!,
@@ -20,7 +23,9 @@ export const config = {
   callbacks: {
     authorized({ request, auth }) {
       const { pathname } = request.nextUrl;
-      if (pathname === "/middleware-example") return !!auth;
+      if (pathname === "/middleware-example") {
+        return !!auth;
+      }
       return true;
     },
   },
