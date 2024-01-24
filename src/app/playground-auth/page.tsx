@@ -1,4 +1,4 @@
-import CustomLink from "@/components/custom-link";
+import CustomLink from "@/components/playground/custom-link";
 import packageJSON from "@/../package.json";
 
 export default function Index() {

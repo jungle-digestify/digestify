@@ -1,4 +1,4 @@
-import CustomLink from "@/components/custom-link";
+import CustomLink from "@/components/playground/custom-link";
 
 //TODO: 현재 보호되지 않음. next-auth에 대한 학습이 필요함
 export default function Page() {

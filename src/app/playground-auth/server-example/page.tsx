@@ -1,5 +1,5 @@
-import CustomLink from "@/components/custom-link";
-import SessionData from "@/components/session-data";
+import CustomLink from "@/components/playground/custom-link";
+import SessionData from "@/components/playground/session-data";
 import { auth } from "@/auth";
 
 export default async function Page() {

@@ -12,9 +12,9 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "./ui/navigation-menu";
+} from "../ui/navigation-menu";
 import React from "react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 
 export function MainNav() {
   return (
