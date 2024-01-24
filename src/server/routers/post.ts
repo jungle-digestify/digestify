@@ -3,7 +3,7 @@ import "server-only"; // Make sure you can't import this on client
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 
-import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
+import { createTRPCRouter, publicProcedure } from "@/server/trpc";
 import { posts } from "@/db/schema";
 
 export const postRouter = createTRPCRouter({

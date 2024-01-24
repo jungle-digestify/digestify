@@ -1,7 +1,7 @@
 import "server-only"; // Make sure you can't import this on client
 
-import { postRouter } from "@/server/api/routers/post";
-import { createTRPCRouter } from "@/server/api/trpc";
+import { postRouter } from "./routers/post";
+import { createTRPCRouter } from "./trpc";
 
 /**
  * This is the primary router for your server.

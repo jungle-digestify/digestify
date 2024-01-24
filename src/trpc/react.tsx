@@ -4,9 +4,37 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { loggerLink, unstable_httpBatchStreamLink } from "@trpc/client";
 import { createTRPCReact } from "@trpc/react-query";
 import { useState } from "react";
+import { ReactQueryStreamedHydration } from "@tanstack/react-query-next-experimental";
 
-import { type AppRouter } from "@/server/api/root";
+import { type AppRouter } from "@/server/app-router";
 import { getUrl, transformer } from "./shared";
+
+function makeQueryClient() {
+  return new QueryClient({
+    defaultOptions: {
+      queries: {
+        // With SSR, we usually want to set some default staleTime
+        // above 0 to avoid refetching immediately on the client
+        staleTime: 60 * 1000,
+      },
+    },
+  });
+}
+
+function getQueryClient() {
+  if (typeof window === "undefined") {
+    // Server: always make a new query client
+    return makeQueryClient();
+  } else {
+    // Browser: make a new query client if we don't already have one
+    // This is very important so we don't re-make a new client if React
+    // supsends during the initial render
+    if (!browserQueryClient) browserQueryClient = makeQueryClient();
+    return browserQueryClient;
+  }
+}
+
+let browserQueryClient: QueryClient | undefined = undefined;
 
 export const api = createTRPCReact<AppRouter>();
 
@@ -14,7 +42,7 @@ export function TRPCReactProvider(props: {
   children: React.ReactNode;
   headers: Headers;
 }) {
-  const [queryClient] = useState(() => new QueryClient());
+  const queryClient = getQueryClient();
 
   const [trpcClient] = useState(() =>
     api.createClient({
@@ -29,7 +57,7 @@ export function TRPCReactProvider(props: {
           url: getUrl(),
           headers() {
             const heads = new Map(props.headers);
-            heads.set("x-trpc-source", "react");
+            heads.set("x-trpc-source", "nextjs");
             return Object.fromEntries(heads);
           },
         }),
@@ -39,9 +67,11 @@ export function TRPCReactProvider(props: {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <api.Provider client={trpcClient} queryClient={queryClient}>
-        {props.children}
-      </api.Provider>
+      <ReactQueryStreamedHydration>
+        <api.Provider client={trpcClient} queryClient={queryClient}>
+          {props.children}
+        </api.Provider>
+      </ReactQueryStreamedHydration>
     </QueryClientProvider>
   );
 }

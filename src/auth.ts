@@ -22,8 +22,10 @@ export const config = {
   ],
   callbacks: {
     authorized({ request, auth }) {
+      console.log("request", request);
       const { pathname } = request.nextUrl;
-      if (pathname === "/middleware-example") {
+      console.log(pathname);
+      if (pathname === "/playground-auth/middleware-example") {
         return !!auth;
       }
       return true;
