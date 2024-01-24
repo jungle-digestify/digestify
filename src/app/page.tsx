@@ -15,6 +15,9 @@ export default function Index() {
         <CustomLink href="/client-example" className="underline">
           Client
         </CustomLink>{" "}
+        <CustomLink href="/rsc-trpc-action" className="underline">
+          rsc-trpc-action
+        </CustomLink>{" "}
         examples to see how to secure pages and get session data.
       </p>
       <p>
