@@ -13,7 +13,7 @@ import { type NextRequest } from "next/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
-// import { db } from "~/server/db";
+import { db } from "@/db";
 
 /**
  * 1. CONTEXT
@@ -40,7 +40,7 @@ interface CreateContextOptions {
 export const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
     headers: opts.headers,
-    // db,
+    db,
   };
 };
 
