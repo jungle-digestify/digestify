@@ -12,6 +12,11 @@ export default function Index() {
         </CustomLink>
       </p>
       <p>
+        <CustomLink href="/playground-trpc" className="underline">
+          playground-trpc
+        </CustomLink>
+      </p>
+      <p>
         Current{" "}
         <CustomLink href="https://nextjs.authjs.dev">NextAuth.js</CustomLink>{" "}
       </p>
