@@ -3,22 +3,13 @@ import CustomLink from "@/components/custom-link";
 export default function Index() {
   return (
     <div className="space-y-2">
-      <h1 className="text-3xl font-bold">NextAuth.js Example</h1>
+      <h1 className="text-3xl font-bold">
+        플레이그라운드를 포함한 엔트리포인트
+      </h1>
       <p>
-        This is an example site to demonstrate how to use{" "}
-        <CustomLink href="https://nextjs.authjs.dev">NextAuth.js</CustomLink>{" "}
-        for authentication. Check out the{" "}
-        <CustomLink href="/server-example" className="underline">
-          Server
-        </CustomLink>{" "}
-        and the{" "}
-        <CustomLink href="/client-example" className="underline">
-          Client
-        </CustomLink>{" "}
-        <CustomLink href="/rsc-trpc-action" className="underline">
-          rsc-trpc-action
-        </CustomLink>{" "}
-        examples to see how to secure pages and get session data.
+        <CustomLink href="/playground-auth" className="underline">
+          playground-auth
+        </CustomLink>
       </p>
       <p>
         Current{" "}
