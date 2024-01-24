@@ -15,7 +15,7 @@ let allscript = "";
 // const videoID = 'Kz3d_vGPtwc';
 
 
-const lang = 'ko'; // Optional, default is 'en' (English)
+const lang = 'ko'; // Optional, default is 'ko' (English)
 
 
 
@@ -31,7 +31,7 @@ export default async function Page(all:any) {
     if(videoID!=undefined){
       try{
         allscript = '';
-        const { transcript, error } = await fetchTranscript(videoID, "ko");
+        const { transcript, error } = await fetchTranscript(videoID, lang);
         // console.log(transcript);
         allscript = transcript.map(entry => entry.text).join('');
         const videoDetails = await getVideoDetails({ videoID, lang });
@@ -44,7 +44,7 @@ export default async function Page(all:any) {
         // Fetching Subtitles
         let subtitles;
   
-        const fetchSubtitles = async (videoID: string, lang = 'en') => {
+        const fetchSubtitles = async (videoID: string, lang = 'ko') => {
           try {
             subtitles = await getSubtitles({ videoID, lang });
             // console.log("subtitles:")
@@ -53,7 +53,7 @@ export default async function Page(all:any) {
           }
         };
         // Fetching Video Details
-        const fetchVideoDetails = async (videoID: string, lang = 'en') => {
+        const fetchVideoDetails = async (videoID: string, lang = 'ko') => {
           try {
             
             // console.log("videoDetails:");
