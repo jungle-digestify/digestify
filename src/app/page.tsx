@@ -22,6 +22,11 @@ export default function Index() {
         </CustomLink>
       </p>
       <p>
+        <CustomLink href="/playground-hyunji" className="underline">
+          playground-hyunji
+        </CustomLink>
+      </p>
+      <p>
         Current{" "}
         <CustomLink href="https://nextjs.authjs.dev">NextAuth.js</CustomLink>{" "}
       </p>
