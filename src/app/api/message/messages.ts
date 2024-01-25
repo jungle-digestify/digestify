@@ -18,7 +18,7 @@ export type Message = {
         
         +"Please ensure the language is suitable for a 16-year-old audience."
         +"I only know Korean, so please print it once in Korean."
-        +"temperature 3.0"
+        // +"temperature 3.0"
         
     },
     {
@@ -37,6 +37,6 @@ export type Message = {
         
         +"Please ensure the language is suitable for a 16-year-old audience."
         +"I only know Korean, so please print it once in Korean."
-        +"temperature 3.0"
+        // +"temperature 3.0"
     },
   ];
