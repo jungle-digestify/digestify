@@ -1,10 +1,10 @@
-import ChatContent from "./chat-content"
-import ChatList, { ChatListSkeleton } from "./chat-list"
-import { createChat } from "./actions"
+import ChatContent from "../[[...chatId]]/chat-content"
+import ChatList, { ChatListSkeleton } from "../[[...chatId]]/chat-list"
+import { createChat } from "../[[...chatId]]/actions"
 import { Suspense, useEffect } from "react"
-import ChatContentWrapper from "./chat-content-wrapper"
-import ChatHeader from "./header"
-import TeamMenu from "./team-select"
+import ChatContentWrapper from "../[[...chatId]]/chat-content-wrapper"
+import ChatHeader from "../[[...chatId]]/header"
+import TeamMenu from "../[[...chatId]]/team-select"
 import { getSubtitles, getVideoDetails } from 'youtube-caption-extractor';
 import { fetchTranscript } from "youtube-subtitle-transcript";
 
@@ -17,7 +17,8 @@ let allscript = "";
 
 const lang = 'ko'; // Optional, default is 'ko' (English)
 
-export default async function Page(all:any) {
+//extendinginput display:none 되어있음
+export default async function Page2(all:any) {
   // console.log("all", all)
   const test = async(videoID: string, lang = 'ko')=>{
     if(videoID!=undefined){
@@ -76,11 +77,10 @@ export default async function Page(all:any) {
   
   
   return (
-
+    
     <div className="w-full h-full flex flex-col">
         <div className="header w-full h-full flex items-center">
           <div className="w-1/3 TeamSelectBtnUp">
-            {/* <button className="TeamSelectBtn font-bold py-2 px-4 rounded"> team </button> */}
             <TeamMenu></TeamMenu>
             
           </div>
@@ -89,7 +89,6 @@ export default async function Page(all:any) {
               <input className="SearchInput py-2 px-4" placeholder="Search ..."></input>
               <input type="submit" className="SearchBtn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
               value='S'/>
-              {/* <span><i className="bi bi-search"></i></span> */}
             </form>
           </div> 
           
@@ -97,23 +96,23 @@ export default async function Page(all:any) {
 
         <div className="main w-full h-full flex flex-row">
           
-          <div className="ChatlistDiv">
+          {/* <div className="ChatlistDiv">
             <Suspense fallback={<ChatListSkeleton />}>
               <ChatList />
             </Suspense>
-          </div>
+          </div> */}
         
-          <div className="ChatContentDiv flex flex-col">
+          <div className="ChatContentDiv2 flex flex-col">
             <div className="ChatContentUp">
               <div className="ChatContent h-full flex-1 flex flex-col">
 
-                {/* {chatId ? (
+                {chatId ? (
                     <Suspense fallback={<div className="flex-1" />}>
                       <ChatContentWrapper chatId={chatId} />
                     </Suspense>
                   ) : (
                     <ChatContent createChat={createChat} script={allscript}/>
-                  )} */}
+                  )}
                 </div>
 
             </div>
@@ -131,29 +130,7 @@ export default async function Page(all:any) {
           footer
         </div>
     </div>
-    // <div className="w-full h-full flex">
-    //   <div className="w-full h-15">
-    //     <ChatHeader></ChatHeader>
-    //   </div>
-      
-    //   <div className="w-full h-75">
-    //     <div className="w-80 h-75 max-h-full border-r-2 border-neutral-300 dark:border-neutral-700 overflow-auto">
-    //       <Suspense fallback={<ChatListSkeleton />}>
-    //         <ChatList />
-    //       </Suspense>
-    //     </div>
-    //     <div className="h-full flex-1 flex flex-col">
-    //       {chatId ? (
-    //         <Suspense fallback={<div className="flex-1" />}>
-    //           <ChatContentWrapper chatId={chatId} />
-    //         </Suspense>
-    //       ) : (
-    //         <ChatContent createChat={createChat} script={allscript}/>
-    //       )}
-          
-    //     </div>
-    //   </div>
-    // </div>
+
     
   )
 }

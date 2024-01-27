@@ -10,8 +10,17 @@ const GrowingTextArea = (props: Props) => {
 
   useEffect(() => {
     if (textAreaRef.current) {
+      console.log('textAreaRef.current = ', textAreaRef.current);
+      console.log('textAreaRef.current.scrollHeight = ', textAreaRef.current.scrollHeight);
+
       textAreaRef.current.style.height = "auto";
-      textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
+      if(textAreaRef.current.scrollHeight === 0){
+        textAreaRef.current.style.height = '56px';
+      }else{
+        textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`; `${textAreaRef.current.scrollHeight}px`;
+      }
+      // textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
+      // textAreaRef.current.style.height = '56px';
     }
   }, [textAreaValue, props.value]);
 

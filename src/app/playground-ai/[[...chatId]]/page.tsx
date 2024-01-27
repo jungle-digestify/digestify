@@ -3,28 +3,14 @@ import ChatList, { ChatListSkeleton } from "./chat-list"
 import { createChat } from "./actions"
 import { Suspense, useEffect } from "react"
 import ChatContentWrapper from "./chat-content-wrapper"
-
+import ChatHeader from "../../playground-hyunji/[[...chatId]]/header"
 import { getSubtitles, getVideoDetails } from 'youtube-caption-extractor';
 import { fetchTranscript } from "youtube-subtitle-transcript";
 
 let allscript = "";
 
-// const homeUrl = 'http://localhost:3000'
-// const videoID = 'Kz3d_vGPtwc';
-
-// const videoID = 'Kz3d_vGPtwc';
-
-
 const lang = 'ko'; // Optional, default is 'ko' (English)
 
-
-
-
-// export async function getServerSideProps(context: any){
-//   const v = context.query.v;
-
-//   return { props: {v}}
-// }
 export default async function Page(all:any) {
   // console.log("all", all)
   const test = async(videoID: string, lang = 'ko')=>{
@@ -78,9 +64,9 @@ export default async function Page(all:any) {
     }
     
   }
-  console.log('all = ', all);
+  // console.log('all = ', all);
   const chatId = all.chatId?.[0]
-  console.log('chatId = ', chatId);
+  // console.log('chatId = ', chatId);
   const videoID = all.searchParams.v;
   // console.log('v=', videoID);
   await test(videoID, lang); 

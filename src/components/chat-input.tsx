@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import GrowingTextArea from "./growing-text-area";
 import { cn } from "@/lib/utils";
 
@@ -20,6 +20,7 @@ export default function ExpandingInput({
   const [selectedImage, setSelectedImage] = useState<File | undefined>(
     undefined
   );
+  const [showTextInput, setInput] = useState(false);
   // const [v_id , setVId] = useState("");
 
   const submit = (value: string) => {
@@ -37,8 +38,21 @@ export default function ExpandingInput({
 
   // let get_v_id='';
   let count = false;
+  let aiInput = false; //필요없는 경우
   useEffect(() => {
     
+    // 메인 페이지에서는 ai 입력창이 필요없고, ai 페이지에서는 입력창이 필요해
+    
+    const currentUrl = window.location.href;
+    const currentPage = currentUrl.split('/')[4].split('?')[0]; //ai 페이지인 경우 input 필요
+    
+    let aiInput = false; //필요없는 경우
+    if(currentPage === 'ai'){
+      aiInput = true;
+      setInput(aiInput);
+    }
+    console.log('aiInput=',aiInput);
+
     const form = document.getElementById('gptForm');
     if(form){
       if(!count){
@@ -46,20 +60,23 @@ export default function ExpandingInput({
       }
       count = true;
     }
+
+    
   }, []);
 
-
+  
+  
   return (
-    <div className="w-full my-10">
+    <div className={showTextInput? "ExpandingInput2 w-full my-5" : "ExpandingInput w-full my-5"}>
       <form
         onSubmit={handleSubmit}
         className="w-full flex flex-col gap-y-4 px-4 relative max-w-5xl mx-auto"
         id="gptForm"
       >
-        <ImageSelection
+        {/* <ImageSelection
           selectedImage={selectedImage}
           setSelectedImage={setSelectedImage}
-        />
+        /> */}
         <GrowingTextArea
           className="w-full bg-transparent border border-gray-500 rounded-2xl outline-none resize-none pl-12 pr-14 py-4 scrollbar-content overflow-y-auto overflow-x-clip overscroll-contain"
           value={content}
@@ -106,3 +123,4 @@ export default function ExpandingInput({
     </div>
   );
 }
+

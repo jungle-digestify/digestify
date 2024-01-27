@@ -34,27 +34,30 @@ export default async function ChatList() {
 
   // console.log(messagesTable)
   return (
-    <div className="flex flex-col p-10 justify-between h-full">
-      <div className="flex flex-col gap-y-4">
-        <a key='new' href={'/playground-ai'} className="truncate">New Chat</a>
-        {chats.map((chat) => (
-          
-          <Link key={chat.id} href={`/${chat.id}`} className="truncate">
-            {chat.name}
-          </Link>
-        ))}
-      </div>
+    <div className="flex h-full chatlistUp">
+      <div className="chatlist w-full h-full flex flex-col justify-between">
+        <div className="flex flex-col gap-y-4">
+          <a key='new' href={'/playground-hyunji'} className="truncate">New Chat</a>
+          {chats.map((chat) => (
+            
+            <Link key={chat.id} href={`/${chat.id}`} className="truncate">
+              {chat.name}
+            </Link>
+          ))}
+        </div>
 
-      {session.user ? (
-        <div className="flex flex-col">
-          <p>{session.user.name}</p>
-          <SignOut>LogOut</SignOut>
-        </div>
-      ) : (
-        <div className="flex flex-col">
-          <SignIn>Sign in</SignIn>
-        </div>
-      )}
+        {session.user ? (
+          <div className="flex flex-col">
+            <p>{session.user.name}</p>
+            <SignOut>LogOut</SignOut>
+          </div>
+        ) : (
+          <div className="flex flex-col">
+            <SignIn>Sign in</SignIn>
+          </div>
+        )}
+      </div>
+      
     </div>
   )
 }
