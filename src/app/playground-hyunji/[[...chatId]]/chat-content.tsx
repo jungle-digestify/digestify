@@ -107,10 +107,9 @@ export default function ChatContent({
   }
 
 
-
   return (
     <>
-      <div className="h-full max-w-4xl w-full mx-auto flex-1 px-10 py-5 overflow-x-hidden overflow-y-auto prose dark:prose-invert">
+      <div className="ChatContentDown h-1/2 max-w-4xl w-full mx-auto flex-1 px-10 py-5 overflow-x-hidden overflow-y-auto prose dark:prose-invert">
         <Markdown
           remarkPlugins={[remarkGfm]}
           components={{
@@ -127,7 +126,7 @@ export default function ChatContent({
                   wrapLongLines={true}
                 />
               ) : (
-                <code {...rest} className={className}>
+                <code {...rest} className={className} >
                   {children}
                 </code>
               )
@@ -137,6 +136,7 @@ export default function ChatContent({
           {assisnantResponse}
         </Markdown>
       </div>
+  
       <ChatInput
         onSubmit={handleSubmit}
         isStreaming={isLoading}
