@@ -170,6 +170,9 @@ dependencies:
   youtube-subtitle-transcript:
     specifier: ^0.1.0
     version: 0.1.0
+  ytdl-core:
+    specifier: ^4.11.5
+    version: 4.11.5
   zod:
     specifier: ^3.22.4
     version: 3.22.4
@@ -5864,6 +5867,14 @@ packages:
       react: 18.2.0
     dev: false
 
+  /m3u8stream@0.8.6:
+    resolution: {integrity: sha512-LZj8kIVf9KCphiHmH7sbFQTVe4tOemb202fWwvJwR9W5ENW/1hxJN6ksAWGhQgSBSa3jyWhnjKU1Fw1GaOdbyA==}
+    engines: {node: '>=12'}
+    dependencies:
+      miniget: 4.2.3
+      sax: 1.3.0
+    dev: false
+
   /magic-string@0.30.5:
     resolution: {integrity: sha512-7xlpfBaQaP/T6Vh8MO/EqXSW5En6INHEvEXQiuff7Gku0PWjU3uf6w/j9o7O+SpB5fOAkrI5HeoNgwjEO0pFsA==}
     engines: {node: '>=12'}
@@ -6382,6 +6393,11 @@ packages:
   /mimic-response@3.1.0:
     resolution: {integrity: sha512-z0yWI+4FDrrweS8Zmt4Ej5HdJmky15+L2e6Wgn3+iK5fWzb6T3fhNFq2+MeTRb064c6Wr4N/wv0DzQTjNzHNGQ==}
     engines: {node: '>=10'}
+    dev: false
+
+  /miniget@4.2.3:
+    resolution: {integrity: sha512-SjbDPDICJ1zT+ZvQwK0hUcRY4wxlhhNpHL9nJOB2MEAXRGagTljsO8MEDzQMTFf0Q8g4QNi8P9lEm/g7e+qgzA==}
+    engines: {node: '>=12'}
     dev: false
 
   /minimatch@3.1.2:
@@ -8598,6 +8614,15 @@ packages:
     resolution: {integrity: sha512-z1kxl4q0HETRBWU3kwUJpaCwAJTElRBbokh7CeWrrpTbxP/uud53R5P+Coz1LR3VZsD9Av4r7jywDisBZqlMow==}
     dependencies:
       xml2js: 0.6.2
+    dev: false
+
+  /ytdl-core@4.11.5:
+    resolution: {integrity: sha512-27LwsW4n4nyNviRCO1hmr8Wr5J1wLLMawHCQvH8Fk0hiRqrxuIu028WzbJetiYH28K8XDbeinYW4/wcHQD1EXA==}
+    engines: {node: '>=12'}
+    dependencies:
+      m3u8stream: 0.8.6
+      miniget: 4.2.3
+      sax: 1.3.0
     dev: false
 
   /zod@3.22.4:

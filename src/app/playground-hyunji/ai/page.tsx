@@ -12,6 +12,8 @@ import { fetchTranscript } from "youtube-subtitle-transcript";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 
+//youtube download
+import fs from 'fs';
 
 let allscript = "";
 
@@ -63,7 +65,16 @@ export default async function Page2(all:any) {
         if(error!=undefined){
           console.log('error = ', error)
         }
-        
+
+        const ytdl = require('ytdl-core');
+        const ori_youtube_url = 'https://www.youtube.com/watch?v='+videoID;
+        const videoURL = ori_youtube_url;
+        const downloadOptions = {
+          quality: 'highest',
+        };
+
+        ytdl(videoURL, downloadOptions).pipe(fs.createWriteStream('video.mp4'));
+        console.log('ytdl.videoInfo = ',ytdl.videoInfo);
       }
       catch(error){
         console.log(error);  

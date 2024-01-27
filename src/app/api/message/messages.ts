@@ -30,12 +30,12 @@ export type Message = {
       content:
         
         "Create a YouTube video summary.  Include the following elements with bold and clear formatting:"
-        +"1. **영상 제목:** : print here video title. "
-        +"Draw a separating line below here. And add a line break."
+        +"1. **영상 제목:** : print here video title"
+        +"Draw a separating line below here."
         +"2. **한줄 요약** : print here one-line summary"
-        +"Draw a separating line below here. And add a line break."
+        +"Draw a separating line below here."
         +"3. **전체 요약 ** : print here Summarize the following in 5 bullet points."
-        +"Draw a separating line below here. And add a line break."
+        +"Draw a separating line below here."
         // +" Summarize the following in 5 bullet points."
         
            +"4. **타임 라인** : Create a timeline with sections and placeholders for time stamps but mention that the model may not provide accurate time information."

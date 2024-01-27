@@ -44,7 +44,11 @@ export default function ExpandingInput({
     // 메인 페이지에서는 ai 입력창이 필요없고, ai 페이지에서는 입력창이 필요해
     
     const currentUrl = window.location.href;
-    const currentPage = currentUrl.split('/')[4].split('?')[0]; //ai 페이지인 경우 input 필요
+    let currentPage = '';
+    if(currentUrl.split('/')[4]!==undefined){
+      currentPage = currentUrl.split('/')[4].split('?')[0]; //ai 페이지인 경우 input 필요
+    }
+    
     
     let aiInput = false; //필요없는 경우
     if(currentPage === 'ai'){
