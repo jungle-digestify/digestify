@@ -106,13 +106,13 @@ export default async function Page(all:any) {
             <div className="ChatContentUp">
               <div className="ChatContent h-full flex-1 flex flex-col">
 
-                {/* {chatId ? (
+                {chatId ? (
                     <Suspense fallback={<div className="flex-1" />}>
                       <ChatContentWrapper chatId={chatId} />
                     </Suspense>
                   ) : (
                     <ChatContent createChat={createChat} script={allscript}/>
-                  )} */}
+                  )}
                 </div>
 
             </div>

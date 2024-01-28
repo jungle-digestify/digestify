@@ -13,7 +13,7 @@ export async function createChat() {
   const session = await auth()
 
   if (session?.user == undefined) throw "error"
-  console.log("createChat", session)
+  // console.log("createChat", session)
   
   const users = await db.select().from(userTable).where(eq(userTable.name, session.user.name!))
   

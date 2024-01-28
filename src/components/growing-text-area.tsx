@@ -10,8 +10,8 @@ const GrowingTextArea = (props: Props) => {
 
   useEffect(() => {
     if (textAreaRef.current) {
-      console.log('textAreaRef.current = ', textAreaRef.current);
-      console.log('textAreaRef.current.scrollHeight = ', textAreaRef.current.scrollHeight);
+      // console.log('textAreaRef.current = ', textAreaRef.current);
+      // console.log('textAreaRef.current.scrollHeight = ', textAreaRef.current.scrollHeight);
 
       textAreaRef.current.style.height = "auto";
       if(textAreaRef.current.scrollHeight === 0){

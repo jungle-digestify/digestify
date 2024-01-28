@@ -20,6 +20,7 @@ const lang = 'ko'; // Optional, default is 'ko' (English)
 export default async function Page2(all:any) {
   // console.log("all", all)
   const test = async(videoID: string, lang = 'ko')=>{
+    console.log('videoID = ',videoID);
     if(videoID!=undefined){
       try{
         allscript = '';
@@ -63,15 +64,45 @@ export default async function Page2(all:any) {
           console.log('error = ', error)
         }
 
+        // 현재 위치 /Users/chohyunji/digestify/src/app/playground-hyunji/ai/page.tsx
+        // 영상 다운로드 된 위치 /Users/chohyunji/digestify/.next/server/app/playground-hyunji/ai/downloads/video.mp4
+
+        // 1. youtube 영상 다운로드
         const ytdl = require('ytdl-core');
+        const path = require('path');
+
         const ori_youtube_url = 'https://www.youtube.com/watch?v='+videoID;
         const videoURL = ori_youtube_url;
         const downloadOptions = {
           quality: 'highest',
+          format: 'mp4',
         };
+        
+        const downloadsDir = path.join(__dirname, 'downloads');
+        const outputPath = path.join(downloadsDir, videoID+".mp4");
 
-        ytdl(videoURL, downloadOptions).pipe(fs.createWriteStream('video.mp4'));
-        console.log('ytdl.videoInfo = ',ytdl.videoInfo);
+        console.log('outputPath = ', outputPath);
+        
+        // downloads 폴더가 없으면 생성
+        try {
+          
+          if (!fs.existsSync(downloadsDir)) {
+            fs.mkdirSync(downloadsDir, { recursive: true });
+            console.log('downloads 폴더가 생성되었습니다.');
+          }
+        
+          const writeStream = fs.createWriteStream(outputPath);
+        
+          ytdl(videoURL, downloadOptions).pipe(writeStream);
+        
+          writeStream.on('finish', () => {
+            console.log(`다운로드가 완료되어 ${outputPath}에 저장되었습니다.`);
+          });
+        } catch (error) {
+          console.error(`에러 발생: ${error.message}`);
+        }
+
+        // 2. 다운한 영상 편집
       }
       catch(error){
         console.log(error);  
