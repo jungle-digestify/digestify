@@ -1,92 +1,63 @@
 import { getActiveTabURL } from "./utils.js";
 
-const addNewBookmark = (bookmarks, bookmark) => {
-  const bookmarkTitleElement = document.createElement("div");
-  const controlsElement = document.createElement("div");
-  const newBookmarkElement = document.createElement("div");
-
-  bookmarkTitleElement.textContent = bookmark.desc;
-  bookmarkTitleElement.className = "bookmark-title";
-  controlsElement.className = "bookmark-controls";
-
-  setBookmarkAttributes("play", onPlay, controlsElement);
-  setBookmarkAttributes("delete", onDelete, controlsElement);
-
-  newBookmarkElement.id = "bookmark-" + bookmark.time;
-  newBookmarkElement.className = "bookmark";
-  newBookmarkElement.setAttribute("timestamp", bookmark.time);
-
-  newBookmarkElement.appendChild(bookmarkTitleElement);
-  newBookmarkElement.appendChild(controlsElement);
-  bookmarks.appendChild(newBookmarkElement);
-};
-
-const viewBookmarks = (currentBookmarks=[]) => {
-  const bookmarksElement = document.getElementById("bookmarks");
-  bookmarksElement.innerHTML = "";
-
-  if (currentBookmarks.length > 0) {
-    for (let i = 0; i < currentBookmarks.length; i++) {
-      const bookmark = currentBookmarks[i];
-      addNewBookmark(bookmarksElement, bookmark);
-    }
-  } else {
-    bookmarksElement.innerHTML = '<i class="row">No bookmarks to show</i>';
-  }
-
-  return;
-};
-
-const onPlay = async e => {
-  const bookmarkTime = e.target.parentNode.parentNode.getAttribute("timestamp");
-  const activeTab = await getActiveTabURL();
-
-  chrome.tabs.sendMessage(activeTab.id, {
-    type: "PLAY",
-    value: bookmarkTime,
+async function checkLoginStatus() {
+  return new Promise((resolve, reject) => {
+    chrome.cookies.get({ url: 'http://localhost:3000', name: 'next-auth.session-token' }, function(cookie) {
+      if (cookie) {
+        resolve(true); // 로그인된 상태
+      } else {
+        resolve(false); // 로그인되지 않은 상태
+      }
+    });
   });
-};
-
-const onDelete = async e => {
-  const activeTab = await getActiveTabURL();
-  const bookmarkTime = e.target.parentNode.parentNode.getAttribute("timestamp");
-  const bookmarkElementToDelete = document.getElementById(
-    "bookmark-" + bookmarkTime
-  );
-
-  bookmarkElementToDelete.parentNode.removeChild(bookmarkElementToDelete);
-
-  chrome.tabs.sendMessage(activeTab.id, {
-    type: "DELETE",
-    value: bookmarkTime,
-  }, viewBookmarks);
-};
-
-const setBookmarkAttributes =  (src, eventListener, controlParentElement) => {
-  const controlElement = document.createElement("img");
-
-  controlElement.src = "assets/" + src + ".png";
-  controlElement.title = src;
-  controlElement.addEventListener("click", eventListener);
-  controlParentElement.appendChild(controlElement);
-};
+}
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const activeTab = await getActiveTabURL();
-  const queryParameters = activeTab.url.split("?")[1];
-  const urlParameters = new URLSearchParams(queryParameters);
+  const toggle = document.getElementById('featureToggle');
+  const toggleStatus = document.getElementById('toggleStatus');
 
-  const currentVideo = urlParameters.get("v");
-  
-  if (activeTab.url.includes("youtube.com/watch") && currentVideo) {
-    chrome.storage.sync.get([currentVideo], (data) => {
-      const currentVideoBookmarks = data[currentVideo] ? JSON.parse(data[currentVideo]) : [];
-        
-      viewBookmarks(currentVideoBookmarks);
+  chrome.storage.sync.get(['featureEnabled'], function(result) {
+    toggle.checked = result.featureEnabled || false;
+    updateToggleText(toggle.checked);
+  });
+
+  toggle.addEventListener('change', function() {
+    chrome.storage.sync.set({'featureEnabled': this.checked});
+    updateToggleText(this.checked);
+    let buttonStatus = this.checked
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, {
+        action: "toggleChanged",
+        status: buttonStatus
+      });
     });
-  } else {
-    const container = document.getElementsByClassName("container")[0];
+  });
 
-    container.innerHTML = '<div class="title">This is not a youtube video page.</div>';
+  function updateToggleText(checked) {
+    toggleStatus.textContent = checked ? "ON" : "OFF";
   }
+
+
+const activeTab = await getActiveTabURL();
+
+const isLoggedIn = await checkLoginStatus();
+
+if (!isLoggedIn) {
+  alert("로그인하셔야 이용 가능합니다.");
+  const container = document.getElementsByClassName("container")[0];
+  container.innerHTML = '<div class="title"><a href="#" id="loginLink">로그인 하러 가기</a></div>';
+
+  document.getElementById("loginLink").addEventListener("click", function() {
+    window.open("http://localhost:3000/login", "_blank");
+  });
+
+  return;
+}
+
+if (activeTab.url.includes("youtube.com")) {
+} else {
+  const container = document.getElementsByClassName("container")[0];
+
+  container.innerHTML = '<div class="title">유튜브 영상을 digestify 하세요!</div>';
+}
 });
