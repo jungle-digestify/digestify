@@ -179,8 +179,10 @@ async function postData(url = '', data = {}) {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
+    credentials: "include"
   };
-
+  
+  console.log(requestOptions)
   const response = await fetch(url, requestOptions);
 
   console.log(response)

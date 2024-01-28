@@ -1,14 +1,14 @@
-import ChatContent from "./chat-content"
-import { createChat } from "./actions"
+import ChatContent from "./chat-content";
+import { createChat } from "./actions";
 
-import { db } from "@/db"
-import { eq, desc, and } from "drizzle-orm"
-import { messages as messagesTable } from "@/db/schema"
+import { db } from "@/db";
+import { eq, desc, and } from "drizzle-orm";
+import { messages as messagesTable } from "@/db/schema";
 
 export default async function ChatContentWrapper({
   chatId,
 }: {
-  chatId: string
+  chatId: string;
 }) {
   const message = await db
     .select()
@@ -17,7 +17,13 @@ export default async function ChatContentWrapper({
       and(eq(messagesTable.chatId, chatId), eq(messagesTable.role, "assistant"))
     )
     .orderBy(desc(messagesTable.createdAt))
-    .get()
+    .get();
 
-  return <ChatContent createChat={createChat} script={""} initialAssistantResponse={message?.content} />
+  return (
+    <ChatContent
+      createChat={createChat}
+      script={""}
+      initialAssistantResponse={message?.content}
+    />
+  );
 }

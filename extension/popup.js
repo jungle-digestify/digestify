@@ -2,7 +2,7 @@ import { getActiveTabURL } from "./utils.js";
 
 async function checkLoginStatus() {
   return new Promise((resolve, reject) => {
-    chrome.cookies.get({ url: 'http://localhost:3000', name: 'next-auth.session-token' }, function(cookie) {
+    chrome.cookies.get({ url: 'http://localhost:3000', name: 'authjs.session-token' }, function(cookie) {
       if (cookie) {
         resolve(true); // 로그인된 상태
       } else {

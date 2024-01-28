@@ -1,46 +1,46 @@
-"use client"
+"use client";
 
-import { useState, useRef, useEffect } from "react"
-import ChatInput from "@/components/chat-input"
-import Markdown from "react-markdown"
-import remarkGfm from "remark-gfm"
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
-import { vscDarkPlus as dark } from "react-syntax-highlighter/dist/esm/styles/prism"
-import { CreateChat } from "./actions"
-import { convertFileToBase64 } from "@/lib/utils"
-
+import { useState, useRef } from "react";
+import ChatInput from "@/components/chat-input";
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vscDarkPlus as dark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { CreateChat } from "./actions";
+import { convertFileToBase64 } from "@/lib/utils";
 
 export default function ChatContent({
   createChat,
   script,
   initialAssistantResponse = "",
-
 }: {
-  createChat: CreateChat
-  script: string
-  initialAssistantResponse?: string
+  createChat: CreateChat;
+  script: string;
+  initialAssistantResponse?: string;
 }) {
-  const [assisnantResponse, setAssistantResponse] = useState(initialAssistantResponse)
-  const [isLoading, setIsLoading] = useState(false)
-  const abortControllerRef = useRef<AbortController | null>(null)
-  const [chatId, setChatId] = useState("")
-  // console.log("chat-content:",script)
+  const [assisnantResponse, setAssistantResponse] = useState(
+    initialAssistantResponse
+  );
+  const [isLoading, setIsLoading] = useState(false);
+  const abortControllerRef = useRef<AbortController | null>(null);
+  const [chatId, setChatId] = useState("");
+
   const handleSubmit = async (value: string, file?: File) => {
-    let currentChatId = chatId
+    let currentChatId = chatId;
     if (!currentChatId) {
       // create a new chat in the database
-      const chat = await createChat()
-      currentChatId = chat.id
+      const chat = await createChat();
+      currentChatId = chat.id;
       // and get the id and store it in state
-      setChatId(chat.id)
+      setChatId(chat.id);
     }
 
-    setIsLoading(true)
-    setAssistantResponse("")
+    setIsLoading(true);
+    setAssistantResponse("");
 
-    let body = ""
+    let body = "";
     if (file) {
-      const imageUrl = await convertFileToBase64(file)
+      const imageUrl = await convertFileToBase64(file);
       const content = [
         {
           type: "image_url",
@@ -52,16 +52,16 @@ export default function ChatContent({
           type: "text",
           text: value,
         },
-      ]
+      ];
 
-      body = JSON.stringify({ content, chatId: currentChatId })
+      body = JSON.stringify({ content, chatId: currentChatId });
     } else {
-      body = JSON.stringify({ content: script, chatId: currentChatId })
+      body = JSON.stringify({ content: value, chatId: currentChatId });
     }
 
     // console.log("submit", value, file);
     try {
-      abortControllerRef.current = new AbortController()
+      abortControllerRef.current = new AbortController();
       const res = await fetch("/api/message", {
         method: "POST",
         body: body,
@@ -69,57 +69,60 @@ export default function ChatContent({
           "Content-Type": "application/json",
         },
         signal: abortControllerRef.current.signal,
-      })
+      });
 
       if (!res.ok || !res.body) {
-        alert("Error sending message")
-        return
+        alert("Error sending message");
+        return;
       }
 
-      const reader = res.body.getReader()
+      const reader = res.body.getReader();
 
-      const decoder = new TextDecoder()
+      const decoder = new TextDecoder();
+      // chunk가 올 때마다 응답을 세트한다. 다 왔으면 탈출함
       while (true) {
-        const { value, done } = await reader.read()
+        const { value, done } = await reader.read();
 
-        const text = decoder.decode(value)
-        setAssistantResponse((currentValue) => currentValue + text)
+        const text = decoder.decode(value);
+        setAssistantResponse((currentValue) => currentValue + text);
 
         if (done) {
-          break
+          break;
         }
       }
     } catch (error: any) {
       if (error.name !== "AbortError") {
-        alert("Error sending message")
+        alert("Error sending message");
       }
     }
-    abortControllerRef.current = null
-    setIsLoading(false)
+    abortControllerRef.current = null;
+    setIsLoading(false);
+  };
+  if (script !== "") {
+    handleSubmit(script);
   }
 
   const handleStop = () => {
     if (!abortControllerRef.current) {
-      return
+      return;
     }
-    abortControllerRef.current.abort()
-    abortControllerRef.current = null
-  }
-
-
+    abortControllerRef.current.abort();
+    abortControllerRef.current = null;
+  };
 
   return (
     <>
-      <div className="h-full max-w-4xl w-full mx-auto flex-1 px-10 py-5 overflow-x-hidden overflow-y-auto prose dark:prose-invert">
+      <div className="max-w-4xl w-full mx-auto flex-1 px-10 py-5 overflow-x-hidden overflow-y-auto prose dark:prose-invert">
         <Markdown
           remarkPlugins={[remarkGfm]}
           components={{
             code(props) {
-              const { children, className, node, ...rest } = props
-              const match = /language-(\w+)/.exec(className || "")
+              const { children, className, node, ...rest } = props;
+              const match = /language-(\w+)/.exec(className || "");
               return match ? (
                 <SyntaxHighlighter
                   PreTag="div"
+                  // eslint-disable-next-line react/no-children-prop
                   children={String(children).replace(/\n$/, "")}
                   language={match[1]}
                   style={dark}
@@ -130,7 +133,7 @@ export default function ChatContent({
                 <code {...rest} className={className}>
                   {children}
                 </code>
-              )
+              );
             },
           }}
         >
@@ -143,5 +146,5 @@ export default function ChatContent({
         onStop={handleStop}
       />
     </>
-  )
+  );
 }

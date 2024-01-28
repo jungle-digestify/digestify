@@ -8,7 +8,7 @@ import {
   sqliteTableCreator,
   text,
   primaryKey,
-  index
+  index,
 } from "drizzle-orm/sqlite-core";
 import type { AdapterAccount } from "@auth/core/adapters";
 
@@ -33,7 +33,9 @@ export const chats = sqliteTable(
   "chats",
   {
     id: text("id").notNull().primaryKey(),
-    userId: text("user_id").notNull().references(()=>users.id),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id),
     name: text("name").notNull(),
     createdAt: text("created_at")
       .default(sql`CURRENT_TIME`)
@@ -42,21 +44,23 @@ export const chats = sqliteTable(
   (table) => {
     return {
       userIdIndex: index("chats_auth_user_id_idx").on(table.userId),
-    }
+    };
   }
-)
+);
 //sql`DATETIME('now', 'localtime')`로 하면 에러남
 
 export const messages = sqliteTable("messages", {
   id: integer("id").notNull().primaryKey(),
-  chatId: text("chat_id").notNull().references(() => chats.id),
+  chatId: text("chat_id")
+    .notNull()
+    .references(() => chats.id),
   role: text("role", { enum: ["user", "assistant"] }).notNull(),
   content: text("content").notNull(),
   createdAt: text("created_at")
     // .default(sql`CURRENT_TIMESTAMP`)
     .default(sql`CURRENT_TIME`)
     .notNull(),
-})
+});
 
 // https://authjs.dev/reference/adapter/drizzle
 
