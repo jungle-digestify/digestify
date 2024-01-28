@@ -8,6 +8,7 @@ import { auth } from "@/auth"
 import { SignIn, SignOut } from "@/components/playground/auth-components";
 
 import { useState } from 'react';
+import { FaList } from "react-icons/fa6";
 
 // //page 이동
 // import { BrowserRouter as Router, Route, Routes, Navigate, useNavigate } from 'react-router-dom';
@@ -31,8 +32,8 @@ export default function TeamMenu() {
   return (
     <div className="TeamSelectDiv">
         <div className='dropdown'>
-            <button className="TeamSelectBtn outline-none focus:outline-none" onClick={toggleDropdown}>
-                TEAM
+        <button className="TeamSelectBtn outline-none focus:outline-none bg-black" onClick={toggleDropdown}>
+                <FaList size={30} color="white" />
             </button>
             <div className= {isDropdownActive ? 'TeamDropDown active' : 'TeamDropDown'}>
                 <ul>

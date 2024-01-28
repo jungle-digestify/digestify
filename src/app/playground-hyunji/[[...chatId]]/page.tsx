@@ -7,11 +7,7 @@ import ChatHeader from "./header"
 import TeamMenu from "./team-select"
 import { getSubtitles, getVideoDetails } from 'youtube-caption-extractor';
 import { fetchTranscript } from "youtube-subtitle-transcript";
-
-//icon
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
-
+import { IoSearchOutline } from "react-icons/io5";
 
 let allscript = "";
 
@@ -86,9 +82,12 @@ export default async function Page(all:any) {
           </div>
           <div className="w-2/3 form-group">
             <form className="form" id="SearchForm">
-              <input className="SearchInput py-2 px-4" placeholder="Search ..."></input>
-              <input type="submit" className="SearchBtn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
-              value='S'/>
+            <div className="flex">
+             <input className="SearchInput py-2 px-4" placeholder="Search ..." />
+              <button type="submit" className="SearchBtn text-white font-bold py-2 px-4 border-4 rounded-xl border-black hover:border-gray-300">
+                <IoSearchOutline />
+              </button>
+            </div>
               {/* <span><i className="bi bi-search"></i></span> */}
             </form>
           </div> 

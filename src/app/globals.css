@@ -122,6 +122,7 @@
   padding: 0.5rem 1rem;
   border-radius: 0.25rem;
   margin-left: 30px;
+  animation: fade-in 1s;
 }
 .TeamSelectBtnUp{
   display: flex;
@@ -396,10 +397,14 @@
 }
 
 .dropdown button {
-  background-color: #3490dc;
+  background-color: black;
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 0.25rem;
+}
+
+.dropdown button:hover {
+  background-color: #43484C;
 }
 
 .dropdown ul {
