@@ -127,7 +127,7 @@ export default async function Page(all:any) {
         </div>
 
         <div className="w-full h-full footer">
-          footer
+          
         </div>
     </div>
     // <div className="w-full h-full flex">

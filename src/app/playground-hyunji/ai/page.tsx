@@ -138,7 +138,7 @@ export default async function Page2(all:any) {
         </div>
 
         <div className="w-full h-full footer">
-          footer
+          
         </div>
     </div>
 
