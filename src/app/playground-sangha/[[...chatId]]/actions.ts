@@ -11,9 +11,7 @@ import { revalidateTag } from "next/cache";
 export async function createChat() {
   const user = await currentUser();
   if (!user) {
-    return new Response(JSON.stringify({ error: "not logged in" }), {
-      status: 401,
-    });
+    return { error: "Unauthorized" };
   }
   const id = generateRandomString(16);
   const result = await db

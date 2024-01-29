@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useId } from "react";
 import ChatInput from "@/components/chat-input";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -8,15 +8,21 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus as dark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { CreateChat } from "./actions";
 import { convertFileToBase64 } from "@/lib/utils";
+import { number } from "zod";
+import Tiptap from "@/components/Tiptap";
+import { PenBoxIcon } from "lucide-react";
+import rehypeRaw from "rehype-raw";
 
 export default function ChatContent({
   createChat,
   script,
   initialAssistantResponse = "",
+  messageResponseId,
 }: {
   createChat: CreateChat;
   script: string;
   initialAssistantResponse?: string;
+  messageResponseId?: number;
 }) {
   const [assisnantResponse, setAssistantResponse] = useState(
     initialAssistantResponse
@@ -24,6 +30,33 @@ export default function ChatContent({
   const [isLoading, setIsLoading] = useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
   const [chatId, setChatId] = useState("");
+  const [isEditing, setIsEditing] = useState(false)
+  const [messageId, setMessageId] = useState("");
+
+  const updateSubmit = async (value: string)=> {
+    setIsLoading(true)
+
+    let body = ""
+    body = JSON.stringify({ content: value, id: messageId })
+    console.log("body :: ",body)
+    try {
+      abortControllerRef.current = new AbortController()
+      await fetch("/api/update", {
+        method: "POST",
+        body: body,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        signal: abortControllerRef.current.signal,
+      })
+    } catch (error: any) {
+      if (error.name !== "AbortError") {
+        alert("Error sending message")
+      }
+    }
+
+    setIsLoading(false)
+  }
 
   const handleSubmit = async (value: string, file?: File) => {
     let currentChatId = chatId;
@@ -35,6 +68,7 @@ export default function ChatContent({
       setChatId(chat.id);
     }
 
+    setMessageId(messageResponseId!.toString())
     setIsLoading(true);
     setAssistantResponse("");
 
@@ -112,33 +146,43 @@ export default function ChatContent({
 
   return (
     <>
-      <div className="max-w-4xl w-full mx-auto flex-1 px-10 py-5 overflow-x-hidden overflow-y-auto prose dark:prose-invert">
-        <Markdown
-          remarkPlugins={[remarkGfm]}
-          components={{
-            code(props) {
-              const { children, className, node, ...rest } = props;
-              const match = /language-(\w+)/.exec(className || "");
-              return match ? (
-                <SyntaxHighlighter
-                  PreTag="div"
-                  // eslint-disable-next-line react/no-children-prop
-                  children={String(children).replace(/\n$/, "")}
-                  language={match[1]}
-                  style={dark}
-                  wrapLines={true}
-                  wrapLongLines={true}
-                />
-              ) : (
-                <code {...rest} className={className}>
-                  {children}
-                </code>
-              );
-            },
-          }}
-        >
-          {assisnantResponse}
-        </Markdown>
+      <div className="h-full max-w-4xl w-full mx-auto flex-1 px-10 py-5 overflow-x-hidden overflow-y-auto prose dark:prose-invert">
+        {isEditing ? (
+          <Tiptap
+            description={document.getElementById('markdownHolder ' + messageId)!.innerHTML}
+            onChange={(newRichText) => setAssistantResponse(newRichText)} id={messageId}          />
+        ):(
+          <div id={"markdownHolder "+messageId}>
+            <Markdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                code(props) {
+                  const { children, className, node, ...rest } = props;
+                  const match = /language-(\w+)/.exec(className || "");
+                  return match ? (
+                    <SyntaxHighlighter
+                      PreTag="div"
+                      // eslint-disable-next-line react/no-children-prop
+                      children={String(children).replace(/\n$/, "")}
+                      language={match[1]}
+                      style={dark}
+                      wrapLines={true}
+                      wrapLongLines={true}
+                    />
+                  ) : (
+                    <code {...rest} className={className}>
+                      {children}
+                    </code>
+                  );
+                },
+              }}
+              rehypePlugins={[rehypeRaw]}
+            >
+              {assisnantResponse}
+            </Markdown>
+          </div>
+        )}
+        <button className={isLoading ? ("hidden"):("px-4 py-2 ml-[95%] al font-medium rounded ")} onClick={() => { if(isEditing) updateSubmit(document.getElementById('markdownHolder '+messageId)!.innerHTML);setIsEditing(!isEditing)}}><PenBoxIcon></PenBoxIcon></button>
       </div>
       <ChatInput
         onSubmit={handleSubmit}

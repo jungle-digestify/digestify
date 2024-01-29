@@ -18,12 +18,13 @@ export default async function ChatContentWrapper({
     )
     .orderBy(desc(messagesTable.createdAt))
     .get();
-
+  console.log("",message)
   return (
     <ChatContent
       createChat={createChat}
       script={""}
       initialAssistantResponse={message?.content}
+      messageResponseId={message?.id}
     />
   );
 }

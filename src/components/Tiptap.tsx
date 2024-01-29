@@ -7,9 +7,11 @@ import { Toolbar } from "@/components/ToolBar"
 export default function Tiptap({
     description,
     onChange,
+    id,
 }: {
     description:string
     onChange: (richText:string) => void
+    id: string
 }) {
     const editor = useEditor({
         extensions: [
@@ -37,7 +39,7 @@ export default function Tiptap({
     return (
         <div className="flex flex-col justify-stretch min-h-[250px]">
             <Toolbar editor={editor} />
-            <EditorContent id="markdownHolder" editor={editor}/>
+            <EditorContent id={"markdownHolder "+id} editor={editor}/>
         </div>
     )
 }
