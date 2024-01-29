@@ -183,7 +183,7 @@ export default function ChatContent({
             </Markdown>
           </div>
         )}
-        <button className={isLoading ? ("hidden"):("px-4 py-2 ml-[95%] al font-medium rounded ")} onClick={() => { if(isEditing) updateSubmit(document.getElementById('markdownHolder '+messageId)!.innerHTML);setIsEditing(!isEditing)}}><PenBoxIcon></PenBoxIcon></button>
+        <button className={messageId ? (isLoading ? ("hidden"):("px-4 py-2 ml-[95%] al font-medium rounded ")):("hidden")} onClick={() => { if(isEditing) updateSubmit(document.getElementById('markdownHolder '+messageId)!.innerHTML);setIsEditing(!isEditing)}}><PenBoxIcon></PenBoxIcon></button>
       </div>
       <ChatInput
         onSubmit={handleSubmit}
