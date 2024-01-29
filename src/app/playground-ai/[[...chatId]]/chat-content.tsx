@@ -35,10 +35,11 @@ export default function ChatContent({
 
   const updateSubmit = async (value: string)=> {
     setIsLoading(true)
+    setMessageId(messageResponseId!.toString())
 
     let body = ""
-    body = JSON.stringify({ content: value, id: messageId })
-    console.log("body :: ",body)
+    body = JSON.stringify({ content: value, id: messageResponseId })
+
     try {
       abortControllerRef.current = new AbortController()
       await fetch("/api/update", {

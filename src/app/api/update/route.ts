@@ -3,12 +3,12 @@ import { messages } from "@/db/schema";
 import { eq, and } from "drizzle-orm";
 
 export async function POST(req: Request) {
-  const { content, messageId } = await req.json();
+  const { content, id } = await req.json();
 
   const sucess = await db
     .update(messages)
     .set({ content: content })
-    .where(eq(messages.id, messageId));
+    .where(eq(messages.id, Number(id)));
 
   return new Response();
 }
