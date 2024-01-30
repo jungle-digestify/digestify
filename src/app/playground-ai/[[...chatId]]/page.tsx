@@ -1,4 +1,4 @@
-import ChatContent from "./chat-content";
+import ChatContent from "./chat-contents";
 import ChatList, { ChatListSkeleton } from "./chat-list";
 import { createChat } from "./actions";
 import { Suspense, useEffect } from "react";
@@ -80,13 +80,9 @@ export default async function Page({
         </Suspense>
       </div>
       <div className="h-full flex-1 flex flex-col">
-        {chatId ? (
-          <Suspense fallback={<div className="flex-1" />}>
-            <ChatContentWrapper chatId={chatId} />
-          </Suspense>
-        ) : (
-          <ChatContent createChat={createChat} script={allscript} />
-        )}
+        <Suspense fallback={<div className="flex-1" />}>
+          <ChatContentWrapper chatId={chatId} />
+        </Suspense>
       </div>
     </div>
   );
