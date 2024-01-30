@@ -12,7 +12,7 @@ import ReactPlayer from 'react-player';
 export default function VideoView(all: any) {
     const [getVideoId, setVideoId] = useState();
     const [test, setTest] = useState(null);
-    const [showVideo, setShowVideo] = useState(false); //document 가 업데이트 됬는지 확인 용
+    const [showVideo, setShowVideo] = useState(false); //document 가 업데이트 됬는지 확인용
     // console.log('VideoView all = ', all);
     let videoID = ''
     videoID = all.videoID+".mp4";
