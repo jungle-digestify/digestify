@@ -38,7 +38,7 @@ export const chats = sqliteTable(
       .references(() => users.id),
     name: text("name").notNull(),
     createdAt: text("created_at")
-      .default(sql`CURRENT_TIME`)
+      .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
   },
   (table) => {
@@ -58,7 +58,7 @@ export const messages = sqliteTable("messages", {
   content: text("content").notNull(),
   createdAt: text("created_at")
     // .default(sql`CURRENT_TIMESTAMP`)
-    .default(sql`CURRENT_TIME`)
+    .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
 });
 
