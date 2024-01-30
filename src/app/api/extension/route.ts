@@ -14,7 +14,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
   // 스패너 돌기 시작
   const user = await currentUser();
   if (!user) {
-    return Response.json(
+    return NextResponse.json(
       { error: "not logged in" },
       {
         status: 401,

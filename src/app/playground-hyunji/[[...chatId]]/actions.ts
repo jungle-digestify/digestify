@@ -12,9 +12,7 @@ export async function createChat() {
   const user = await currentUser();
 
   if (!user) {
-    return new Response(JSON.stringify({ error: "not logged in" }), {
-      status: 401,
-    });
+    return { error: "Unauthorized" };
   }
 
   const id = generateRandomString(16);
@@ -26,7 +24,6 @@ export async function createChat() {
       userId: user.id,
     })
     .returning();
-  console.log("result:", result);
 
   revalidateTag("get-chats-for-chat-list");
 

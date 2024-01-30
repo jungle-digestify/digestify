@@ -10,18 +10,19 @@ import { messages } from "@/db/schema";
 import { eq, and } from "drizzle-orm";
 import { currentUser } from "@/lib/auth";
 import { cookies } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   console.log("cookies:", cookies().getAll());
   const { content, chatId } = await req.json();
   const user = await currentUser();
 
   if (!user) {
-    return Response.json(
+    return NextResponse.json(
       { error: "not logged in" },
       {
         status: 401,
@@ -30,7 +31,7 @@ export async function POST(req: Request) {
   }
 
   if (!chatId) {
-    return Response.json({ error: "chat id required" }, { status: 400 });
+    return NextResponse.json({ error: "chat id required" }, { status: 400 });
   }
   const chat = await db
     .select()
@@ -39,7 +40,7 @@ export async function POST(req: Request) {
     .get();
 
   if (!chat) {
-    return new Response("chat is not found", { status: 400 });
+    return new NextResponse("chat is not found", { status: 400 });
   }
 
   const allDBMessages = await db

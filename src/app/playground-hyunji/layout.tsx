@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import { cn } from "@/lib/utils";
-
+import '../local-globals.css'
 // //page 이동
 // import { BrowserRouter as Router, Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 
