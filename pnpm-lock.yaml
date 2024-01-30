@@ -102,8 +102,8 @@ dependencies:
     specifier: ^0.29.3
     version: 0.29.3(@types/better-sqlite3@7.6.9)(@types/react@18.2.48)(better-sqlite3@9.3.0)(react@18.2.0)
   fluent-ffmpeg:
-    specifier: ^2.1.2
-    version: 2.1.2
+    specifier: 2.1.0
+    version: 2.1.0
   lucide-react:
     specifier: ^0.314.0
     version: 0.314.0(react@18.2.0)
@@ -4527,8 +4527,8 @@ packages:
     resolution: {integrity: sha512-36yxDn5H7OFZQla0/jFJmbIKTdZAQHngCedGxiMmpNfEZM0sdEeT+WczLQrjK6D7o2aiyLYDnkw0R3JK0Qv1RQ==}
     dev: true
 
-  /fluent-ffmpeg@2.1.2:
-    resolution: {integrity: sha512-IZTB4kq5GK0DPp7sGQ0q/BWurGHffRtQQwVkiqDgeO6wYJLLV5ZhgNOQ65loZxxuPMKZKZcICCUnaGtlxBiR0Q==}
+  /fluent-ffmpeg@2.1.0:
+    resolution: {integrity: sha512-VwRRPrb53I3nBdZL4ybp/mZcJhWWebZJGjz+V1133qD3MnRGYA/9RetYx4P3sQQLyXud+u48SyOnQdXXhCtswg==}
     engines: {node: '>=0.8.0'}
     dependencies:
       async: 3.2.5

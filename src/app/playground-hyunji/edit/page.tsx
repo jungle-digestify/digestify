@@ -18,8 +18,8 @@ import fs from 'fs';
 // import ReactPlayer from 'react-player'
 
 // import dynamic from 'next/dynamic'; //서버사이드에서 클라이언트 사이드 사용하는 태그 사용할 수 있게 도와줌
-import VideoView from './mp4view';
-
+import VideoView from './mp4view'
+// import { ffmpeg } from 'fluent-ffmpeg';
 let allscript = "";
 
 const lang = 'ko'; // Optional, default is 'ko' (English)
@@ -37,7 +37,7 @@ export default async function Page2(all:any) {
         allscript = '';
         const { transcript, error } = await fetchTranscript(videoID, lang);
         // console.log(transcript);
-        allscript = transcript.map(entry => entry.text).join('');
+        allscript = transcript.map((entry: { text: any }) => entry.text).join('');
         const videoDetails = await getVideoDetails({ videoID, lang });
         // console.log("videoDetails:!", videoDetails)
         
@@ -48,7 +48,7 @@ export default async function Page2(all:any) {
         //description 에서 time line만 가져오기
         getTimeLine = videoDetails.description.match(/\d{2}:\d{2}/g);
         
-        const lastTimes = videoDetails.subtitles.map(subtitle => parseFloat(subtitle.start) + parseFloat(subtitle.dur));
+        const lastTimes = videoDetails.subtitles.map((subtitle: { start: string; dur: string }) => parseFloat(subtitle.start) + parseFloat(subtitle.dur));
         const lastTime = Math.max(...lastTimes);
         // console.log('lastTime =', lastTime);
 
@@ -145,6 +145,7 @@ export default async function Page2(all:any) {
         }
 
         // 2. 다운한 영상 편집
+        
       }
       catch(error){
         console.log(error);  
@@ -197,7 +198,13 @@ export default async function Page2(all:any) {
                     <ChatContent createChat={createChat} script={allscript}/>
                   )} */}
                   {/* <VideoView openVideoUrl={openVideoUrl}></VideoView> */}
-                  <VideoView videoID={videoID} getTimeLine={getTimeLine}></VideoView>
+                  <div className="videoPlayer">
+                      <div className='oriVideo'>
+                        <VideoView videoID={videoID} getTimeLine={getTimeLine}></VideoView>
+                      </div>
+                  </div>
+                 
+                  
                   
                   
                 </div>
