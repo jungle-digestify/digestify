@@ -1,44 +1,45 @@
-import OpenAI from "openai"
+import OpenAI from "openai";
 
-import { OpenAIStream, StreamingTextResponse } from "ai"
+import { OpenAIStream, StreamingTextResponse } from "ai";
 
-import { initialProgrammerMessages } from "./messages"
+import { initialProgrammerMessages } from "./messages";
 
-import { db } from "@/db"
-import { chats, users as userTable } from "@/db/schema"
-import { messages } from "@/db/schema"
-import { eq, and } from "drizzle-orm"
-import { auth } from "@/auth"
- 
+import { db } from "@/db";
+import { chats, users as userTable } from "@/db/schema";
+import { messages } from "@/db/schema";
+import { eq, and } from "drizzle-orm";
+import { currentUser } from "@/lib/auth";
+import { cookies } from "next/headers";
+
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
-})
+});
 
 export async function POST(req: Request) {
-  const { content, chatId } = await req.json()
-  const session = await auth()
-  if (session?.user == undefined) throw "error"
+  console.log("cookies:", cookies().getAll());
+  const { content, chatId } = await req.json();
+  const user = await currentUser();
 
-  if (!session.user) {
-    return new Response("not logged in", { status: 401 })
+  if (!user) {
+    return Response.json(
+      { error: "not logged in" },
+      {
+        status: 401,
+      }
+    );
   }
 
   if (!chatId) {
-    return new Response("chatId is required", { status: 400 })
+    return Response.json({ error: "chat id required" }, { status: 400 });
   }
-
-  // check the chat belongs to the currently logged in user
-  const users = await db.select().from(userTable).where(eq(userTable.name, session.user.name!))
-
-
   const chat = await db
     .select()
     .from(chats)
-    .where(and(eq(chats.id, chatId), eq(chats.userId, users[0].id)))
-    .get()
+    .where(and(eq(chats.id, chatId), eq(chats.userId, user.id)))
+    .get();
 
   if (!chat) {
-    return new Response("chat is not found", { status: 400 })
+    return new Response("chat is not found", { status: 400 });
   }
 
   const allDBMessages = await db
@@ -49,7 +50,7 @@ export async function POST(req: Request) {
     .from(messages)
     .where(eq(messages.chatId, chatId))
     .orderBy(messages.createdAt)
-    .all()
+    .all();
 
   const chatCompletion = await openai.chat.completions.create({
     messages: [
@@ -60,7 +61,7 @@ export async function POST(req: Request) {
     model: "gpt-3.5-turbo-1106",
     stream: true,
     max_tokens: 4096,
-  })
+  });
 
   const stream = OpenAIStream(chatCompletion, {
     onStart: async () => {},
@@ -78,12 +79,12 @@ export async function POST(req: Request) {
             role: "assistant",
             content: completion,
           },
-        ])
+        ]);
       } catch (e) {
-        console.error(e)
+        console.error(e);
       }
     },
-  })
+  });
 
-  return new StreamingTextResponse(stream)
+  return new StreamingTextResponse(stream);
 }

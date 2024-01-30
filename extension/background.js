@@ -1,5 +1,7 @@
 function getCookieToken() {
-  return chrome.cookies.get({ url: 'http://localhost:3000', name: 'next-auth.session-token' });
+  const cookie = chrome.cookies.get({ url: 'http://localhost:3000', name: 'authjs.session-token' });
+  console.log("cookie = ", cookie)
+  return cookie
 }
 
 // const cookie = await getCookieToken();
