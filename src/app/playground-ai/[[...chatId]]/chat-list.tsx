@@ -27,7 +27,7 @@ export default async function ChatList() {
   // console.log(messagesTable)
   return (
     <div className="flex flex-col p-10 justify-between h-full">
-      <div className="flex flex-col gap-y-4">
+      <div className="flex flex-col gap-y-4  overflow-x-hidden">
         <a key="new" href={"/playground-ai"} className="truncate">
           New Chat
         </a>

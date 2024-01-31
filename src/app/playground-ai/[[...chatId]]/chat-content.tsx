@@ -1,6 +1,5 @@
 "use client";
 import { MessageType } from "./chat-content-wrapper";
-import { number } from "zod";
 import Tiptap from "@/components/Tiptap";
 import { PenBoxIcon } from "lucide-react";
 import rehypeRaw from "rehype-raw";
@@ -8,7 +7,7 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus as dark } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function ChatContent({
   chatId,
@@ -41,7 +40,22 @@ export default function ChatContent({
   };
 
   return (
-    <div className="h-full max-w-4xl w-full mx-auto flex-1 px-10 py-5 overflow-x-hidden overflow-y-auto prose dark:prose-invert">
+    <>
+      <button
+        className={
+          isLoading ? "hidden" : "px-4 ml-[99%] font-medium rounded flex relative h-0 pt-5"
+        }
+        onClick={() => {
+          if (isEditing){
+            updateSubmit(
+              document.getElementById("markdownHolder " + message.id)!.innerHTML
+            );
+          }
+          setIsEditing(!isEditing);
+        }}
+      >
+        <PenBoxIcon></PenBoxIcon>
+      </button>
       {isEditing ? (
         <Tiptap
           description={
@@ -81,20 +95,6 @@ export default function ChatContent({
           </Markdown>
         </div>
       )}
-      <button
-        className={
-          isLoading ? "hidden" : "px-4 py-2 ml-[95%] al font-medium rounded "
-        }
-        onClick={() => {
-          if (isEditing)
-            updateSubmit(
-              document.getElementById("markdownHolder " + message.id)!.innerHTML
-            );
-          setIsEditing(!isEditing);
-        }}
-      >
-        <PenBoxIcon></PenBoxIcon>
-      </button>
-    </div>
+    </>
   );
 }

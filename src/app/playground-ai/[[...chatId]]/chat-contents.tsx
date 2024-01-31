@@ -1,13 +1,18 @@
 "use client";
 
-import { useState, useRef, useId } from "react";
+import { useState, useRef, useId, useEffect } from "react";
 import ChatInput from "@/components/chat-input";
 
-import { CreateChat } from "./actions";
+import { CreateChat, refreshChat } from "./actions";
 import { convertFileToBase64 } from "@/lib/utils";
 
 import { MessagesType } from "./chat-content-wrapper";
 import ChatContent from "@/app/playground-ai/[[...chatId]]/chat-content";
+
+function scrollToBottom() {
+  const element = document.getElementById("wraper");
+  element!.scrollTop = element!.scrollHeight;
+}
 
 export default function ChatContents({
   createChat,
@@ -64,12 +69,11 @@ export default function ChatContents({
       });
 
       if (!res.ok || !res.body) {
-        alert("Error sending message");
+        alert("Error sending message응답이상");
         return;
       }
 
       const reader = res.body.getReader();
-
       const decoder = new TextDecoder();
       // chunk가 올 때마다 응답을 세트한다. 다 왔으면 탈출함
       while (true) {
@@ -84,11 +88,14 @@ export default function ChatContents({
       }
     } catch (error: any) {
       if (error.name !== "AbortError") {
-        alert("Error sending message");
+        alert("Error sending message 어보트");
       }
     }
     abortControllerRef.current = null;
     setIsLoading(false);
+    await refreshChat(chatId!);
+    setAssistantResponse("");
+    scrollToBottom()
   };
 
   const handleStop = () => {
@@ -101,14 +108,16 @@ export default function ChatContents({
 
   return (
     <>
-      {messages?.map((message) => (
-        <ChatContent
-          key={message.id}
-          message={message}
-          chatId={message.chatId}
-        />
-      ))}
-      <pre>{assistantResponse}</pre>
+      <div id="wraper" className="h-full max-w-4xl w-full mx-auto px-10 py-5 overflow-x-hidden overflow-y-auto dark:prose-invert">
+        {messages?.map((message) => (
+          <ChatContent
+            key={message.id}
+            message={message}
+            chatId={message.chatId}
+          />
+        ))}
+        <p className="max-w-4xl w-full my-5">{assistantResponse}</p>
+      </div>
       <ChatInput
         onSubmit={handleSubmit}
         isStreaming={isLoading}

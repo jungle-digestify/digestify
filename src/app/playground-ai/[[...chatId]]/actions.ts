@@ -6,7 +6,7 @@ import { chats, users as userTable } from "@/db/schema";
 import { currentUser } from "@/lib/auth";
 import { generateRandomString } from "@/lib/utils";
 import { eq } from "drizzle-orm";
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 export async function createChat() {
   const user = await currentUser();
@@ -30,6 +30,10 @@ export async function createChat() {
   return {
     id,
   };
+}
+
+export async function refreshChat(chatId:string) {
+  revalidatePath("/"+chatId,"page")
 }
 
 export type CreateChat = typeof createChat;

@@ -31,7 +31,7 @@ export default function ImageUploadComponent({
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto px-4">
       <label className="flex absolute left-0 bottom-0 mx-7 mb-3">
         <svg
           className="w-6 h-6 hover:cursor-pointer transform-gpu active:scale-75 transition-all text-neutral-500"

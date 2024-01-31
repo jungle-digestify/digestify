@@ -33,17 +33,17 @@ export default function ExpandingInput({
   const buttonDisabled = content.length === 0 || isStreaming;
 
   return (
-    <div className="w-full my-10">
+    <div className="w-full mb-7">
       <form
         onSubmit={handleSubmit}
-        className="w-full flex flex-col gap-y-4 px-4 relative max-w-5xl mx-auto"
+        className="w-full flex flex-col px-4 relative max-w-5xl mx-auto"
       >
         <ImageSelection
           selectedImage={selectedImage}
           setSelectedImage={setSelectedImage}
         />
         <GrowingTextArea
-          className="w-full bg-transparent border border-gray-500 rounded-2xl outline-none resize-none pl-12 pr-14 py-4 scrollbar-content overflow-y-auto overflow-x-clip overscroll-contain"
+          className="w-full bg-transparent border border-gray-500 rounded-2xl outline-none resize-none pl-12 pr-14 py-4 overflow-x-clip"
           value={content}
           onChange={(e) => setContent(e.target.value)}
         />
