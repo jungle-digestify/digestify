@@ -16,9 +16,9 @@ export type Message = {
         +"3. **전체 요약 ** : print here Summarize the following in 5 bullet points."
         +"Draw a separating line below here. And add a line break."
         
-           +"4. **타임 라인:** Create a timeline with sections and placeholders for time stamps but mention that the model may not provide accurate time information."
+        +"4. **타임 라인:** Create a timeline which includes 5 bullet points and related time. Full length of video is inserted in the end of transcript. for example 13:11."
            +"Draw a separating line below here."
-           +"**Note** : 타임 라인은 아직 정확하지 않을 수 있습니다."
+           
         
         +"Please ensure the language is suitable for a 16-year-old audience."
         +"I only know Korean, so please print it once in Korean."
@@ -39,10 +39,9 @@ export type Message = {
         +"Draw a separating line below here."
         // +" Summarize the following in 5 bullet points."
         
-           +"4. **타임 라인** : Create a timeline with sections and placeholders for time stamps but mention that the model may not provide accurate time information."
-           +"Draw a separating line below here."
-           +"**Note** : 타임 라인은 아직 정확하지 않을 수 있습니다."
-        
+        +"4. **타임 라인:** Create a timeline which includes 5 bullet points and related time. Full length of video is inserted in the end of transcript. for example 13:11."
+        +" "
+        +"Draw a separating line below here."
         
         +"Please ensure the language is suitable for a 16-year-old audience."
         +"I only know Korean, so please print it once in Korean."

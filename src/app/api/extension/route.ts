@@ -29,7 +29,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
   if (videoURL) {
     console.log("유튜브인 경우");
     const { transcript, error } = await fetchTranscript(videoURL, "ko");
-    let parsed_script = transcript.map((entry) => [(Number(entry.start)/60).toFixed(0)+'.'+(Number(entry.start)%60).toFixed(0)+":"+entry.text]).join("/");
+    let parsed_script = transcript.map((entry) => [Math.floor(Number(entry.start)/60).toFixed(0)+'.'+(Number(entry.start)%60).toFixed(0).padStart(2,'0')+":"+entry.text]).join("/");
     let lang = "ko";
     const videoDetails = await getVideoDetails({ videoID: videoURL, lang });
     console.log(parsed_script);
