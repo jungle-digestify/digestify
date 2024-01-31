@@ -24,10 +24,11 @@ function ChangeSecond(timeArr: any[]){
                     return shortTime.push([0, getTime[0]]);
                 }else{
                     if(i!=getTime.length-1){
-                        shortTime.push([getTime[i], getTime[i+1]]);
-                    }else{
-                        shortTime.push([getTime[i], getTime[i]+100]); //마지막꺼 영상 끝시간 알수없나..
+                        shortTime.push([getTime[i], getTime[i+1] -2]);
                     }
+                    // else{
+                    //     shortTime.push([getTime[i], getTime[i]+10]); //마지막꺼 영상 끝시간 알수없나..
+                    // }
                 }
             }
         }
@@ -52,13 +53,13 @@ export default function VideoView(all: any) {
     // const playerRef2 = useRef(null);
 
     let getSecondTimeLine = ChangeSecond(all.getTimeLine);
-    console.log('all.getTimeLine = ', all.getTimeLine);
-    console.log('getSTL = ', getSecondTimeLine);
+    // console.log('all.getTimeLine = ', all.getTimeLine);
+    // console.log('getSTL = ', getSecondTimeLine);
     // setSTL(getSecondTimeLine);
 
     const playerRefs: (React.LegacyRef<ReactPlayer> | undefined)[] = [];
 
-    for (let i = 1; i <= all.getTimeLine.length; i++) {
+    for (let i = 0; i <= all.getTimeLine.length; i++) {
         playerRefs.push(useRef(null));
     }
 
@@ -76,7 +77,7 @@ export default function VideoView(all: any) {
     else{
         return (
         <div className="videoPlayer">
-            <div className='oriVideo'>
+            <div className='oriVideo' style={{marginBottom:'20px'}}>
                 <ReactPlayer
                     // url='/downloads/8VZvs6O5tZY.mp4'
                     url={'https://www.youtube.com/watch?v='+videoID}
@@ -92,7 +93,9 @@ export default function VideoView(all: any) {
                 { typeof getSecondTimeLine === 'number' || getSecondTimeLine.length === 0 ?
                     <div>타임라인이 없습니다.</div>
                     :
+                    
                     getSecondTimeLine.map((row:any, rowIndex:number)=>(
+                        
                     <div key={rowIndex} className='short h-full w-full'>
                         <div className='shortTime'>
                             <p> {all.getTimeLine[rowIndex]} </p>
