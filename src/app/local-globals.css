@@ -302,10 +302,10 @@
 
 .ChatlistDiv{
   height: 100%;
-  width: 30%;
+  width: 25%;
 }
 .ChatContentDiv{
-  width: 79%;
+  width: 85%;
   height: 100%;
 }
 .ChatContentDiv2{
@@ -539,7 +539,7 @@
 
 .ChatlistDiv{
   height: 100%;
-  width: 30%;
+  width: 20%;
 }
 .ChatContentDiv{
   width: 79%;
@@ -563,6 +563,22 @@
 }
 
 /* video */
+.videoPlayer{
+  /* margin-right: 20px; */
+}
+.oriVideo{
+  display: flex;
+  align-items: center;
+  justify-content: center
+}
 .shortVideo{
   display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.short{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

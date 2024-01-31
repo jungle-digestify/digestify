@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { eq } from "drizzle-orm";
+import { asc, desc, eq } from "drizzle-orm";
 import { chats as chatsTable } from "@/db/schema";
 import { unstable_cache as cache } from "next/cache";
 import Link from "next/link";
@@ -13,6 +13,7 @@ const getChats = cache(
       .select({ id: chatsTable.id, name: chatsTable.name })
       .from(chatsTable)
       .where(eq(chatsTable.userId, userId))
+      .orderBy(desc(chatsTable.createdAt))
       .all(),
   ["get-chats-for-chat-list"],
   {

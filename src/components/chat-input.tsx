@@ -33,7 +33,7 @@ export default function ExpandingInput({
   const buttonDisabled = content.length === 0 || isStreaming;
 
   return (
-    <div className="w-full mb-7">
+    <div className="w-full mb-7 ExpandingInput">
       <form
         onSubmit={handleSubmit}
         className="w-full flex flex-col px-4 relative max-w-5xl mx-auto"

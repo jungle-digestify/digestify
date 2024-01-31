@@ -31,7 +31,7 @@ export default async function Page2(all:any) {
   // console.log("all", all)
   
   const test = async(videoID: string, lang = 'ko')=>{
-    console.log('videoID = ',videoID);
+    // console.log('videoID = ',videoID);
     if(videoID!=undefined){
       try{
         allscript = '';
@@ -132,7 +132,6 @@ export default async function Page2(all:any) {
         
             writeStream.on('finish', () => {
               console.log(`다운로드가 완료되어 ${outputPath}에 저장되었습니다.`);
-              openVideoUrl = outputPath;
               //클라이언트에게 다운로드 완료되었다고 알려주기 ?!!!
               
             });
@@ -198,14 +197,8 @@ export default async function Page2(all:any) {
                     <ChatContent createChat={createChat} script={allscript}/>
                   )} */}
                   {/* <VideoView openVideoUrl={openVideoUrl}></VideoView> */}
-                  <div className="videoPlayer">
-                      <div className='oriVideo'>
-                        <VideoView videoID={videoID} getTimeLine={getTimeLine}></VideoView>
-                      </div>
-                  </div>
-                 
                   
-                  
+                    <VideoView videoID={videoID} getTimeLine={getTimeLine}></VideoView>
                   
                 </div>
 

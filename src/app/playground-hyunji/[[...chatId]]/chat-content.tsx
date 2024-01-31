@@ -24,7 +24,7 @@ export default function ChatContent({
   initialAssistantResponse?: string;
   messageResponseId?: number;
 }) {
-  console.log("initialAssistantResponse:",initialAssistantResponse)
+  // console.log("initialAssistantResponse:",initialAssistantResponse)
   const [assisnantResponse, setAssistantResponse] = useState(
     initialAssistantResponse
   );
@@ -134,7 +134,7 @@ export default function ChatContent({
     abortControllerRef.current = null;
     setIsLoading(false);
   };
-  console.log('response = ', assisnantResponse);
+  // console.log('response = ', assisnantResponse);
   if (script !== "") {
     handleSubmit(script);
   }
@@ -149,7 +149,7 @@ export default function ChatContent({
 
   return (
     <>
-      <div className="h-full max-w-4xl w-full mx-auto flex-1 px-10 py-5 overflow-x-hidden overflow-y-auto prose dark:prose-invert">
+      <div className="h-full max-w-4xl w-full mx-auto flex-1 px-5 py-5 prose dark:prose-invert">
         {isEditing ? (
           <Tiptap
             description={document.getElementById('markdownHolder ' + messageId)!.innerHTML}

@@ -8,10 +8,17 @@ import TeamMenu from "./team-select"
 import { getSubtitles, getVideoDetails } from 'youtube-caption-extractor';
 import { fetchTranscript } from "youtube-subtitle-transcript";
 import { IoSearchOutline } from "react-icons/io5";
+// import VideoView from "./video-view"
+import VideoWrapper from "./video-wrapper"
+import ReactPlayer from 'react-player';
+
+//db
+import { db } from "@/db";
+import { chats as chatsTable } from "@/db/schema";
+import { desc, eq } from "drizzle-orm"
+import { error } from "console"
 
 let allscript = "";
-
-const lang = "ko"; // Optional, default is 'ko' (English)
 
 export default async function Page({
   params,
@@ -19,9 +26,14 @@ export default async function Page({
 }: {
   params: { chatId?: string[] };
   searchParams: { v: string };
-}) {
+}) {  
+  // console.log('params = ', params);
+  
   const test = async (videoID: string, lang = "ko") => {
-    if (videoID != undefined) {
+
+    if ('videoID' != undefined) {
+    // if (videoID != undefined) {
+    
       try {
         allscript = "";
         const { transcript, error } = await fetchTranscript(videoID, lang);
@@ -56,24 +68,20 @@ export default async function Page({
 
         fetchSubtitles(videoID, lang);
         fetchVideoDetails(videoID, lang);
-
-        // console.log("allscript final: ", allscript)
+        
+        
         if (error != undefined) {
           console.log("error = ", error);
         }
+        
       } catch (error) {
         console.log(error);
       }
     }
   };
   const chatId = params.chatId?.[0];
-  const videoID = searchParams.v;
-  if (chatId && videoID) {
-    console.log(chatId, videoID);
-    await test(videoID, lang);
-  }
-  console.log("allscript:", allscript);
 
+  // let getTimeLine=['00:00', '01:24', '04:23'];
   
   return (
 
@@ -108,8 +116,8 @@ export default async function Page({
         
           <div className="ChatContentDiv flex flex-col">
             <div className="ChatContentUp">
-              <div className="ChatContent h-full flex-1 flex flex-col">
-
+              <div className="ChatContent h-full flex flex-row overflow-x-hidden overflow-y-scroll">
+                <div className="videoPlayerLeft w-[55%]">
                 {chatId ? (
                     <Suspense fallback={<div className="flex-1" />}>
                       <ChatContentWrapper chatId={chatId} />
@@ -118,6 +126,17 @@ export default async function Page({
                     <ChatContent createChat={createChat} script={allscript}/>
                   )}
                 </div>
+                {chatId ? (
+                  <div className="videoPlayer w-[45%]">
+                    <div className='oriVideo'>
+                      <VideoWrapper chatId={chatId}></VideoWrapper>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="oriVideo"> 동영상 없음 </div>
+                )}
+                </div>
+                
 
             </div>
             <div className="MetaDataUp">
@@ -134,29 +153,6 @@ export default async function Page({
           
         </div>
     </div>
-    // <div className="w-full h-full flex">
-    //   <div className="w-full h-15">
-    //     <ChatHeader></ChatHeader>
-    //   </div>
-      
-    //   <div className="w-full h-75">
-    //     <div className="w-80 h-75 max-h-full border-r-2 border-neutral-300 dark:border-neutral-700 overflow-auto">
-    //       <Suspense fallback={<ChatListSkeleton />}>
-    //         <ChatList />
-    //       </Suspense>
-    //     </div>
-    //     <div className="h-full flex-1 flex flex-col">
-    //       {chatId ? (
-    //         <Suspense fallback={<div className="flex-1" />}>
-    //           <ChatContentWrapper chatId={chatId} />
-    //         </Suspense>
-    //       ) : (
-    //         <ChatContent createChat={createChat} script={allscript}/>
-    //       )}
-          
-    //     </div>
-    //   </div>
-    // </div>
     
   )
 }
