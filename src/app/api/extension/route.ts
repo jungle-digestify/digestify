@@ -65,7 +65,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
       console.log('이미 해당 영상이 다운로드 되어있습니다.');
     }
     
-  } catch (error) {
+  } catch (error:any) {
     console.error(`에러 발생: ${error.message}`);
   }
   // // 다운로드 완료
