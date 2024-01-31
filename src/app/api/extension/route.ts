@@ -29,7 +29,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
   if (videoURL) {
     console.log("유튜브인 경우");
     const { transcript, error } = await fetchTranscript(videoURL, "ko");
-    let parsed_script = transcript.map((entry) => entry.text).join("");
+    let parsed_script = transcript.map((entry) => [(Number(entry.start)/60).toFixed(0)+'.'+(Number(entry.start)%60).toFixed(0)+":"+entry.text]).join("/");
     let lang = "ko";
     const videoDetails = await getVideoDetails({ videoID: videoURL, lang });
     console.log(parsed_script);
@@ -37,7 +37,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
     // 1. chatId 대신 만들고 결과 넣기
     const chat = await createChat({ videoDetails, videoURL });
     const chatId = chat.id;
-    const content = JSON.stringify(transcript);
+    const content = JSON.stringify(parsed_script);
     const body = JSON.stringify({ content, chatId });
     console.log("body:", body);
     // 2. transcript ai에 넣고 결과 얻기

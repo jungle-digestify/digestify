@@ -13,8 +13,8 @@ export async function createChat({
   videoDetails,
   videoURL,
 }: {
-  videoDetails: VideoDetails;
-  videoURL: string;
+  videoDetails?: VideoDetails|undefined;
+  videoURL?: string|undefined;
 }) {
   const user = await currentUser();
 

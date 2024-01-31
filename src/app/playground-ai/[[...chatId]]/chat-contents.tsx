@@ -31,7 +31,7 @@ export default function ChatContents({
   const handleSubmit = async (value: string, file?: File) => {
     if (!currentChatId) {
       // create a new chat in the database
-      const chat = await createChat();
+      const chat = await createChat({});
       setCurrentChatId(chat.id);
       // and get the id and store it in state
     }
