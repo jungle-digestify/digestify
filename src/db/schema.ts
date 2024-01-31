@@ -37,6 +37,7 @@ export const chats = sqliteTable(
       .notNull()
       .references(() => users.id),
     name: text("name").notNull(),
+    videoId: text("video_id").notNull(),
     createdAt: text("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),

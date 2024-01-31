@@ -101,6 +101,9 @@ dependencies:
   clsx:
     specifier: ^2.1.0
     version: 2.1.0
+  dotenv:
+    specifier: ^16.4.1
+    version: 16.4.1
   drizzle-orm:
     specifier: ^0.29.3
     version: 0.29.3(@types/better-sqlite3@7.6.9)(@types/react@18.2.48)(better-sqlite3@9.3.0)(react@18.2.0)
@@ -214,6 +217,9 @@ devDependencies:
   drizzle-kit:
     specifier: ^0.20.13
     version: 0.20.13
+  esbuild-register:
+    specifier: ^3.5.0
+    version: 3.5.0(esbuild@0.19.12)
   eslint:
     specifier: ^8.56.0
     version: 8.56.0
@@ -3784,6 +3790,11 @@ packages:
     dependencies:
       esutils: 2.0.3
     dev: true
+
+  /dotenv@16.4.1:
+    resolution: {integrity: sha512-CjA3y+Dr3FyFDOAMnxZEGtnW9KBR2M0JvvUtXNW+dYJL5ROWxP9DUHCwgFqpMk0OXCc0ljhaNTr2w/kutYIcHQ==}
+    engines: {node: '>=12'}
+    dev: false
 
   /dreamopt@0.8.0:
     resolution: {integrity: sha512-vyJTp8+mC+G+5dfgsY+r3ckxlz+QMX40VjPQsZc5gxVAxLmi64TBoVkP54A/pRAXMXsbu2GMMBrZPxNv23waMg==}

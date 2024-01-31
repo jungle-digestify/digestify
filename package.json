@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:reset": "node --loader esbuild-register/loader -r esbuild-register ./src/db/reset.ts",
+    "db:drop": "node --loader esbuild-register/loader -r esbuild-register ./src/db/drop.ts",
+    "db:push": "drizzle-kit push:sqlite"
   },
   "dependencies": {
     "@auth/core": "^0.22.0",
@@ -41,6 +44,7 @@
     "bootstrap-icons": "^1.11.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "dotenv": "^16.4.1",
     "drizzle-orm": "^0.29.3",
     "fluent-ffmpeg": "2.1.0",
     "lucide-react": "^0.314.0",
@@ -80,6 +84,7 @@
     "@types/ws": "^8.5.10",
     "autoprefixer": "^10.4.17",
     "drizzle-kit": "^0.20.13",
+    "esbuild-register": "^3.5.0",
     "eslint": "^8.56.0",
     "eslint-config-next": "14.1.0",
     "postcss": "^8.4.33",

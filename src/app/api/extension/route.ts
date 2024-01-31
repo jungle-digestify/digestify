@@ -35,7 +35,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
     console.log(parsed_script);
     console.log(videoDetails);
     // 1. chatId 대신 만들고 결과 넣기
-    const chat = await createChat();
+    const chat = await createChat({ videoDetails, videoURL });
     const chatId = chat.id;
     const content = JSON.stringify(transcript);
     const body = JSON.stringify({ content, chatId });

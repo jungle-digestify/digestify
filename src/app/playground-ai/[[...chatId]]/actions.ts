@@ -7,8 +7,15 @@ import { currentUser } from "@/lib/auth";
 import { generateRandomString } from "@/lib/utils";
 import { eq } from "drizzle-orm";
 import { revalidatePath, revalidateTag } from "next/cache";
+import { VideoDetails } from "youtube-caption-extractor";
 
-export async function createChat() {
+export async function createChat({
+  videoDetails,
+  videoURL,
+}: {
+  videoDetails: VideoDetails;
+  videoURL: string;
+}) {
   const user = await currentUser();
 
   if (!user) {
@@ -20,8 +27,9 @@ export async function createChat() {
     .insert(chats)
     .values({
       id: id,
-      name: id,
+      name: videoDetails?.title ?? id,
       userId: user.id,
+      videoId: videoURL ?? "",
     })
     .returning();
 
@@ -32,8 +40,8 @@ export async function createChat() {
   };
 }
 
-export async function refreshChat(chatId:string) {
-  revalidatePath("/"+chatId,"page")
+export async function refreshChat(chatId: string) {
+  revalidatePath("/" + chatId, "page");
 }
 
 export type CreateChat = typeof createChat;
