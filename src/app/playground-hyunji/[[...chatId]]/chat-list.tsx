@@ -38,8 +38,9 @@ export default async function ChatList() {
             key={chat.id}
             href={`/playground-hyunji/${chat.id}`}
             className="truncate"
+            dangerouslySetInnerHTML={{ __html: chat.name }}
           >
-            {chat.name}
+            {/* {chat.name} */}
           </Link>
         ))}
       </div>
