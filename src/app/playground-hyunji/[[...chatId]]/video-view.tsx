@@ -31,6 +31,7 @@ function ChangeSecond(timeArr: any[]){
                 }
             }
         }
+    
     return shortTime;
 }
 
@@ -51,7 +52,8 @@ export default function VideoView(all: any) {
     // const playerRef2 = useRef(null);
 
     let getSecondTimeLine = ChangeSecond(all.getTimeLine);
-    // console.log('getSTL = ', getSecondTimeLine);
+    console.log('all.getTimeLine = ', all.getTimeLine);
+    console.log('getSTL = ', getSecondTimeLine);
     // setSTL(getSecondTimeLine);
 
     const playerRefs: (React.LegacyRef<ReactPlayer> | undefined)[] = [];
@@ -87,11 +89,10 @@ export default function VideoView(all: any) {
             </div>
             <div className='shortVideo h-full w-full gap-5'>
                 {/* <div className='short'>타임 라인</div> */}
-                {getSecondTimeLine.length === 0 ?
+                { typeof getSecondTimeLine === 'number' || getSecondTimeLine.length === 0 ?
                     <div>타임라인이 없습니다.</div>
-                    :<div></div>
-                }
-                {getSecondTimeLine && getSecondTimeLine.map((row:any, rowIndex:number)=>(
+                    :
+                    getSecondTimeLine.map((row:any, rowIndex:number)=>(
                     <div key={rowIndex} className='short h-full w-full'>
                         <div className='shortTime'>
                             <p> {all.getTimeLine[rowIndex]} </p>
