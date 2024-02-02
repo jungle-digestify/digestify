@@ -403,14 +403,10 @@
 }
 
 .dropdown button {
-  background-color: black;
+  background-color: #3490dc;
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 0.25rem;
-}
-
-.dropdown button:hover {
-  background-color: #43484C;
 }
 
 .dropdown ul {
