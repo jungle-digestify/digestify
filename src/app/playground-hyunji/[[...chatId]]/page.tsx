@@ -7,7 +7,8 @@ import ChatHeader from "./header"
 import TeamMenu from "./team-select"
 import { getSubtitles, getVideoDetails } from 'youtube-caption-extractor';
 import { fetchTranscript } from "youtube-subtitle-transcript";
-import { IoSearchOutline } from "react-icons/io5";
+import { FaSearch } from "react-icons/fa";
+
 // import VideoView from "./video-view"
 import VideoWrapper from "./video-wrapper"
 import ReactPlayer from 'react-player';
@@ -96,8 +97,8 @@ export default async function Page({
             <form className="form" id="SearchForm">
             <div className="flex">
              <input className="SearchInput py-2 px-4" placeholder="Search ..." />
-              <button type="submit" className="SearchBtn text-white font-bold py-2 px-4 border-4 rounded-xl border-black hover:border-gray-300">
-                <IoSearchOutline />
+             <button type="submit" className="SearchBtn text-white font-bold py-2 px-4 rounded-lg" style={{ backgroundColor: '#3490dc' }}>
+                <FaSearch style={{ backgroundColor: '#3490dc' }} />
               </button>
             </div>
               {/* <span><i className="bi bi-search"></i></span> */}

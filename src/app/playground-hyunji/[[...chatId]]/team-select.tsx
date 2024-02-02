@@ -33,7 +33,7 @@ export default function TeamMenu() {
     <div className="TeamSelectDiv">
         <div className='dropdown'>
         <button className="TeamSelectBtn outline-none focus:outline-none bg-black" onClick={toggleDropdown}>
-                <FaList size={30} color="white" />
+        <FaList size={30} color="white" style={{ backgroundColor: '#3490dc' }} />
             </button>
             <div className= {isDropdownActive ? 'TeamDropDown active' : 'TeamDropDown'}>
                 <ul>
