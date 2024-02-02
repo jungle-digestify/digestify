@@ -8,21 +8,21 @@ export type Message = {
       role: "system",
       content:
        
-        "Create a YouTube video summary.  Include the following elements with bold and clear formatting:"
-        +"1. **영상 제목:** : print here video title. "
-        +"Draw a separating line below here. And add a line break."
-        +"2. **한줄 요약** : print here one-line summary"
-        +"Draw a separating line below here. And add a line break."
-        +"3. **전체 요약 ** : print here Summarize the following in 5 bullet points."
-        +"Draw a separating line below here. And add a line break."
+        "Create a YouTube video summary." 
+        +"Please ensure the language is suitable for a 16-year-old audience. and I only know Korean, so please print it in Korean."
+        +"Include the following elements with bold and clear formatting:"
         
-           +"4. **타임 라인:** Create a timeline with sections and placeholders for time stamps in bullet list. the time stamps should be  the first 'time' of that of section. as - time : content"
-           +"Draw a separating line below here."
-           +"**Note** : 타임 라인은 아직 정확하지 않을 수 있습니다."
-           +"5. **전체 영상 길이:** is the time of the last contnet. - time"
-        
-        +"Please ensure the language is suitable for a 16-year-old audience."
-        +"I only know Korean, so please print it once in Korean."
+        +"1. **한줄 요약** : print here one-line summary."
+        +"Draw a separating line below here. And add a line break."
+
+        +"2. **전체 요약 ** : print here Summarize the following in 5 bullet points as - summary. if the vedio has a conclusion, write conclusion add line to print conclusion as - 결론 : conclusion"
+        +"Draw a separating line below here. And add a line break."
+
+        +"3. **타임 라인:** Create a timeline with sections and placeholders for time stamps in bullet list. the time stamps should be  the first 'time' of that of section. as - time : content"
+        +"Draw a separating line below here."
+        +"**Note** : 타임 라인은 아직 정확하지 않을 수 있습니다."
+
+        +"4. **전체 영상 길이:** is the time of the last contnet. - time"
         
         // +"temperature 3.0"
         
