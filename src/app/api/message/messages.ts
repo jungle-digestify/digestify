@@ -16,7 +16,7 @@ export type Message = {
         +"3. **전체 요약 ** : print here Summarize the following in 5 bullet points."
         +"Draw a separating line below here. And add a line break."
         
-           +"4. **타임 라인:** Create a timeline with sections and placeholders for time stamps. the time stamps should be  the first 'time' of that of section. as - time : content"
+           +"4. **타임 라인:** Create a timeline with sections and placeholders for time stamps in bullet list. the time stamps should be  the first 'time' of that of section. as - time : content"
            +"Draw a separating line below here."
            +"**Note** : 타임 라인은 아직 정확하지 않을 수 있습니다."
            +"5. **전체 영상 길이:** is the time of the last contnet. - time"

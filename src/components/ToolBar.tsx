@@ -21,15 +21,17 @@ export function Toolbar({ editor }: Props) {
     }
 
     return (
-        <div className="border border-input bg-red">
+        <div className="border border-input bg-transparent">
             <Toggle
                 size="sm"
+                variant={"outline"}
+                className="data-[state=on]:bg-transparent hover:bg-transparent data-[state=on]:outline-double outline-r"
                 pressed={editor.isActive("heading")}
                 onPressedChange={() => 
                 editor.chain().focus().toggleHeading({ level: 2 }).run()
             }
             >
-                <Heading2 className="h-4 w-4"/>
+                <Heading2 className="h-4 w-4 data-[state=on]:bg-transparent"/>
             </Toggle>
             <Toggle
                 size="sm"
@@ -38,7 +40,7 @@ export function Toolbar({ editor }: Props) {
                 editor.chain().focus().toggleBold().run()
             }
             >
-                <Bold className="h-4 w-4"/>
+                <Bold className="h-4 w-4 data-[state=on]:bg-transparent"/>
             </Toggle>
             <Toggle
                 size="sm"

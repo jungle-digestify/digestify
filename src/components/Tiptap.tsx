@@ -27,7 +27,7 @@ export default function Tiptap({
         editorProps: {
             attributes: {
                 class:
-                "rounded-md border min-h-[150px] border-input bg-back "
+                "min-h-[150px] "
             },
         },
         onUpdate({editor}) {
