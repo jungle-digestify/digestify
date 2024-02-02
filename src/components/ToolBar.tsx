@@ -21,11 +21,10 @@ export function Toolbar({ editor }: Props) {
     }
 
     return (
-        <div className="border border-input bg-transparent">
+        <div className="border-input bg-transparent my-1">
             <Toggle
                 size="sm"
-                variant={"outline"}
-                className="data-[state=on]:bg-transparent hover:bg-transparent data-[state=on]:outline-double outline-r"
+                className="data-[state=on]:bg-transparent data-[state=on]:text-slate-50 hover:bg-transparent data-[state=on]:outline outline-white mr-1"
                 pressed={editor.isActive("heading")}
                 onPressedChange={() => 
                 editor.chain().focus().toggleHeading({ level: 2 }).run()
@@ -35,6 +34,7 @@ export function Toolbar({ editor }: Props) {
             </Toggle>
             <Toggle
                 size="sm"
+                className="data-[state=on]:bg-transparent data-[state=on]:text-slate-50 hover:bg-transparent data-[state=on]:outline outline-white mr-1"
                 pressed={editor.isActive("bold")}
                 onPressedChange={() => 
                 editor.chain().focus().toggleBold().run()
@@ -44,6 +44,7 @@ export function Toolbar({ editor }: Props) {
             </Toggle>
             <Toggle
                 size="sm"
+                className="data-[state=on]:bg-transparent data-[state=on]:text-slate-50 hover:bg-transparent data-[state=on]:outline outline-white mr-1"
                 pressed={editor.isActive("italic")}
                 onPressedChange={() => 
                 editor.chain().focus().toggleItalic().run()
@@ -53,6 +54,7 @@ export function Toolbar({ editor }: Props) {
             </Toggle>
             <Toggle
                 size="sm"
+                className="data-[state=on]:bg-transparent data-[state=on]:text-slate-50 hover:bg-transparent data-[state=on]:outline outline-white mr-1"
                 pressed={editor.isActive("strike")}
                 onPressedChange={() => 
                 editor.chain().focus().toggleStrike().run()
@@ -62,6 +64,7 @@ export function Toolbar({ editor }: Props) {
             </Toggle>
             <Toggle
                 size="sm"
+                className="data-[state=on]:bg-transparent data-[state=on]:text-slate-50 hover:bg-transparent data-[state=on]:outline outline-white mr-1"
                 pressed={editor.isActive("bulletList")}
                 onPressedChange={() => {
                     editor.chain().focus().toggleBulletList().run();
@@ -75,6 +78,7 @@ export function Toolbar({ editor }: Props) {
             </Toggle>
             <Toggle
                 size="sm"
+                className="data-[state=on]:bg-transparent data-[state=on]:text-slate-50 hover:bg-transparent data-[state=on]:outline outline-white mr-1"
                 pressed={editor.isActive("orderlist")}
                 onPressedChange={() => 
                 editor.chain().focus().toggleOrderedList().run()
