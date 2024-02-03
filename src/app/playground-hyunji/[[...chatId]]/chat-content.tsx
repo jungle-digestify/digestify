@@ -22,7 +22,7 @@ export default function ChatContent({
   createChat: CreateChat;
   script: string;
   initialAssistantResponse?: string;
-  messageResponseId?: number;
+  messageResponseId?: string;
 }) {
   // console.log("initialAssistantResponse:",initialAssistantResponse)
   const [assisnantResponse, setAssistantResponse] = useState(
@@ -65,9 +65,12 @@ export default function ChatContent({
     if (!currentChatId) {
       // create a new chat in the database
       const chat = await createChat();
+      if(chat.id !==undefined) {
+
       currentChatId = chat.id;
       // and get the id and store it in state
       setChatId(chat.id);
+    }
     }
 
     setMessageId(messageResponseId!.toString())
