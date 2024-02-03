@@ -21,6 +21,17 @@ export const {
   unstable_update: update,
 } = NextAuth({
   adapter: DrizzleAdapter(db),
+  cookies: {
+    sessionToken: {
+      name: `authjs.session-token`,
+      options: {
+        httpOnly: false,
+        sameSite: "none",
+        path: "/",
+        secure: true,
+      },
+    },
+  },
   pages: {
     signIn: "/auth/login",
     error: "/auth/error",

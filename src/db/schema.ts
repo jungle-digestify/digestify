@@ -68,6 +68,9 @@ export const messages = pgTable("messages", {
   }).defaultNow(),
 });
 
+type MessageSelect = InferSelectModel<typeof messages>;
+type MessageInsert = InferInsertModel<typeof messages>;
+
 // https://authjs.dev/reference/adapter/drizzle
 
 export const users = pgTable("user", {
