@@ -30,44 +30,44 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
   // console.log('videoURL = ',videoURL);
 
   // 1. youtube 영상 다운로드
-  const ytdl = require('ytdl-core');
-  const path = require('path');
-  let outputPath='';
-  
-  // const ori_youtube_url = 'https://www.youtube.com/watch?v='+chat?.videoId;
-  const downVideoURL = 'https://www.youtube.com/watch?v='+videoURL;
-  const downloadOptions = {
-    quality: 'highest',
-    format: 'mp4',
-  };
+  // const ytdl = require('ytdl-core');
+  // const path = require('path');
+  // let outputPath='';
 
-  const publicDownloadsDir = path.join(process.cwd(), 'public', 'downloads'); // 다운로드를 서버에 하면 안되고 public에 해야 접근해서 읽어올 수 있음
-  outputPath = path.join(publicDownloadsDir, videoURL+".mp4");
-  // console.log('outputPath = ', outputPath);
-  try {
-    // downloads 폴더가 없으면 생성
-    if (!fs.existsSync(publicDownloadsDir)) {
+  // // const ori_youtube_url = 'https://www.youtube.com/watch?v='+chat?.videoId;
+  // const downVideoURL = 'https://www.youtube.com/watch?v='+videoURL;
+  // const downloadOptions = {
+  //   quality: 'highest',
+  //   format: 'mp4',
+  // };
+
+  // const publicDownloadsDir = path.join(process.cwd(), 'public', 'downloads'); // 다운로드를 서버에 하면 안되고 public에 해야 접근해서 읽어올 수 있음
+  // outputPath = path.join(publicDownloadsDir, videoURL+".mp4");
+  // // console.log('outputPath = ', outputPath);
+  // try {
+  //   // downloads 폴더가 없으면 생성
+  //   if (!fs.existsSync(publicDownloadsDir)) {
       
-      fs.mkdirSync(publicDownloadsDir);
-    }
+  //     fs.mkdirSync(publicDownloadsDir);
+  //   }
     
-    if(!fs.existsSync(outputPath)){ //downloads 폴더에 파일이 존재하지 않으면 다운로드
-      const writeStream = fs.createWriteStream(outputPath);
-      ytdl(videoURL, downloadOptions).pipe(writeStream);
+  //   if(!fs.existsSync(outputPath)){ //downloads 폴더에 파일이 존재하지 않으면 다운로드
+  //     const writeStream = fs.createWriteStream(outputPath);
+  //     ytdl(videoURL, downloadOptions).pipe(writeStream);
   
-      writeStream.on('finish', () => {
-        console.log(`다운로드가 완료되어 ${outputPath}에 저장되었습니다.`);
-        // openVideoUrl = outputPath;
-        //클라이언트에게 다운로드 완료되었다고 알려주기 ?!!!
+  //     writeStream.on('finish', () => {
+  //       console.log(`다운로드가 완료되어 ${outputPath}에 저장되었습니다.`);
+  //       // openVideoUrl = outputPath;
+  //       //클라이언트에게 다운로드 완료되었다고 알려주기 ?!!!
         
-      });
-    }else{
-      console.log('이미 해당 영상이 다운로드 되어있습니다.');
-    }
+  //     });
+  //   }else{
+  //     console.log('이미 해당 영상이 다운로드 되어있습니다.');
+  //   }
     
-  } catch (error:any) {
-    console.error(`에러 발생: ${error.message}`);
-  }
+  // } catch (error:any) {
+  //   console.error(`에러 발생: ${error.message}`);
+  // }
   // // 다운로드 완료
 
   if (videoURL) {
@@ -76,7 +76,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
     let parsed_script = transcript.map((entry) => [Math.floor(Number(entry.start)/60).toFixed(0)+':'+(Number(entry.start)%60).toFixed(0).padStart(2,'0')+"-"+entry.text]).join("/");
     let lang = "ko";
     const videoDetails = await getVideoDetails({ videoID: videoURL, lang });
-    console.log(parsed_script);
+    console.log('parsed_script = ',parsed_script);
     console.log('videoDetails =', videoDetails);
 
   

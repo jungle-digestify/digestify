@@ -123,6 +123,8 @@
   border-radius: 0.25rem;
   margin-left: 30px;
   animation: fade-in 1s;
+  display: flex;
+  align-items: center;
 }
 .TeamSelectBtnUp{
   display: flex;
@@ -365,15 +367,14 @@
   border-radius: 0.25rem;
   margin-left: 30px;
 }
-.TeamSelectBtnUp{
-  display: flex;
-}
+
 .TeamSelectDiv{
   /* background-color: #232323; */
   /* color:white; */
   margin-left : 30px;
   position: relative;
   display: flex;
+  height: 40px;
 }
 .form-group{
   display: flex;
@@ -483,12 +484,20 @@
   width: 100%;
   height: 80%;
 }
+.ChatContentUp2{
+  border: 20px solid rgba(0,0,0,0);;
+  border-radius: 20px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+}
 .ChatContentUp *{
   background-color: #232323;
 
 }
 
-.ChatContent{
+
+.ChatContent2{
   background-color: #232323;
   color:white;
   box-sizing: border-box;
@@ -559,13 +568,36 @@
 }
 
 /* video */
-.videoPlayer{
-  /* margin-right: 20px; */
+.videoPlayer2{
+  background-color: #232323;
 }
 .oriVideo{
   display: flex;
   align-items: center;
-  justify-content: center
+  justify-content: center;
+}
+
+.oriVideo2{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  background-color: #232323;
+}
+.ori_video{
+  border: 10px solid #43484C;
+  border-radius: 5px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.video_title{
+  width: 280px;
+  text-overflow: ellipsis;
+  /* overflow: hidden; */
+  /* white-space: nowrap; */
 }
 .shortVideo{
   display: flex;
@@ -577,4 +609,30 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.timeLine{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.showTimeLine{
+  color: #43484C;
+  background-color: #a6b4c3;
+  /* border: 2px solid #aebecd; */
+  border-radius: 8px;
+  box-sizing: border-box;
+
+  padding: 3px 8px; 
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); 
+  cursor: pointer;
+  animation: fade-in 1s;
+}
+
+.showTimeLine:hover, .showTimeLine:focus {
+  background-color: #bed5ed;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
 }

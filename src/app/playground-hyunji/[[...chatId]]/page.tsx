@@ -118,7 +118,7 @@ export default async function Page({
           <div className="ChatContentDiv flex flex-col">
             <div className="ChatContentUp">
               <div className="ChatContent h-full flex flex-row overflow-x-hidden overflow-y-scroll">
-                <div className="videoPlayerLeft w-[55%]">
+                <div className="videoPlayerLeft w-[50%]">
                 {chatId ? (
                     <Suspense fallback={<div className="flex-1" />}>
                       <ChatContentWrapper chatId={chatId} />
@@ -128,7 +128,7 @@ export default async function Page({
                   )}
                 </div>
                 {chatId ? (
-                  <div className="videoPlayer w-[45%]">
+                  <div className="videoPlayer w-[50%]">
                     <div className='oriVideo'>
                       <VideoWrapper chatId={chatId}></VideoWrapper>
                     </div>
