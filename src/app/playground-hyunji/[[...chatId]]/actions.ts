@@ -2,7 +2,7 @@
 
 import { auth } from "@/auth";
 import { db } from "@/db";
-import { chats, users as userTable } from "@/db/schema";
+import { chats, users as userTable, InsertChat } from "@/db/schema";
 import { currentUser } from "@/lib/auth";
 import { generateRandomString } from "@/lib/utils";
 import { eq } from "drizzle-orm";
@@ -15,12 +15,10 @@ export async function createChat() {
     return { error: "Unauthorized" };
   }
 
-  const id = generateRandomString(16);
-  const result = await db
+  const [result] = await db
     .insert(chats)
     .values({
-      id: id,
-      name: id,
+      name: "새로운 채팅",
       userId: user.id,
     })
     .returning();
@@ -28,7 +26,7 @@ export async function createChat() {
   revalidateTag("get-chats-for-chat-list");
 
   return {
-    id,
+    id: result.id,
   };
 }
 

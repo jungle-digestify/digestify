@@ -37,7 +37,7 @@ export const chats = pgTable(
       .notNull()
       .references(() => users.id),
     name: text("name").notNull(),
-    videoId: text("video_id").notNull(),
+    videoId: text("video_id"),
     createdAt: timestamp("createdAt", {
       mode: "date",
       withTimezone: true,
@@ -49,6 +49,9 @@ export const chats = pgTable(
     };
   }
 );
+
+export type InsertChat = InferInsertModel<typeof chats>;
+
 export const messages = pgTable("messages", {
   id: text("id")
     .notNull()

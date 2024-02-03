@@ -13,21 +13,18 @@ export async function createChat({
   videoDetails,
   videoURL,
 }: {
-  videoDetails?: VideoDetails|undefined;
-  videoURL?: string|undefined;
+  videoDetails?: VideoDetails | undefined;
+  videoURL?: string | undefined;
 }) {
   const user = await currentUser();
 
   if (!user) {
     return { error: "Unauthorized" };
   }
-
-  const id = generateRandomString(16);
-  const result = await db
+  const [result] = await db
     .insert(chats)
     .values({
-      id: id,
-      name: videoDetails?.title ?? id,
+      name: videoDetails?.title ?? "새로운 채팅",
       userId: user.id,
       videoId: videoURL ?? "",
     })
@@ -36,7 +33,7 @@ export async function createChat({
   revalidateTag("get-chats-for-chat-list");
 
   return {
-    id,
+    id: result.id,
   };
 }
 
