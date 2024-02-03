@@ -90,6 +90,11 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
     // 1. chatId 대신 만들고 결과 넣기
     const chat = await createChat({ videoDetails, videoURL });
     const chatId = chat.id;
+
+    if (chatId === undefined) {
+      return new Response("error");
+    }
+
     const content = JSON.stringify(parsed_script);
     const body = JSON.stringify({ content, chatId });
     console.log("body:", body);
@@ -132,7 +137,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
             },
             {
               chatId,
-              role: "assistant",
+              role: "system",
               content: completion,
             },
           ]);
