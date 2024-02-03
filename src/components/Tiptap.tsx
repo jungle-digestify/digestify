@@ -1,45 +1,44 @@
-"use client"
-import { useEditor, EditorContent } from "@tiptap/react"
-import StarterKit from "@tiptap/starter-kit"
-import Heading from "@tiptap/extension-heading"
-import { Toolbar } from "@/components/ToolBar"
+"use client";
+import { useEditor, EditorContent } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import Heading from "@tiptap/extension-heading";
+import { Toolbar } from "@/components/ToolBar";
 
 export default function Tiptap({
-    description,
-    onChange,
-    id,
+  description,
+  onChange,
+  id,
 }: {
-    description:string
-    onChange: (richText:string) => void
-    id: string
+  description: string;
+  onChange: (richText: string) => void;
+  id: string;
 }) {
-    const editor = useEditor({
-        extensions: [
-            StarterKit.configure({}),
-            Heading.configure({
-                HTMLAttributes: {
-                    class: "text-xl font-bold",
-                    levels: [2]
-                }
-            })
-        ],
-        content: description,
-        editorProps: {
-            attributes: {
-                class:
-                "min-h-[150px] "
-            },
+  const editor = useEditor({
+    extensions: [
+      StarterKit.configure({}),
+      Heading.configure({
+        HTMLAttributes: {
+          class: "text-xl font-bold",
+          levels: [2],
         },
-        onUpdate({editor}) {
-            onChange(editor.getHTML())
-            console.log(editor.getHTML())
-        },
-    })
+      }),
+    ],
+    content: description,
+    editorProps: {
+      attributes: {
+        class: "min-h-[150px] ",
+      },
+    },
+    onUpdate({ editor }) {
+      onChange(editor.getHTML());
+      console.log(editor.getHTML());
+    },
+  });
 
-    return (
-        <div className="flex flex-col justify-stretch ">
-            <Toolbar editor={editor} />
-            <EditorContent id={"markdownHolder "+id} editor={editor}/>
-        </div>
-    )
+  return (
+    <div className="flex flex-col justify-stretch ">
+      <Toolbar editor={editor} />
+      <EditorContent id={"markdownHolder " + id} editor={editor} />
+    </div>
+  );
 }

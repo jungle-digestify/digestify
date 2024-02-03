@@ -1,7 +1,8 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import { SessionProvider } from "next-auth/react";
 import { headers } from "next/headers";
-
+import { auth } from "@/auth";
 import { TRPCReactProvider } from "@/trpc/react";
 
 export const metadata: Metadata = {
@@ -10,10 +11,15 @@ export const metadata: Metadata = {
     "This is an example site to demonstrate how to use NextAuth.js for authentication",
 };
 
-export default function RootLayout({ children }: React.PropsWithChildren) {
+export default async function RootLayout({
+  children,
+}: React.PropsWithChildren) {
+  const session = await auth();
   return (
     <>
-      <TRPCReactProvider headers={headers()}>{children}</TRPCReactProvider>
+      <SessionProvider session={session}>
+        <TRPCReactProvider headers={headers()}>{children}</TRPCReactProvider>
+      </SessionProvider>
     </>
   );
 }

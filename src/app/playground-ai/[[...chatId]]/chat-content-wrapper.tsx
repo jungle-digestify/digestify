@@ -24,11 +24,8 @@ export default async function ChatContentWrapper({
           eq(messagesTable.role, "assistant")
         )
       )
-      .orderBy(messagesTable.createdAt)
-      .all();
+      .orderBy(messagesTable.createdAt);
   }
-
-  console.log("messages:", messages);
 
   return (
     <ChatContents createChat={createChat} messages={messages} chatId={chatId} />

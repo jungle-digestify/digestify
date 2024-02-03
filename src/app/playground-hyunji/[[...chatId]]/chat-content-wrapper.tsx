@@ -10,14 +10,13 @@ export default async function ChatContentWrapper({
 }: {
   chatId: string;
 }) {
-  const message = await db
+  const [message] = await db
     .select()
     .from(messagesTable)
     .where(
       and(eq(messagesTable.chatId, chatId), eq(messagesTable.role, "assistant"))
     )
-    .orderBy(desc(messagesTable.createdAt))
-    .get();
+    .orderBy(desc(messagesTable.createdAt));
 
   return (
     <ChatContent

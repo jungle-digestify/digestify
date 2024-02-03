@@ -2,6 +2,26 @@
 @tailwind components;
 @tailwind utilities;
  
+html,
+body,
+:root {
+  height: 100%;
+}
+
+* {
+	min-width: 0;
+}
+
+img, svg, video  {
+	display:block;
+	max-width: 100%; 
+}
+
+h1, h2, h3 { 
+	text-wrap: balance;
+}
+
+
 @layer base {
   :root {
     --background: 0 0% 100%;

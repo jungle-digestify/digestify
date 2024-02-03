@@ -17,7 +17,6 @@ const openai = new OpenAI({
 });
 
 export async function POST(req: NextRequest) {
-  console.log("cookies:", cookies().getAll());
   const { content, chatId } = await req.json();
   const user = await currentUser();
 
@@ -33,11 +32,10 @@ export async function POST(req: NextRequest) {
   if (!chatId) {
     return NextResponse.json({ error: "chat id required" }, { status: 400 });
   }
-  const chat = await db
+  const [chat] = await db
     .select()
     .from(chats)
-    .where(and(eq(chats.id, chatId), eq(chats.userId, user.id)))
-    .get();
+    .where(and(eq(chats.id, chatId), eq(chats.userId, user.id)));
 
   if (!chat) {
     return new NextResponse("chat is not found", { status: 400 });
@@ -50,8 +48,7 @@ export async function POST(req: NextRequest) {
     })
     .from(messages)
     .where(eq(messages.chatId, chatId))
-    .orderBy(messages.createdAt)
-    .all();
+    .orderBy(messages.createdAt);
 
   const chatCompletion = await openai.chat.completions.create({
     messages: [

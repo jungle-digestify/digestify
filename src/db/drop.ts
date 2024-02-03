@@ -1,12 +1,12 @@
-import { drizzle } from "drizzle-orm/better-sqlite3";
-import * as dotenv from "dotenv";
 import { sql } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
 import * as schema from "./schema";
-import Database from "better-sqlite3";
+import * as dotenv from "dotenv";
 dotenv.config({ path: "./.env.local" });
 
-const sqlite = new Database("sqlite.db");
-const db = drizzle(sqlite, { schema, logger: true });
+const queryClient = postgres(process.env.DATABASE_URL!);
+export const db = drizzle(queryClient, { schema, logger: true });
 
 async function drop() {
   const tableSchema = db._.schema;
@@ -17,20 +17,25 @@ async function drop() {
   console.log("🗑️  droping the entire database");
   const queries = Object.values(tableSchema).map((table) => {
     console.log(`🧨 Preparing drop query for table: ${table.dbName}`);
-    return sql.raw(`DROP TABLE ${table.dbName};`);
+    return sql.raw(`DROP TABLE "${table.dbName}" CASCADE;`);
   });
 
   console.log("📨 Sending drop queries...");
-  try {
-    await Promise.allSettled(
-      queries.map(async (query) => {
-        if (query) await db.run(query);
-      })
-    );
-  } catch (err) {
-    console.log(err);
+  for (let query of queries) {
+    try {
+      const result = await db.execute(query);
+      console.log(result);
+    } catch (err) {
+      if (err instanceof Error) {
+        console.log(err.message);
+      } else {
+        console.log(err);
+      }
+    }
   }
+
   console.log("✅ Database dropped");
+  process.exit();
 }
 
 drop().catch((e) => {

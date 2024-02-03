@@ -1,46 +1,47 @@
 // Example model schema from the Drizzle docs
 // https://orm.drizzle.team/docs/sql-schema-declaration
-
-import { sql } from "drizzle-orm";
 import {
-  integer,
-  sqliteTable,
-  sqliteTableCreator,
+  timestamp,
+  pgTable,
   text,
   primaryKey,
+  integer,
+  boolean,
+  serial,
+  varchar,
   index,
-} from "drizzle-orm/sqlite-core";
+} from "drizzle-orm/pg-core";
+import { sql, InferSelectModel, InferInsertModel } from "drizzle-orm";
+import { createId } from "@paralleldrive/cuid2";
+
 import type { AdapterAccount } from "@auth/core/adapters";
 
-/**
- * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
- * database instance for multiple projects.
- *
- * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
- */
-export const mysqlTable = sqliteTableCreator(
-  (name) => `four-mutations_${name}`
-);
-
-export const posts = sqliteTable("post", {
-  id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
-  name: text("name", { length: 256 }),
-  createdAt: text("time").default(sql`CURRENT_TIME`),
+export const posts = pgTable("post", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 256 }),
+  createdAt: timestamp("time", {
+    mode: "date",
+    withTimezone: true,
+  }).defaultNow(),
 });
 
 // chatgpt 기본 예제
-export const chats = sqliteTable(
+export const chats = pgTable(
   "chats",
   {
-    id: text("id").notNull().primaryKey(),
+    id: text("id")
+      .notNull()
+      .primaryKey()
+      .$defaultFn(() => createId()),
     userId: text("user_id")
       .notNull()
       .references(() => users.id),
     name: text("name").notNull(),
     videoId: text("video_id").notNull(),
-    createdAt: text("created_at")
-      .default(sql`CURRENT_TIMESTAMP`)
-      .notNull(),
+    createdAt: timestamp("createdAt", {
+      mode: "date",
+      withTimezone: true,
+    }).defaultNow(),
   },
   (table) => {
     return {
@@ -48,32 +49,45 @@ export const chats = sqliteTable(
     };
   }
 );
-//sql`DATETIME('now', 'localtime')`로 하면 에러남
-
-export const messages = sqliteTable("messages", {
-  id: integer("id").notNull().primaryKey(),
+export const messages = pgTable("messages", {
+  id: text("id")
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => createId()),
   chatId: text("chat_id")
     .notNull()
     .references(() => chats.id),
-  role: text("role", { enum: ["user", "assistant"] }).notNull(),
+  role: text("role", { enum: ["user", "assistant", "system"] }).notNull(),
   content: text("content").notNull(),
-  createdAt: text("created_at")
-    // .default(sql`CURRENT_TIMESTAMP`)
-    .default(sql`CURRENT_TIMESTAMP`)
-    .notNull(),
+  createdAt: timestamp("createdAt", {
+    mode: "date",
+    withTimezone: true,
+  }).defaultNow(),
 });
 
 // https://authjs.dev/reference/adapter/drizzle
 
-export const users = sqliteTable("user", {
-  id: text("id").notNull().primaryKey(),
+export const users = pgTable("user", {
+  id: text("id")
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => createId()),
   name: text("name"),
   email: text("email").notNull(),
-  emailVerified: integer("emailVerified", { mode: "timestamp_ms" }),
+  emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
+  password: text("password"),
+  role: text("role", { enum: ["ADMIN", "USER"] })
+    .notNull()
+    .default("USER"),
+  isTwoFactorEnabled: boolean("isTwoFactorEanbled").notNull().default(false),
 });
 
-export const accounts = sqliteTable(
+type UserSelect = InferSelectModel<typeof users>;
+type UserInsert = InferInsertModel<typeof users>;
+export type UserRole = UserSelect["role"];
+
+export const accounts = pgTable(
   "account",
   {
     userId: text("userId")
@@ -97,22 +111,58 @@ export const accounts = sqliteTable(
   })
 );
 
-export const sessions = sqliteTable("session", {
-  sessionToken: text("sessionToken").notNull().primaryKey(),
-  userId: text("userId")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-  expires: integer("expires", { mode: "timestamp_ms" }).notNull(),
-});
-
-export const verificationTokens = sqliteTable(
+export const verificationTokens = pgTable(
   "verificationToken",
   {
-    identifier: text("identifier").notNull(),
+    id: text("id")
+      .notNull()
+      .$defaultFn(() => createId()),
+    email: text("email").notNull(),
     token: text("token").notNull(),
-    expires: integer("expires", { mode: "timestamp_ms" }).notNull(),
+    expires: timestamp("expires", { mode: "date" }).notNull(),
   },
   (vt) => ({
-    compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
+    compoundKey: primaryKey({ columns: [vt.id, vt.token] }),
   })
 );
+
+export const passwordResetTokens = pgTable(
+  "passwordResetToken",
+  {
+    id: text("id")
+      .notNull()
+      .$defaultFn(() => createId()),
+    email: text("email").notNull(),
+    token: text("token").notNull(),
+    expires: timestamp("expires", { mode: "date" }).notNull(),
+  },
+  (vt) => ({
+    compoundKey: primaryKey({ columns: [vt.id, vt.token] }),
+  })
+);
+
+export const twoFactorTokens = pgTable(
+  "twoFactorToken",
+  {
+    id: text("id")
+      .notNull()
+      .$defaultFn(() => createId()),
+    email: text("email").notNull(),
+    token: text("token").notNull(),
+    expires: timestamp("expires", { mode: "date" }).notNull(),
+  },
+  (vt) => ({
+    compoundKey: primaryKey({ columns: [vt.id, vt.token] }),
+  })
+);
+
+export const twoFactorConfirmation = pgTable("twoFactorConfirmation", {
+  id: text("id")
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => createId()),
+  userId: text("userId")
+    .notNull()
+    .unique()
+    .references(() => users.id, { onDelete: "cascade" }),
+});

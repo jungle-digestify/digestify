@@ -1,79 +1,102 @@
 import NextAuth from "next-auth";
-import type { DefaultSession, NextAuthConfig } from "next-auth";
-import authConfig from "@/auth.config";
-import { db } from "./db";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
-import { accounts, users } from "./db/schema";
+
+import { db } from "@/db";
+import authConfig from "@/auth.config";
+import { getUserById } from "@/data/user";
+import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confirmation";
+import { getAccountByUserId } from "./data/account";
+import {
+  users,
+  twoFactorConfirmation as twoFactorConfirmationTable,
+  UserRole,
+} from "./db/schema";
 import { eq } from "drizzle-orm";
 
-declare module "next-auth" {
-  interface Session {
-    user: DefaultSession["user"] & {
-      id: string;
-    };
-  }
-}
-
-export const config = {
+export const {
+  handlers: { GET, POST },
+  auth,
+  signIn,
+  signOut,
+  unstable_update: update,
+} = NextAuth({
   adapter: DrizzleAdapter(db),
-  session: { strategy: "jwt" },
-  cookies: {
-    sessionToken: {
-      name: `authjs.session-token`,
-      options: {
-        httpOnly: false,
-        sameSite: "none",
-        path: "/",
-        secure: true,
-      },
+  pages: {
+    signIn: "/auth/login",
+    error: "/auth/error",
+  },
+  events: {
+    async linkAccount({ user }) {
+      await db
+        .update(users)
+        .set({ emailVerified: new Date() })
+        .where(eq(users.id, user.id!));
     },
   },
-
   callbacks: {
-    async jwt({ token }) {
-      if (!token.sub) return token;
+    async signIn({ user, account }) {
+      // Allow OAuth without email verification
+      if (account?.provider !== "credentials") return true;
+      if (user.id === undefined) return false;
+      const existingUser = await getUserById(user.id);
 
-      const [existingUser] = await db
-        .select()
-        .from(users)
-        .where(eq(users.id, token.sub));
+      // Prevent sign in without email verification
+      if (!existingUser?.emailVerified) return false;
 
-      if (!existingUser) return token;
+      if (existingUser.isTwoFactorEnabled) {
+        const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(
+          existingUser.id
+        );
 
-      const existingAccount = await db
-        .select()
-        .from(accounts)
-        .where(eq(accounts.userId, existingUser.id));
+        if (!twoFactorConfirmation) return false;
 
-      token.isOAuth = !!existingAccount;
-      token.name = existingUser.name;
-      token.email = existingUser.email;
+        // Delete two factor confirmation for next sign in
+        await db
+          .delete(twoFactorConfirmationTable)
+          .where(eq(twoFactorConfirmationTable.id, twoFactorConfirmation.id));
+      }
 
-      return token;
+      return true;
     },
     async session({ token, session }) {
       if (token.sub && session.user) {
         session.user.id = token.sub;
       }
 
+      if (token.role && session.user) {
+        session.user.role = token.role as UserRole;
+      }
+
+      if (session.user) {
+        session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
+      }
+
       if (session.user) {
         session.user.name = token.name;
         session.user.email = token.email;
+        session.user.isOAuth = token.isOAuth as boolean;
       }
 
       return session;
     },
-    //   authorized({ request, auth }) {
-    //     console.log("request", request);
-    //     const { pathname } = request.nextUrl;
-    //     console.log(pathname);
-    //     if (pathname === "/playground-auth/middleware-example") {
-    //       return !!auth;
-    //     }
-    //     return true;
-    //   },
-  },
-  ...authConfig,
-} satisfies NextAuthConfig;
+    async jwt({ token }) {
+      if (!token.sub) return token;
 
-export const { handlers, auth, signIn, signOut } = NextAuth(config);
+      const existingUser = await getUserById(token.sub);
+
+      if (!existingUser) return token;
+
+      const existingAccount = await getAccountByUserId(existingUser.id);
+
+      token.isOAuth = !!existingAccount;
+      token.name = existingUser.name;
+      token.email = existingUser.email;
+      token.role = existingUser.role;
+      token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
+
+      return token;
+    },
+  },
+  session: { strategy: "jwt" },
+  ...authConfig,
+});

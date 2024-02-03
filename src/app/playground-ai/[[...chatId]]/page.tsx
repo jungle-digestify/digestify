@@ -70,7 +70,6 @@ export default async function Page({
     console.log(chatId, videoID);
     await test(videoID, lang);
   }
-  console.log("allscript:", allscript);
 
   return (
     <div className="w-full h-full flex">

@@ -3,7 +3,13 @@
  * These routes do not require authentication
  * @type {string[]}
  */
-export const publicRoutes = ["/", "/auth/new-verification", "/playground-ai"];
+export const publicRoutes = [
+  "/",
+  "/auth/new-verification",
+  "/playground-ai",
+  "/playground-trpc",
+  "/playground-hyunji",
+];
 
 /**
  * An array of routes that are used for authentication
@@ -29,4 +35,4 @@ export const apiAuthPrefix = "/api/auth";
  * The default redirect path after logging in
  * @type {string}
  */
-export const DEFAULT_LOGIN_REDIRECT = "/settings";
+export const DEFAULT_LOGIN_REDIRECT = "/playground-auth2/settings";

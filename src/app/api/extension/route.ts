@@ -9,7 +9,7 @@ import { fetchTranscript } from "youtube-subtitle-transcript";
 import { OpenAIStream, StreamingTextResponse } from "ai";
 import OpenAI from "openai";
 import { initialProgrammerMessages } from "@/app/api/message/messages";
-import fs from 'fs';
+import fs from "fs";
 
 export const POST = async (req: NextRequest, res: NextResponse) => {
   // 스패너 돌기 시작
@@ -47,24 +47,24 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
   // try {
   //   // downloads 폴더가 없으면 생성
   //   if (!fs.existsSync(publicDownloadsDir)) {
-      
+
   //     fs.mkdirSync(publicDownloadsDir);
   //   }
-    
+
   //   if(!fs.existsSync(outputPath)){ //downloads 폴더에 파일이 존재하지 않으면 다운로드
   //     const writeStream = fs.createWriteStream(outputPath);
   //     ytdl(videoURL, downloadOptions).pipe(writeStream);
-  
+
   //     writeStream.on('finish', () => {
   //       console.log(`다운로드가 완료되어 ${outputPath}에 저장되었습니다.`);
   //       // openVideoUrl = outputPath;
   //       //클라이언트에게 다운로드 완료되었다고 알려주기 ?!!!
-        
+
   //     });
   //   }else{
   //     console.log('이미 해당 영상이 다운로드 되어있습니다.');
   //   }
-    
+
   // } catch (error:any) {
   //   console.error(`에러 발생: ${error.message}`);
   // }
@@ -73,13 +73,20 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
   if (videoURL) {
     console.log("유튜브인 경우");
     const { transcript, error } = await fetchTranscript(videoURL, "ko");
-    let parsed_script = transcript.map((entry) => [Math.floor(Number(entry.start)/60).toFixed(0)+':'+(Number(entry.start)%60).toFixed(0).padStart(2,'0')+"-"+entry.text]).join("/");
+    let parsed_script = transcript
+      .map((entry) => [
+        Math.floor(Number(entry.start) / 60).toFixed(0) +
+          ":" +
+          (Number(entry.start) % 60).toFixed(0).padStart(2, "0") +
+          "-" +
+          entry.text,
+      ])
+      .join("/");
     let lang = "ko";
     const videoDetails = await getVideoDetails({ videoID: videoURL, lang });
-    console.log('parsed_script = ',parsed_script);
-    console.log('videoDetails =', videoDetails);
+    console.log("parsed_script = ", parsed_script);
+    console.log("videoDetails =", videoDetails);
 
-  
     // 1. chatId 대신 만들고 결과 넣기
     const chat = await createChat({ videoDetails, videoURL });
     const chatId = chat.id;
@@ -95,8 +102,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
       })
       .from(messages)
       .where(eq(messages.chatId, chatId))
-      .orderBy(messages.createdAt)
-      .all();
+      .orderBy(messages.createdAt);
 
     const openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,

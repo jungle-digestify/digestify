@@ -12,8 +12,7 @@ const getChats = cache(
     await db
       .select({ id: chatsTable.id, name: chatsTable.name })
       .from(chatsTable)
-      .where(eq(chatsTable.userId, userId))
-      .all(),
+      .where(eq(chatsTable.userId, userId)),
   ["get-chats-for-chat-list"],
   {
     tags: ["get-chats-for-chat-list"],
