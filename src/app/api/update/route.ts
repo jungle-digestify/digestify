@@ -8,7 +8,7 @@ export async function POST(req: Request) {
   const sucess = await db
     .update(messages)
     .set({ content: content })
-    .where(eq(messages.id, Number(id)));
+    .where(eq(messages.id, id));
 
   return new Response();
 }
