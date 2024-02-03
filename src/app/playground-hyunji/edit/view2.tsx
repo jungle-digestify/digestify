@@ -27,9 +27,9 @@ export default function VideoView2(all: any) {
             <div className='oriVideo2 gap-5'>
                 {all.chats.length!==0 ?
                     all.chats.map((item : any, index: number)=>(
-                    <div className='ori_video gap-2'>
+                    <div className='ori_video gap-2' key={index}>
                         <ReactPlayer
-                            key={index}
+                            
                             url={'https://www.youtube.com/watch?v='+item.video_id}
                             controls
                             width="260px"
@@ -38,7 +38,10 @@ export default function VideoView2(all: any) {
                             onStart={() => {}}
                             onReady={()=>{ }}
                         />
-                        <div className="video_title" dangerouslySetInnerHTML={{ __html: item.name }}></div>
+                        <div className="video_title">
+                            <a href={item.id} dangerouslySetInnerHTML={{ __html: item.name }}></a>    
+                        </div> 
+                      
                     </div>
                     
                     ))

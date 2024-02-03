@@ -33,6 +33,9 @@ export default async function ChatList() {
         <a key="new" href={"/playground-hyunji"} className="truncate">
           New Chat
         </a>
+        <a key="" className="showVideoList" href="/playground-hyunji/edit">
+          Show Thumbnail
+        </a>
         {chats.map((chat) => (
           <Link
             key={chat.id}
