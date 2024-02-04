@@ -84,8 +84,8 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
       .join("/");
     let lang = "ko";
     const videoDetails = await getVideoDetails({ videoID: videoURL, lang });
-    console.log("parsed_script = ", parsed_script);
-    console.log("videoDetails =", videoDetails);
+    // console.log("parsed_script = ", parsed_script);
+    // console.log("videoDetails =", videoDetails);
 
     // 1. chatId 대신 만들고 결과 넣기
     const chat = await createChat({ videoDetails, videoURL });
@@ -97,7 +97,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 
     const content = JSON.stringify(parsed_script);
     const body = JSON.stringify({ content, chatId });
-    console.log("body:", body);
+    // console.log("body:", body);
     // 2. transcript ai에 넣고 결과 얻기
 
     const allDBMessages = await db

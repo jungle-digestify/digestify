@@ -32,15 +32,15 @@ export default async function VideoWrapper({
     .select()
     .from(messagesTable)
     .where(
-      and(eq(messagesTable.chatId, chatId), eq(messagesTable.role, "assistant"))
+      and(eq(messagesTable.chatId, chatId), eq(messagesTable.role, "system"))
     )
     .orderBy(desc(messagesTable.createdAt));
 
   // console.log("chat: ",chat)
-  console.log("message.content: ", message?.content);
+  // console.log("message.content: ", message?.content);
   // const timelineMatches = message?.content.match(/\d{2}:\d{2} +?/g);
   const timelineMatches = message?.content.match(/\d{1,2}:\d{2}/g);
-  console.log("timelineMatches =", [...new Set(timelineMatches)]);
+  // console.log("timelineMatches =", [...new Set(timelineMatches)]);
 
   //중복 제거
   const getTimeLine = [...new Set(timelineMatches)];
