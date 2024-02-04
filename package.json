@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:reset": "node --loader esbuild-register/loader -r esbuild-register ./src/db/reset.ts",
-    "db:drop": "node --loader esbuild-register/loader -r esbuild-register ./src/db/drop.ts",
+    "db:reset": "node -r esbuild-register ./src/db/reset.ts",
+    "db:drop": "node -r esbuild-register ./src/db/drop.ts",
     "db:push": "drizzle-kit push:pg"
   },
   "dependencies": {
