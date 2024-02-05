@@ -87,13 +87,13 @@ export default async function Page({
   return (
 
     <div className="w-full h-full flex flex-col">
-        <div className="header w-full h-full flex items-center">
-          <div className="w-1/3 TeamSelectBtnUp">
-            {/* <button className="TeamSelectBtn font-bold py-2 px-4 rounded"> team </button> */}
+        <div className="header w-full h-full flex items-center border">
+          <button>리스트 보기</button>
+          <p>여기 형진이가 헤드 만들어준데 로고, 팀워크스페이스버튼, 사용자 로그인 현황</p>
+          {/* <div className="w-1/3 TeamSelectBtnUp">
             <TeamMenu></TeamMenu>
-            
-          </div>
-          <div className="w-2/3 form-group">
+          </div> */}
+          {/* <div className="w-2/3 form-group">
             <form className="form" id="SearchForm">
             <div className="flex">
              <input className="SearchInput py-2 px-4" placeholder="Search ..." />
@@ -101,22 +101,22 @@ export default async function Page({
                 <FaSearch style={{ backgroundColor: '#3490dc' }} />
               </button>
             </div>
-              {/* <span><i className="bi bi-search"></i></span> */}
             </form>
-          </div> 
+          </div>  */}
           
         </div>
 
         <div className="main w-full h-full flex flex-row">
           
-          <div className="ChatlistDiv">
+          <div className="ChatlistDiv border">
+            
             <Suspense fallback={<ChatListSkeleton />}>
               <ChatList />
             </Suspense>
           </div>
         
           <div className="ChatContentDiv flex flex-col">
-            <div className="ChatContentUp">
+            <div className="ChatContentUp2">
               <div className="ChatContent h-full flex flex-row overflow-x-hidden overflow-y-scroll">
                 <div className="videoPlayerLeft w-[50%]">
                 {chatId ? (
@@ -140,12 +140,12 @@ export default async function Page({
                 
 
             </div>
-            <div className="MetaDataUp">
+            {/* <div className="MetaDataUp">
               <div className="MetaData w-full h-full">
                     meta data
               </div>
 
-            </div>
+            </div> */}
           </div>
           
         </div>

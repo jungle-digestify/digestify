@@ -90,7 +90,7 @@
     opacity: 1;
   }
 }
-/* 01.25 */
+
 .ChatHeader{
   background-color: black;
   color: white;
@@ -490,6 +490,7 @@
   box-sizing: border-box;
   width: 100%;
   height: 100%;
+
 }
 .ChatContentUp *{
   background-color: #232323;
