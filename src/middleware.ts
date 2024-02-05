@@ -1,4 +1,5 @@
 import NextAuth from "next-auth";
+import { NextResponse } from 'next/server'
 
 import authConfig from "@/auth.config";
 import {
@@ -14,7 +15,11 @@ export default auth((req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
   if(req.nextUrl.pathname==='/api/extension'){
-    return null
+    const response = NextResponse.next();
+    response.headers.set('Access-Control-Allow-Origin', req.headers.get('origin') ?? "*");
+    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    response.headers.set('Access-Control-Allow-Headers', "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version");
+    return response;
   }
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);

@@ -50,7 +50,6 @@ export const {
       if (account?.provider !== "credentials") return true;
       if (user.id === undefined) return false;
       const existingUser = await getUserById(user.id);
-
       // Prevent sign in without email verification
       if (!existingUser?.emailVerified) return false;
 
@@ -66,7 +65,7 @@ export const {
           .delete(twoFactorConfirmationTable)
           .where(eq(twoFactorConfirmationTable.id, twoFactorConfirmation.id));
       }
-
+      
       return true;
     },
     async session({ token, session }) {
@@ -87,14 +86,12 @@ export const {
         session.user.email = token.email;
         session.user.isOAuth = token.isOAuth as boolean;
       }
-
       return session;
     },
     async jwt({ token }) {
       if (!token.sub) return token;
 
       const existingUser = await getUserById(token.sub);
-
       if (!existingUser) return token;
 
       const existingAccount = await getAccountByUserId(existingUser.id);

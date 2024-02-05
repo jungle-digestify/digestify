@@ -12,8 +12,11 @@ import { initialProgrammerMessages } from "@/app/api/message/messages";
 import fs from "fs";
 
 export const POST = async (req: NextRequest, res: NextResponse) => {
+  console.log("Post 요청 들어옴");
   // 스패너 돌기 시작
   const user = await currentUser();
+  
+  console.log("inside POST:", user)
   if (!user) {
     return NextResponse.json(
       { error: "not logged in" },
@@ -23,7 +26,6 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
     );
   }
 
-  console.log("Post 요청 들어옴");
   const data = await readRequestBody(req);
 
   let videoURL = data.videoUrl;
@@ -146,7 +148,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
         }
       },
     });
-
+    
     return new StreamingTextResponse(stream);
 
     return new Response("OK");
