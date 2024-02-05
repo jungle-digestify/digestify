@@ -90,3 +90,18 @@
     opacity: 1;
   }
 }
+
+.ListBtn{
+    background-color: #efb2fe;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    margin-left: 30px;
+    animation: fade-in 1s;
+    display: flex;
+    align-items: center;
+}
+/* .ChatlistDiv{
+    display: none;
+    float: right;
+} */

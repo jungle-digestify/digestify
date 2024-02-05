@@ -19,6 +19,23 @@ import { chats as chatsTable } from "@/db/schema";
 import { desc, eq } from "drizzle-orm"
 import { error } from "console"
 
+//show list
+// import ShowChatList from "./show-chat-list"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+// import {
+//   Accordion,
+//   AccordionContent,
+//   AccordionItem,
+//   AccordionTrigger,
+// } from "@/components/ui/accordion"
+
 let allscript = "";
 
 export default async function Page({
@@ -81,14 +98,13 @@ export default async function Page({
     }
   };
   const chatId = params.chatId?.[0];
-
-  // let getTimeLine=['00:00', '01:24', '04:23'];
   
   return (
 
     <div className="w-full h-full flex flex-col">
         <div className="header w-full h-full flex items-center border">
-          <button>리스트 보기</button>
+          <button className="ListBtn">리스트 보기</button>
+          
           <p>여기 형진이가 헤드 만들어준데 로고, 팀워크스페이스버튼, 사용자 로그인 현황</p>
           {/* <div className="w-1/3 TeamSelectBtnUp">
             <TeamMenu></TeamMenu>
@@ -108,11 +124,12 @@ export default async function Page({
 
         <div className="main w-full h-full flex flex-row">
           
-          <div className="ChatlistDiv border">
+          <div className="ChatlistDiv border h-full w-[15%]">
             
-            <Suspense fallback={<ChatListSkeleton />}>
+            {/* <Suspense fallback={<ChatListSkeleton />}>
               <ChatList />
-            </Suspense>
+            </Suspense> */}
+
           </div>
         
           <div className="ChatContentDiv flex flex-col">
@@ -140,7 +157,7 @@ export default async function Page({
                 
 
             </div>
-            {/* <div className="MetaDataUp">
+            {/* <div className="MetaDataUp border">
               <div className="MetaData w-full h-full">
                     meta data
               </div>
@@ -150,7 +167,7 @@ export default async function Page({
           
         </div>
 
-        <div className="w-full h-full footer">
+        <div className="w-full h-full footer border">
           
         </div>
     </div>
