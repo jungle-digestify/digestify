@@ -105,11 +105,11 @@ export default async function Page({
         <div className="main w-full h-[85%] flex flex-row">
           
           <ResizablePanelGroup direction="horizontal">
-            <ResizablePanel defaultSize={defaultLayout[0]} className="chat-list">
-              <div>
+            <ResizablePanel defaultSize={defaultLayout[0]} className="chat-list w-full h-full">
+              <div className="h-full w-full">
                 {/* <Suspense fallback={<ChatListSkeleton />}> */}
                 <Suspense>
-                  <ChatList chatId ={chatId}/>
+                  <ChatList chatId ={chatId} pageName='main'/>
                 </Suspense>
               </div>
         

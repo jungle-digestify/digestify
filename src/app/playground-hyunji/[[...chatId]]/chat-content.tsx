@@ -13,6 +13,13 @@ import Tiptap from "@/components/Tiptap";
 import { PenBoxIcon } from "lucide-react";
 import rehypeRaw from "rehype-raw";
 
+import { Toggle } from "@/components/ui/toggle"
+import {
+  FontBoldIcon,
+  FontItalicIcon,
+  UnderlineIcon,
+} from "@radix-ui/react-icons"
+
 export default function ChatContent({
   createChat,
   script,
@@ -188,7 +195,11 @@ export default function ChatContent({
             </Markdown>
           </div>
         )}
-        <button className={messageResponseId ? (isLoading ? ("hidden"):("px-4 py-2 ml-[95%] al font-medium rounded ")):("hidden")} onClick={() => { if(isEditing) updateSubmit(document.getElementById('markdownHolder '+messageId)!.innerHTML);setIsEditing(!isEditing)}}><PenBoxIcon></PenBoxIcon></button>
+        {/* <button className={messageResponseId ? (isLoading ? ("hidden"):("px-4 py-2 ml-[95%] al font-medium rounded")):("hidden")} onClick={() => { if(isEditing) updateSubmit(document.getElementById('markdownHolder '+messageId)!.innerHTML);setIsEditing(!isEditing)}}><PenBoxIcon className="h-4 w-4" style={{fill: 'black'}}></PenBoxIcon></button> */}
+        <Toggle variant="outline" aria-label="Toggle italic"
+        onClick={() => { if(isEditing) updateSubmit(document.getElementById('markdownHolder '+messageId)!.innerHTML);setIsEditing(!isEditing)}}>
+          <PenBoxIcon className="h-4 w-4" />
+        </Toggle>
       </div>
       <ChatInput
         onSubmit={handleSubmit}
