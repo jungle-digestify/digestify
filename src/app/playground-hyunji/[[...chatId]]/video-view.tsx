@@ -96,24 +96,30 @@ export default function VideoView(all: any) {
     }
     else{
         return (
-        <div className="videoPlayer">
-            <div className='oriVideo px-5 py-5'>
+        <div className='h-full w-full flex flex-col gap-5' style={{ border: '10px solid rgba(0,0,0,0)' , boxSizing:'border-box'}}>
+            <div style={{ position: 'relative', paddingTop: '56.25%'}}>
                 <ReactPlayer
                     // url='/downloads/8VZvs6O5tZY.mp4'
                     ref={playerRef}
                     url={'https://www.youtube.com/watch?v='+videoID}
-                    // url={videoUrl}
                     controls
-                    width="400px"
-                    height='230px'
+                    width="100%"
+                    height="100%"
+                    // style={{ maxWidth: '100%', height: 'auto' }}
                     onError={(e: any)=> console.log("onError", e)}
-                    onStart={() => {
-                            // if(playerRef.current!==null && startTime!==0){
-                            //     playerRef.current.seekTo(startTime, 'seconds')
-                            // }
-                        }
-                    }
+                    onStart={() => {}}
                     onReady={()=>{ }}
+                    style={{ position: 'absolute', top: 0, left: 0 }}
+                    config={{
+                        youtube: {
+                          playerVars: {
+                            controls: 1,
+                            modestbranding: 1,
+                            width: '100%',
+                            height: '100%',
+                          },
+                        },
+                      }}
                 />
             </div>
             <div className='timeLine gap-4 px-5'>

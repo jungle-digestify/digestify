@@ -19,27 +19,29 @@ const getChats = cache(
     tags: ["get-chats-for-chat-list"],
   }
 );
-export default async function ChatList() {
+export default async function ChatList(all: any) {
   const user = await currentUser();
 
   const chats = user ? await getChats(user.id) : [];
 
-  // console.log(messagesTable)
+  // console.log('chats =', all);
+  const getChatId = all.chatId;
   return (
     <div className="chatlistUp flex h-full">
-      <div className="chatlist w-full h-full flex flex-col justify-between">
-        <div className="flex flex-col gap-y-4">
-          <a key="new" href={"/playground-hyunji"} className="truncate">
+      <div className="chatlist w-full h-full">
+        <div className="flex flex-col gap-y-1 mx-1">
+          {/* <a key="new" href={"/playground-hyunji"} className="truncate inline-flex items-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 justify-start">
             New Chat
-          </a>
-          <a key="" className="showVideoList" href="/playground-hyunji/edit">
+          </a> */}
+          <a key="" className="inline-flex items-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 justify-start" href="/playground-hyunji/edit">
             Show Thumbnail
           </a>
           {chats.map((chat) => (
             <Link
               key={chat.id}
               href={`/playground-hyunji/${chat.id}`}
-              className="truncate"
+              className={`chatlistitem truncate inline-flex items-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 justify-start`}
+              style={{backgroundColor: getChatId === chat.id ? 'black' : '', color: getChatId === chat.id ? 'white':''}}
               dangerouslySetInnerHTML={{ __html: chat.name }}
             >
               {/* {chat.name} */}

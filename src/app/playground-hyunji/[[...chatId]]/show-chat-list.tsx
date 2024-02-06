@@ -7,27 +7,38 @@ import Link from "next/link"
 import { auth } from "@/auth"
 import { SignIn, SignOut } from "@/components/playground/auth-components";
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
+import ChatList, { ChatListSkeleton } from "./chat-list"
+import ChatContentWrapper from "./chat-content-wrapper"
+
 import { FaList } from "react-icons/fa6";
 
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-  } from "@/components/ui/accordion"
+// import {
+//     Accordion,
+//     AccordionContent,
+//     AccordionItem,
+//     AccordionTrigger,
+//   } from "@/components/ui/accordion"
 
-export default function ShowChatList() {
-  
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable"
+
+export default function ShowChatList(all : any) {
+  const defaultLayout = all.defaultSize;
 
   return (
-    <Accordion type="single" collapsible>
-    <AccordionItem value="item-1">
-        <AccordionTrigger>Is it accessible?</AccordionTrigger>
-        <AccordionContent>
-        Yes. It adheres to the WAI-ARIA design pattern.
-        </AccordionContent>
-    </AccordionItem>
-    </Accordion>
+    <div>
+    <ResizablePanel defaultSize={defaultLayout} className="chat-list">
+      <div>
+        <Suspense fallback={<ChatListSkeleton />}>
+          <ChatList chatId ={chatId}/>
+        </Suspense>
+      </div>
+        
+    </ResizablePanel>
+    </div>
   )
   }

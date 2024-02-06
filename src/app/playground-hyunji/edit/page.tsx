@@ -28,6 +28,13 @@ import { error } from "console";
 
 import VideoView2 from "./view2";
 
+//resize
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable"
+
 let allscript = "";
 
 export default async function Page2({
@@ -55,59 +62,44 @@ export default async function Page2({
 
   const user = await currentUser();
   const chats = user ? await getChats(user.id) : [];
-  console.log("chats =", chats);
+  // console.log("chats =", chats);
   const chatId = params.chatId?.[0];
+
+  const defaultLayout = [265, 1095];
 
   return (
     <div className="w-full h-full flex flex-col">
-      <div className="header w-full h-full flex items-center">
-        <div className="w-1/3 TeamSelectBtnUp">
-          {/* <button className="TeamSelectBtn font-bold py-2 px-4 rounded"> team </button> */}
-          <TeamMenu></TeamMenu>
-        </div>
-        <div className="w-2/3 form-group">
-          <form className="form" id="SearchForm">
-            <div className="flex">
-              <input
-                className="SearchInput py-2 px-4"
-                placeholder="Search ..."
-              />
-              <button
-                type="submit"
-                className="SearchBtn text-white font-bold py-2 px-4 rounded-lg"
-                style={{ backgroundColor: "#3490dc" }}
-              >
-                {/* <FaSearch style={{ backgroundColor: '#3490dc' }} /> */}
-              </button>
-            </div>
-            {/* <span><i className="bi bi-search"></i></span> */}
-          </form>
-        </div>
-      </div>
-
-      <div className="main w-full h-full flex flex-row">
-        <div className="ChatlistDiv">
-          <Suspense fallback={<ChatListSkeleton />}>
-            <ChatList />
-          </Suspense>
+        <div className="header w-full h-[10%] flex items-center border">
+          {/* <button className="ListBtn">리스트</button> */}
+          {/* <ChatListBtn></ChatListBtn> */}
+          <p> 헤드 (로고, 팀워크스페이스버튼, 사용자 로그인 현황)</p>
         </div>
 
-        <div className="ChatContentDiv flex flex-col">
-          <div className="ChatContentUp2">
-            <div className="ChatContent h-full flex flex-row overflow-x-hidden overflow-y-scroll">
-              <VideoView2 chats={chats}></VideoView2>
-            </div>
-          </div>
-          {/* <div className="MetaDataUp">
-              <div className="MetaData w-full h-full">
-                    meta data
+        <div className="main w-full h-[85%] flex flex-row">
+          
+          <ResizablePanelGroup direction="horizontal">
+            <ResizablePanel defaultSize={defaultLayout[0]} className="chat-list">
+              <div>
+                {/* <Suspense fallback={<ChatListSkeleton />}> */}
+                <Suspense>
+                  <ChatList chatId ={chatId}/>
+                </Suspense>
               </div>
-
-            </div> */}
+        
+            </ResizablePanel>
+            <ResizableHandle withHandle />
+            <ResizablePanel defaultSize={defaultLayout[1]}>
+              <VideoView2 chats={chats}></VideoView2>
+            </ResizablePanel>
+           
+          </ResizablePanelGroup>
         </div>
-      </div>
 
-      <div className="w-full h-full footer"></div>
+        <div className="footer w-full h-[5%] min-h-[5%] border">
+          <div className="footText">&copy; Digestify</div>
+        </div>
     </div>
+
+    
   );
 }

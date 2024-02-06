@@ -9,11 +9,14 @@ import { useState, useRef } from 'react';
 import ReactPlayer from 'react-player';
 
 export default function VideoView2(all: any) {
-    console.log('all =', all);
+    // console.log('all =', all);
     const [showVideo, setShowVideo] = useState(false);
+    const [getChats, setChats] = useState([]);
+    
 
     useEffect(()=>{
         if(document){
+            setChats(all.chats.reverse());
             setShowVideo(true);
         }
     })
@@ -23,17 +26,17 @@ export default function VideoView2(all: any) {
     }
     else{
         return (
-        <div className="videoPlayer2">
+        <div className="videoPlayer2 m-3">
             <div className='oriVideo2 gap-5'>
-                {all.chats.length!==0 ?
-                    all.chats.map((item : any, index: number)=>(
+                {getChats.length!==0 ?
+                    getChats.map((item : any, index: number)=>(
                     <div className='ori_video gap-2' key={index}>
                         <ReactPlayer
                             
                             url={'https://www.youtube.com/watch?v='+item.video_id}
                             controls
-                            width="260px"
-                            height='140px'
+                            width="340px"
+                            height='180px'
                             onError={(e: any)=> console.log("onError", e)}
                             onStart={() => {}}
                             onReady={()=>{ }}

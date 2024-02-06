@@ -19,22 +19,13 @@ import { chats as chatsTable } from "@/db/schema";
 import { desc, eq } from "drizzle-orm"
 import { error } from "console"
 
-//show list
-// import ShowChatList from "./show-chat-list"
+// import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
+
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-// import {
-//   Accordion,
-//   AccordionContent,
-//   AccordionItem,
-//   AccordionTrigger,
-// } from "@/components/ui/accordion"
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable"
 
 let allscript = "";
 
@@ -98,77 +89,59 @@ export default async function Page({
     }
   };
   const chatId = params.chatId?.[0];
+  const defaultLayout = [265, 440, 655];
+
+  const listClicked = false;
   
   return (
 
     <div className="w-full h-full flex flex-col">
-        <div className="header w-full h-full flex items-center border">
-          <button className="ListBtn">리스트 보기</button>
-          
-          <p>여기 형진이가 헤드 만들어준데 로고, 팀워크스페이스버튼, 사용자 로그인 현황</p>
-          {/* <div className="w-1/3 TeamSelectBtnUp">
-            <TeamMenu></TeamMenu>
-          </div> */}
-          {/* <div className="w-2/3 form-group">
-            <form className="form" id="SearchForm">
-            <div className="flex">
-             <input className="SearchInput py-2 px-4" placeholder="Search ..." />
-             <button type="submit" className="SearchBtn text-white font-bold py-2 px-4 rounded-lg" style={{ backgroundColor: '#3490dc' }}>
-                <FaSearch style={{ backgroundColor: '#3490dc' }} />
-              </button>
-            </div>
-            </form>
-          </div>  */}
-          
+        <div className="header w-full h-[10%] flex items-center border">
+          {/* <button className="ListBtn">리스트</button> */}
+          {/* <ChatListBtn></ChatListBtn> */}
+          <p> 헤드 (로고, 팀워크스페이스버튼, 사용자 로그인 현황)</p>
         </div>
 
-        <div className="main w-full h-full flex flex-row">
+        <div className="main w-full h-[85%] flex flex-row">
           
-          <div className="ChatlistDiv border h-full w-[15%]">
-            
-            {/* <Suspense fallback={<ChatListSkeleton />}>
-              <ChatList />
-            </Suspense> */}
-
-          </div>
-        
-          <div className="ChatContentDiv flex flex-col">
-            <div className="ChatContentUp2">
-              <div className="ChatContent h-full flex flex-row overflow-x-hidden overflow-y-scroll">
-                <div className="videoPlayerLeft w-[50%]">
-                {chatId ? (
-                    <Suspense fallback={<div className="flex-1" />}>
-                      <ChatContentWrapper chatId={chatId} />
-                    </Suspense>
-                  ) : (
-                    <ChatContent createChat={createChat} script={allscript}/>
-                  )}
-                </div>
-                {chatId ? (
-                  <div className="videoPlayer w-[50%]">
-                    <div className='oriVideo'>
-                      <VideoWrapper chatId={chatId}></VideoWrapper>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="oriVideo"> 동영상 없음 </div>
-                )}
-                </div>
-                
-
-            </div>
-            {/* <div className="MetaDataUp border">
-              <div className="MetaData w-full h-full">
-                    meta data
+          <ResizablePanelGroup direction="horizontal">
+            <ResizablePanel defaultSize={defaultLayout[0]} className="chat-list">
+              <div>
+                {/* <Suspense fallback={<ChatListSkeleton />}> */}
+                <Suspense>
+                  <ChatList chatId ={chatId}/>
+                </Suspense>
               </div>
-
-            </div> */}
-          </div>
-          
+        
+            </ResizablePanel>
+            <ResizableHandle withHandle />
+            <ResizablePanel defaultSize={defaultLayout[1]}>
+            {/* <ScrollArea className="w-96 whitespace-nowrap rounded-md border"> */}
+                {chatId ? (
+                  <Suspense fallback={<div className="flex-1" />}>
+                    <ChatContentWrapper chatId={chatId} />
+                  </Suspense>
+                ) : (
+                  <ChatContent createChat={createChat} script={allscript}/>
+                )}
+                {/* <ScrollBar orientation="horizontal" /> */}
+              {/* </ScrollArea> */}
+            </ResizablePanel>
+            <ResizableHandle withHandle />
+            <ResizablePanel defaultSize={defaultLayout[2]}>
+              {chatId ? (
+                <div className="">
+                  <VideoWrapper chatId={chatId}></VideoWrapper>
+                </div>
+                ) : (
+                <div> 동영상 없음 </div>
+              )}
+            </ResizablePanel>
+          </ResizablePanelGroup>
         </div>
 
-        <div className="w-full h-full footer border">
-          
+        <div className="footer w-full h-[5%] min-h-[5%] border">
+          <div className="footText">&copy; Digestify</div>
         </div>
     </div>
     
