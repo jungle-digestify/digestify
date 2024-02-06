@@ -2,23 +2,10 @@ import ChatContent from "../[[...chatId]]/chat-content";
 import ChatList, { ChatListSkeleton } from "../[[...chatId]]/chat-list";
 import { createChat } from "../[[...chatId]]/actions";
 import { Suspense, useEffect } from "react";
-import ChatContentWrapper from "../[[...chatId]]/chat-content-wrapper";
-import ChatHeader from "../[[...chatId]]/header";
-import TeamMenu from "../[[...chatId]]/team-select";
-import { getSubtitles, getVideoDetails } from "youtube-caption-extractor";
-import { fetchTranscript } from "youtube-subtitle-transcript";
+
 import { unstable_cache as cache } from "next/cache";
 import { currentUser } from "@/lib/auth";
 
-//icon
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
-
-//youtube download
-import fs from "fs";
-// import VideoView from "./video-view"
-import VideoWrapper from "./video-wrapper";
-import ReactPlayer from "react-player";
 
 //db
 import { db } from "@/db";
@@ -62,10 +49,10 @@ export default async function Page2({
 
   const user = await currentUser();
   const chats = user ? await getChats(user.id) : [];
-  // console.log("chats =", chats);
+  console.log("chats =", chats);
   const chatId = params.chatId?.[0];
 
-  const defaultLayout = [265, 1095];
+  const defaultLayout = [20, 80];
 
   return (
     <div className="w-full h-full flex flex-col">

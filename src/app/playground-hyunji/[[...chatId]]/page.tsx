@@ -26,6 +26,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
+import { FaCircleXmark, FaFaceGrin, FaFaceGrinTongue, FaFaceGrinTongueSquint, FaRegCircleXmark } from "react-icons/fa6"
 
 let allscript = "";
 
@@ -89,7 +90,7 @@ export default async function Page({
     }
   };
   const chatId = params.chatId?.[0];
-  const defaultLayout = [265, 440, 655];
+  const defaultLayout = [20, 40, 40];
 
   const listClicked = false;
   
@@ -102,39 +103,43 @@ export default async function Page({
           <p> 헤드 (로고, 팀워크스페이스버튼, 사용자 로그인 현황)</p>
         </div>
 
-        <div className="main w-full h-[85%] flex flex-row">
+        <div className="main w-full h-[85%] flex flex-row" suppressContentEditableWarning={true}>
           
           <ResizablePanelGroup direction="horizontal">
-            <ResizablePanel defaultSize={defaultLayout[0]} className="chat-list w-full h-full">
-              <div className="h-full w-full">
-                {/* <Suspense fallback={<ChatListSkeleton />}> */}
-                <Suspense>
-                  <ChatList chatId ={chatId} pageName='main'/>
-                </Suspense>
-              </div>
+            <ResizablePanel defaultSize={defaultLayout[0]} className="chat-list w-full h-full" minSize={10}>
+                <div className="h-full">
+                  {/* <Suspense fallback={<ChatListSkeleton />}> */}
+                  <Suspense>
+                    <ChatList chatId ={chatId} pageName='main'/>
+                  </Suspense>
+                </div>
         
             </ResizablePanel>
             <ResizableHandle withHandle />
-            <ResizablePanel defaultSize={defaultLayout[1]}>
+            <ResizablePanel defaultSize={defaultLayout[1]} minSize={10}>
             {/* <ScrollArea className="w-96 whitespace-nowrap rounded-md border"> */}
-                {chatId ? (
-                  <Suspense fallback={<div className="flex-1" />}>
+          
+              {chatId ? (
+                    <Suspense fallback={<div className="flex-1" />}>
                     <ChatContentWrapper chatId={chatId} />
                   </Suspense>
                 ) : (
-                  <ChatContent createChat={createChat} script={allscript}/>
+                  // <ChatContent createChat={createChat} script={allscript}/>
+                  <div className="w-full h-full flex flex-col justify-center align-middle items-center"><FaRegCircleXmark size={25}></FaRegCircleXmark>요약 없음</div>
                 )}
+           
+                
                 {/* <ScrollBar orientation="horizontal" /> */}
               {/* </ScrollArea> */}
             </ResizablePanel>
             <ResizableHandle withHandle />
-            <ResizablePanel defaultSize={defaultLayout[2]}>
+            <ResizablePanel defaultSize={defaultLayout[2]} minSize={10}>
               {chatId ? (
-                <div className="">
+                <div >
                   <VideoWrapper chatId={chatId}></VideoWrapper>
                 </div>
                 ) : (
-                <div> 동영상 없음 </div>
+                <div className="w-full h-full flex flex-col justify-center align-middle items-center"> <FaRegCircleXmark size={25}></FaRegCircleXmark>동영상 없음 </div>
               )}
             </ResizablePanel>
           </ResizablePanelGroup>
