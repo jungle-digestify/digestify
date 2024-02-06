@@ -1,5 +1,3 @@
-// Example model schema from the Drizzle docs
-// https://orm.drizzle.team/docs/sql-schema-declaration
 import {
   timestamp,
   pgTable,
@@ -11,11 +9,9 @@ import {
   varchar,
   index,
 } from "drizzle-orm/pg-core";
-import { sql, InferSelectModel, InferInsertModel } from "drizzle-orm";
+import { InferSelectModel, InferInsertModel } from "drizzle-orm";
 import { createId } from "@paralleldrive/cuid2";
-
 import type { AdapterAccount } from "@auth/core/adapters";
-
 export const posts = pgTable("post", {
   id: serial("id").primaryKey(),
   name: varchar("name", { length: 256 }),
@@ -25,6 +21,49 @@ export const posts = pgTable("post", {
   }).defaultNow(),
 });
 
+export const workspace = pgTable("workspace",
+  {
+    id: text("id")
+      .notNull()
+      .primaryKey()
+      .$defaultFn(() => createId()),
+    name:text("name")
+      .notNull()
+      .default("새 워크 스페이스"),
+    description:text("description"),
+    type: text("type", {enum: [ "personal", "team"]}).notNull(),
+    createdAt:timestamp("createdAt", {
+      mode: "date",
+      withTimezone: true,
+    }).defaultNow(),
+  }
+)
+export const userInWorkspace = pgTable("userInWorkspace",
+  {
+    workspaceId: text("workspaceId")
+      .notNull()
+      .references(() => workspace.id),
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id),
+    accept: boolean("accept")
+      .notNull()
+      .default(false),
+    isHost: boolean("isHost")
+      .notNull()
+      .default(false),
+  }
+)
+export const metadata = pgTable(
+  "metadata",
+  {
+    chatId: text("chatId")
+      .notNull()
+      .primaryKey()
+      .references(() => chats.id),
+    keyword: text("keyword")
+  }
+)
 // chatgpt 기본 예제
 export const chats = pgTable(
   "chats",
@@ -33,9 +72,9 @@ export const chats = pgTable(
       .notNull()
       .primaryKey()
       .$defaultFn(() => createId()),
-    userId: text("user_id")
+    workspaceId: text("user_id")
       .notNull()
-      .references(() => users.id),
+      .references(() => workspace.id),
     name: text("name").notNull(),
     videoId: text("video_id"),
     createdAt: timestamp("createdAt", {
@@ -45,13 +84,23 @@ export const chats = pgTable(
   },
   (table) => {
     return {
-      userIdIndex: index("chats_auth_user_id_idx").on(table.userId),
+      workspaceIdIndex: index("chats_auth_user_id_idx").on(table.workspaceId),
     };
   }
 );
-
+// export const workspaceChatRelation = relations(workspace, ({one,many})=>({
+//   profile: one(chats,{
+//     fields: [workspace.id],
+//     references: [chats.workspaceId]
+//   }),
+// }))
+// export const chatWorkspaceRelation = relations(chats, ({one}) => ({
+//   author: one(workspace, {
+//     fields: [chats.workspaceId],
+//     references: [workspace.id]
+//   })
+// }))
 export type InsertChat = InferInsertModel<typeof chats>;
-
 export const messages = pgTable("messages", {
   id: text("id")
     .notNull()
@@ -67,12 +116,9 @@ export const messages = pgTable("messages", {
     withTimezone: true,
   }).defaultNow(),
 });
-
 type MessageSelect = InferSelectModel<typeof messages>;
 type MessageInsert = InferInsertModel<typeof messages>;
-
 // https://authjs.dev/reference/adapter/drizzle
-
 export const users = pgTable("user", {
   id: text("id")
     .notNull()
@@ -87,12 +133,12 @@ export const users = pgTable("user", {
     .notNull()
     .default("USER"),
   isTwoFactorEnabled: boolean("isTwoFactorEanbled").notNull().default(false),
+  defaultWorkspace: text("defaultWorkspace").references(() =>workspace.id)
 });
 
 type UserSelect = InferSelectModel<typeof users>;
 type UserInsert = InferInsertModel<typeof users>;
 export type UserRole = UserSelect["role"];
-
 export const accounts = pgTable(
   "account",
   {
@@ -116,7 +162,6 @@ export const accounts = pgTable(
     }),
   })
 );
-
 export const verificationTokens = pgTable(
   "verificationToken",
   {
@@ -131,7 +176,6 @@ export const verificationTokens = pgTable(
     compoundKey: primaryKey({ columns: [vt.id, vt.token] }),
   })
 );
-
 export const passwordResetTokens = pgTable(
   "passwordResetToken",
   {
@@ -146,7 +190,6 @@ export const passwordResetTokens = pgTable(
     compoundKey: primaryKey({ columns: [vt.id, vt.token] }),
   })
 );
-
 export const twoFactorTokens = pgTable(
   "twoFactorToken",
   {
@@ -161,7 +204,6 @@ export const twoFactorTokens = pgTable(
     compoundKey: primaryKey({ columns: [vt.id, vt.token] }),
   })
 );
-
 export const twoFactorConfirmation = pgTable("twoFactorConfirmation", {
   id: text("id")
     .notNull()
