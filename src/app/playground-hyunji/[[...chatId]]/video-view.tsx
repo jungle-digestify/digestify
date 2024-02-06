@@ -96,7 +96,7 @@ export default function VideoView(all: any) {
     }
     else{
         return (
-        <div className='h-full w-full flex flex-col gap-5' style={{ border: '10px solid rgba(0,0,0,0)' , boxSizing:'border-box'}}>
+        <div className='h-full w-full flex flex-col gap-5 overflow-y-auto' style={{ border: '10px solid rgba(0,0,0,0)' , boxSizing:'border-box'}}>
             <div style={{ position: 'relative', paddingTop: '56.25%'}}>
                 <ReactPlayer
                     // url='/downloads/8VZvs6O5tZY.mp4'

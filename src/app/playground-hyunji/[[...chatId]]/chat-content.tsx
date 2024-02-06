@@ -159,7 +159,7 @@ export default function ChatContent({
 
   return (
     <>
-      <div className="h-full max-w-4xl w-full mx-auto flex-1 px-5 py-5 prose dark:prose-invert">
+      <div className="h-full max-w-4xl w-full mx-auto flex-1 px-5 py-5 prose dark:prose-invert overflow-y-auto">
         {isEditing ? (
           <Tiptap
             description={document.getElementById('markdownHolder ' + messageId)!.innerHTML}
@@ -196,10 +196,13 @@ export default function ChatContent({
           </div>
         )}
         {/* <button className={messageResponseId ? (isLoading ? ("hidden"):("px-4 py-2 ml-[95%] al font-medium rounded")):("hidden")} onClick={() => { if(isEditing) updateSubmit(document.getElementById('markdownHolder '+messageId)!.innerHTML);setIsEditing(!isEditing)}}><PenBoxIcon className="h-4 w-4" style={{fill: 'black'}}></PenBoxIcon></button> */}
-        <Toggle variant="outline" aria-label="Toggle italic"
-        onClick={() => { if(isEditing) updateSubmit(document.getElementById('markdownHolder '+messageId)!.innerHTML);setIsEditing(!isEditing)}}>
-          <PenBoxIcon className="h-4 w-4" />
-        </Toggle>
+        <div className="w-full flex justify-end">
+          <Toggle variant="outline" aria-label="Toggle italic"
+          onClick={() => { if(isEditing) updateSubmit(document.getElementById('markdownHolder '+messageId)!.innerHTML);setIsEditing(!isEditing)}}>
+            <PenBoxIcon className="h-4 w-4" />
+          </Toggle>
+        </div>
+        
       </div>
       <ChatInput
         onSubmit={handleSubmit}

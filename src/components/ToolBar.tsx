@@ -48,7 +48,7 @@ export function Toolbar({ editor }: Props) {
           editor.chain().focus().toggleHeading({ level: 2 }).run()
         }
       >
-        <Heading1Icon className="h-4 w-4" />
+        <Heading2Icon className="h-4 w-4" />
         {/* <Heading2 className="h-4 w-4 data-[state=on]:bg-transparent" /> */}
       </ToggleGroupItem>
       <ToggleGroupItem
