@@ -7,6 +7,10 @@ import { auth } from "@/auth";
 import { SignIn, SignOut } from "@/components/playground/auth-components";
 import { currentUser } from "@/lib/auth";
 
+//logo
+import { FaList } from "react-icons/fa6";
+import { FaImage } from "react-icons/fa";
+
 const getChats = cache(
   async (userId: string) =>
     await db
@@ -25,16 +29,18 @@ export default async function ChatList(all: any) {
   const chats = user ? await getChats(user.id) : [];
 
   // console.log('chats =', all);
+  const pageName = all.pageName;
   const getChatId = all.chatId;
   return (
-    <div className="chatlistUp flex h-full">
-      <div className="chatlist w-full h-full">
-        <div className="flex flex-col gap-y-1 mx-1">
+    <div className="chatlistUp flex w-full h-full">
+      <div className="chatlist w-full my-3">
+        <div className="h-[85%] flex flex-col gap-y-1 mx-1">
           {/* <a key="new" href={"/playground-hyunji"} className="truncate inline-flex items-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 justify-start">
             New Chat
           </a> */}
-          <a key="" className="inline-flex items-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 justify-start" href="/playground-hyunji/edit">
-            Show Thumbnail
+          <a key="" className="inline-flex items-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 justify-start" href="/playground-hyunji/edit"
+          style={{backgroundColor: pageName === 'edit' ? 'black' : '', color: pageName === 'edit' ? 'white':''}}>
+            <FaImage size={22} color={pageName === 'edit' ? 'white': 'black'} /> <div className="mx-2">Show Thumbnail</div>
           </a>
           {chats.map((chat) => (
             <Link
@@ -50,12 +56,12 @@ export default async function ChatList(all: any) {
         </div>
 
         {user ? (
-          <div className="flex flex-col">
+          <div className="flex flex-col h-[15%] text-center justify-center">
             <p>{user.name}</p>
             <SignOut>LogOut</SignOut>
           </div>
         ) : (
-          <div className="flex flex-col">
+          <div className="flex flex-col h-[15%]  text-center justify-center">
             <SignIn>Sign in</SignIn>
           </div>
         )}
