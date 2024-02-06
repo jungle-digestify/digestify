@@ -10,6 +10,8 @@ import {
   users,
   twoFactorConfirmation as twoFactorConfirmationTable,
   UserRole,
+  workspace,
+  userInWorkspace,
 } from "./db/schema";
 import { eq } from "drizzle-orm";
 
@@ -59,11 +61,38 @@ export const {
         );
 
         if (!twoFactorConfirmation) return false;
-
+      
         // Delete two factor confirmation for next sign in
         await db
           .delete(twoFactorConfirmationTable)
           .where(eq(twoFactorConfirmationTable.id, twoFactorConfirmation.id));
+      }
+      if (!existingUser.defaultWorkspace){
+        const space = await db
+        .insert(workspace) //개인 스페이스 생성
+        .values(
+          {
+            name:"personalSpace",
+            description:"personalSpace",
+            type: "personal"
+          }
+        ).returning()
+
+        await db // 유저 테이블에 개인 스페이스 넣기
+          .update(users)
+          .set({ defaultWorkspace: space[0].id })
+          .where(eq(users.id, String(existingUser.id)))
+          
+        await db // userInSpace 관계 넣기
+        .insert(userInWorkspace)
+        .values(
+            {
+              workspaceId:space[0].id,
+              userId:existingUser.id,
+              isHost:true,
+              accept:true
+            }
+        )
       }
       
       return true;
