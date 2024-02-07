@@ -63,13 +63,13 @@ export default function VideoView(all: any) {
 
     const playerRef = useRef(null); //하나만할때
 
-    for (let i = 0; i < all.getTimeLine.length; i++) {
+    for (let i = 0; i < all.getTimeLine.length-1; i++) { // 마지막 타임라인은 영상길이 length-1
         // playerRefs.push(useRef(null)); // 여러개 할땐 필요
         timeLineArr.push(all.getTimeLine[i]);
     }
 
     // console.log('timeLineArr=', timeLineArr);
-    const [startTime, setST] = useState(0);
+    // const [startTime, setST] = useState(0);
     useEffect(()=>{
         
         if(document){ //document 가 생성되고 난후에 reactplayer 할당
@@ -83,7 +83,7 @@ export default function VideoView(all: any) {
         if(playerRef.current){
             const [minutes, seconds] = timeInSeconds.split(':').map(Number);
             const getSeconds= minutes * 60 + seconds; //분 단위로 변경
-            setST(getSeconds);
+            // setST(getSeconds);
             // console.log('getSeconds = ', getSeconds);
             playerRef.current.seekTo(getSeconds);
             playerRef.current.getInternalPlayer()?.playVideo();
