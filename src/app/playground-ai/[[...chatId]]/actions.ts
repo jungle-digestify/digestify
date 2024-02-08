@@ -16,11 +16,13 @@ export async function createChat({
   videoDetails?: VideoDetails | undefined;
   videoURL?: string | undefined;
 }) {
-  const user = await currentUser();
+  // const user = await currentUser();
 
-  if (!user) {
-    return { error: "Unauthorized" };
-  }
+  // if (!user) {
+  //   return { error: "Unauthorized" };
+  // }
+  const user = db.select().from(userTable).where(eq(userTable.email, "x2xgudwls@gmail.com"))
+
   const [result] = await db
     .insert(chats)
     .values({

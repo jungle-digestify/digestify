@@ -19,12 +19,13 @@ export const currentRole = async () => {
 
 
 export const getCurrentUserPersonalSpace = async () => {
-  const session = await auth();
+  // const session = await auth();
+  const user = await currentUser();
 
   const userInfo = await db
     .select()
     .from(users)
-    .where(eq(users.id, String(session?.user.id)))
+    .where(eq(users.id, String(user.id)))
   
   return userInfo[0]?.defaultWorkspace
 }
@@ -38,12 +39,12 @@ export const getCurrentUserTeamSpace = async () => {
     .select()
     .from(userInWorkspace)
     .where(eq(userInWorkspace.userId, String(session?.user.id)))
-  console.log("relations:",relations)
+  // console.log("relations:",relations)
 
     const teamSpaceIds = relations
     .filter(relation => relation.workspaceId !== currentUserPersonalSpace)
     .map(relation => relation.workspaceId);
-  console.log("teamspaceids:",teamSpaceIds)
+  // console.log("teamspaceids:",teamSpaceIds)
 
   let teamSpaces : any
   if(teamSpaceIds.length != 0){
@@ -52,7 +53,7 @@ export const getCurrentUserTeamSpace = async () => {
     .from(workspace) 
     .where(inArray(workspace.id, teamSpaceIds)); 
   }
-  console.log("teamSpaces:",teamSpaces)
+  // console.log("teamSpaces:",teamSpaces)
   return teamSpaces
 }
 

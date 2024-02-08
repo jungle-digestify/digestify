@@ -1,10 +1,10 @@
-import ChatContent from "../[spaceId]/chat-content"
-import ChatList, { ChatListSkeleton } from "../[spaceId]/chat-list"
-import { createChat } from "../[spaceId]/actions"
+import ChatContent from "../[...params]/chat-content"
+import ChatList, { ChatListSkeleton } from "../[...params]/chat-list"
+import { createChat } from "../[...params]/actions"
 import { Suspense, useEffect } from "react"
-import ChatContentWrapper from "../[spaceId]/chat-content-wrapper"
-import ChatHeader from "../[spaceId]/header"
-import TeamMenu from "../[spaceId]/team-select"
+import ChatContentWrapper from "../[...params]/chat-content-wrapper"
+import ChatHeader from "../[...params]/header"
+import TeamMenu from "../[...params]/team-select"
 import { getSubtitles, getVideoDetails } from 'youtube-caption-extractor';
 import { fetchTranscript } from "youtube-subtitle-transcript";
 import { IoSearchOutline } from "react-icons/io5";

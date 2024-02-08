@@ -1,4 +1,4 @@
-import { createChat } from "@/app/playground-ai/[[...chatId]]/actions";
+import { createChat } from "@/app/playground-hjin/[...params]/actions";
 import { db } from "@/db";
 import { messages } from "@/db/schema";
 import { currentUser } from "@/lib/auth";
@@ -14,17 +14,17 @@ import fs from "fs";
 export const POST = async (req: NextRequest, res: NextResponse) => {
   console.log("Post 요청 들어옴");
   // 스패너 돌기 시작
-  const user = await currentUser();
+  // const user = await currentUser();
   
-  console.log("inside POST:", user)
-  if (!user) {
-    return NextResponse.json(
-      { error: "not logged in" },
-      {
-        status: 401,
-      }
-    );
-  }
+  // console.log("inside POST:", user)
+  // if (!user) {
+  //   return NextResponse.json(
+  //     { error: "not logged in" },
+  //     {
+  //       status: 401,
+  //     }
+  //   );
+  // }
 
   const data = await readRequestBody(req);
 
@@ -85,12 +85,11 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
       ])
       .join("/");
     let lang = "ko";
-    const videoDetails = await getVideoDetails({ videoID: videoURL, lang });
-    // console.log("parsed_script = ", parsed_script);
-    // console.log("videoDetails =", videoDetails);
 
-    // 1. chatId 대신 만들고 결과 넣기
+    const videoDetails = await getVideoDetails({ videoID: videoURL, lang });
+
     const chat = await createChat({ videoDetails, videoURL });
+
     const chatId = chat.id;
 
     if (chatId === undefined) {

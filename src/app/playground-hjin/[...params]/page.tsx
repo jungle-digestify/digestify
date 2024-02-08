@@ -1,0 +1,124 @@
+import ChatContent from "./chat-content"
+import ChatList, { ChatListSkeleton } from "./chat-list"
+import { createChat } from "./actions"
+import { Suspense, useEffect } from "react"
+import ChatContentWrapper from "./chat-content-wrapper"
+import ChatHeader from "./header"
+import TeamMenu from "./team-select"
+import { getSubtitles, getVideoDetails } from 'youtube-caption-extractor';
+import { fetchTranscript } from "youtube-subtitle-transcript";
+import { IoSearchOutline } from "react-icons/io5";
+// import VideoView from "./video-view"
+import VideoWrapper from "./video-wrapper"
+import ReactPlayer from 'react-player';
+
+//db
+import { db } from "@/db";
+import { chats as chatsTable } from "@/db/schema";
+import { desc, eq } from "drizzle-orm"
+import { error } from "console"
+import { getCurrentUserPersonalSpace, getCurrentUserTeamSpace, getSpace } from "@/lib/auth"
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable"
+
+import { FaCircleXmark, FaFaceGrin, FaFaceGrinTongue, FaFaceGrinTongueSquint, FaRegCircleXmark } from "react-icons/fa6"
+
+let allscript = "";
+
+interface TeamSpace {
+  title: string;
+  desc: string;
+  id: string;
+  type: 'team';
+}
+export default async function Page({
+  params,
+}: {
+  params: { params:string };
+}) { 
+  const spaceId = params.params[0]
+  const chatId = params.params[1] ?? null
+
+  console.log("spaceid:",spaceId)
+  console.log("chatId:",chatId)
+  if(chatId == "edit"){
+    console.log("edit!!!!!!!!!!!!!!!!")
+  }
+  const currentSpace = await getSpace(spaceId)
+
+  const currentUserPersonalSpace = await getCurrentUserPersonalSpace()
+  const currentUserTeamSpace : TeamSpace[] = await getCurrentUserTeamSpace()
+
+  // if (!currentSpace){
+  //   return <>not exist space!</>
+  // }
+  
+  // if (spaceId === currentUserPersonalSpace){
+  //   return <>this is personal space!</>
+  // }
+
+  // const inTeamSpace = currentUserTeamSpace.map(teamSpace => teamSpace.id === spaceId)
+  // console.log("teamspace 입니다")
+  // if (!inTeamSpace){
+  //   return <>you are not in this space!</>
+  // }
+
+  const defaultLayout = [20, 40, 40];
+
+
+  return (
+    <div className="w-full h-full flex flex-col">
+
+        <div className="main w-full h-[85%] flex flex-row" suppressContentEditableWarning={true}>
+          
+          <ResizablePanelGroup direction="horizontal">
+            <ResizablePanel defaultSize={defaultLayout[0]} className="chat-list w-full h-full" minSize={10}>
+                <div className="h-full">
+                  {/* <Suspense fallback={<ChatListSkeleton />}> */}
+                  <Suspense>
+                    <ChatList spaceId={currentUserPersonalSpace} chatId={chatId} pageName="main"/>
+                  </Suspense>
+                </div>
+        
+            </ResizablePanel>
+            <ResizableHandle withHandle />
+            <ResizablePanel defaultSize={defaultLayout[1]} minSize={10}>
+            {/* <ScrollArea className="w-96 whitespace-nowrap rounded-md border"> */}
+          
+              {chatId ? (
+                    <Suspense fallback={<div className="flex-1" />}>
+                    <ChatContentWrapper chatId={chatId} />
+                  </Suspense>
+                ) : (
+                  // <ChatContent createChat={createChat} script={allscript}/>
+                  <div className="w-full h-full flex flex-col justify-center align-middle items-center"><FaRegCircleXmark size={25}></FaRegCircleXmark>요약 없음</div>
+                )}
+           
+                
+                {/* <ScrollBar orientation="horizontal" /> */}
+              {/* </ScrollArea> */}
+            </ResizablePanel>
+            <ResizableHandle withHandle />
+            <ResizablePanel defaultSize={defaultLayout[2]} minSize={10}>
+              {chatId ? (
+                <div >
+                  <VideoWrapper chatId={chatId}></VideoWrapper>
+                </div>
+                ) : (
+                <div className="w-full h-full flex flex-col justify-center align-middle items-center"> <FaRegCircleXmark size={25}></FaRegCircleXmark>동영상 없음 </div>
+              )}
+            </ResizablePanel>
+          </ResizablePanelGroup>
+        </div>
+
+        <div className="footer w-full h-[5%] min-h-[5%] border">
+          <div className="footText">&copy; Digestify</div>
+        </div>
+    </div>
+    
+  )
+
+}

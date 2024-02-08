@@ -34,7 +34,7 @@ import { desc } from "drizzle-orm";
 import { auth } from "@/auth";
 import { useToast } from "@/components/ui/use-toast"
 import { ToastAction } from "@/components/ui/toast"
-import { TeamInviteButton } from "@/app/playground-hjin/[spaceId]/components/teamInviteButton";
+import { TeamInviteButton } from "@/app/playground-hjin/[...params]/components/teamInviteButton";
 import {
   Menubar,
   MenubarContent,
