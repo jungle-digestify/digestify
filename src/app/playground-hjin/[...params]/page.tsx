@@ -25,6 +25,8 @@ import {
 } from "@/components/ui/resizable"
 
 import { FaCircleXmark, FaFaceGrin, FaFaceGrinTongue, FaFaceGrinTongueSquint, FaRegCircleXmark } from "react-icons/fa6"
+import VideoView2 from "../edit/view2"
+import { PgSchema } from "drizzle-orm/pg-core"
 
 let allscript = "";
 
@@ -41,12 +43,10 @@ export default async function Page({
 }) { 
   const spaceId = params.params[0]
   const chatId = params.params[1] ?? null
+  const chats = await db.select().from(chatsTable).where(eq(chatsTable.workspaceId,spaceId))
 
   console.log("spaceid:",spaceId)
   console.log("chatId:",chatId)
-  if(chatId == "edit"){
-    console.log("edit!!!!!!!!!!!!!!!!")
-  }
   const currentSpace = await getSpace(spaceId)
 
   const currentUserPersonalSpace = await getCurrentUserPersonalSpace()
@@ -76,41 +76,46 @@ export default async function Page({
           
           <ResizablePanelGroup direction="horizontal">
             <ResizablePanel defaultSize={defaultLayout[0]} className="chat-list w-full h-full" minSize={10}>
-                <div className="h-full">
-                  {/* <Suspense fallback={<ChatListSkeleton />}> */}
-                  <Suspense>
-                    <ChatList spaceId={currentUserPersonalSpace} chatId={chatId} pageName="main"/>
-                  </Suspense>
-                </div>
+              <div className="h-full">
+                {/* <Suspense fallback={<ChatListSkeleton />}> */}
+                <Suspense>
+                  <ChatList spaceId={currentUserPersonalSpace} chatId={chats} pageName="main"/>
+                </Suspense>
+              </div>
         
             </ResizablePanel>
             <ResizableHandle withHandle />
-            <ResizablePanel defaultSize={defaultLayout[1]} minSize={10}>
-            {/* <ScrollArea className="w-96 whitespace-nowrap rounded-md border"> */}
-          
-              {chatId ? (
-                    <Suspense fallback={<div className="flex-1" />}>
-                    <ChatContentWrapper chatId={chatId} />
-                  </Suspense>
-                ) : (
-                  // <ChatContent createChat={createChat} script={allscript}/>
-                  <div className="w-full h-full flex flex-col justify-center align-middle items-center"><FaRegCircleXmark size={25}></FaRegCircleXmark>요약 없음</div>
+            {chatId === null ? (
+              <ResizablePanel defaultSize={defaultLayout[1]}>
+                <VideoView2 chats={chats}></VideoView2>
+              </ResizablePanel>
+            ):(
+              <>
+              <ResizablePanel defaultSize={defaultLayout[1]} minSize={10}>
+                {/* <ScrollArea className="w-96 whitespace-nowrap rounded-md border"> */}
+                  {chatId ? (
+                        <Suspense fallback={<div className="flex-1" />}>
+                        <ChatContentWrapper chatId={chatId} />
+                      </Suspense>
+                    ) : (
+                      // <ChatContent createChat={createChat} script={allscript}/>
+                      <div className="w-full h-full flex flex-col justify-center align-middle items-center"><FaRegCircleXmark size={25}></FaRegCircleXmark>요약 없음</div>
+                  )}
+                  {/* <ScrollBar orientation="horizontal" /> */}
+                {/* </ScrollArea> */}
+              </ResizablePanel>
+              <ResizableHandle withHandle />
+              <ResizablePanel defaultSize={defaultLayout[2]} minSize={10}>
+                {chatId ? (
+                  <div >
+                    <VideoWrapper chatId={chatId}></VideoWrapper>
+                  </div>
+                  ) : (
+                  <div className="w-full h-full flex flex-col justify-center align-middle items-center"> <FaRegCircleXmark size={25}></FaRegCircleXmark>동영상 없음 </div>
                 )}
-           
-                
-                {/* <ScrollBar orientation="horizontal" /> */}
-              {/* </ScrollArea> */}
-            </ResizablePanel>
-            <ResizableHandle withHandle />
-            <ResizablePanel defaultSize={defaultLayout[2]} minSize={10}>
-              {chatId ? (
-                <div >
-                  <VideoWrapper chatId={chatId}></VideoWrapper>
-                </div>
-                ) : (
-                <div className="w-full h-full flex flex-col justify-center align-middle items-center"> <FaRegCircleXmark size={25}></FaRegCircleXmark>동영상 없음 </div>
-              )}
-            </ResizablePanel>
+              </ResizablePanel>
+              </>
+            )}
           </ResizablePanelGroup>
         </div>
 

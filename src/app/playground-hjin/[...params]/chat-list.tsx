@@ -35,7 +35,7 @@ export default async function ChatList(all: any) {
     <div className="chatlistUp flex w-full h-full">
       <div className="chatlist w-full my-3">
         <div className="h-[85%] flex flex-col gap-y-1 mx-1 overflow-y-auto">
-          <a key="" className="inline-flex items-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 justify-start" href={`/playground-hjin/edit/${spaceId}`}
+          <a key="" className="inline-flex items-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 justify-start" href={`/playground-hjin/${spaceId}`}
           style={{backgroundColor: pageName === 'edit' ? 'black' : '', color: pageName === 'edit' ? 'white':''}}>
             <FaImage size={22} color={pageName === 'edit' ? 'white': 'black'} /> <div className="mx-2">Show Thumbnail</div>
           </a>

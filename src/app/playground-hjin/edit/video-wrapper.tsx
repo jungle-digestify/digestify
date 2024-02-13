@@ -1,5 +1,5 @@
-import ChatContent from "./chat-content";
-import { createChat } from "./actions";
+// import ChatContent from "./chat-content";
+// import { createChat } from "./actions";
 
 import { db } from "@/db";
 import { chats as chatsTable } from "@/db/schema";
