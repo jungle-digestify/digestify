@@ -94,7 +94,7 @@ export default async function Page({ params }: { params: { params: string } }) {
   return (
     <div className="w-full h-full flex flex-col">
       <div
-        className="main w-full h-[85%] flex flex-row"
+        className="main w-full h-full flex flex-row"
         suppressContentEditableWarning={true}
       >
         <ResizablePanelGroup direction="horizontal">
@@ -152,10 +152,6 @@ export default async function Page({ params }: { params: { params: string } }) {
             </>
           )}
         </ResizablePanelGroup>
-      </div>
-
-      <div className="footer w-full h-[5%] min-h-[5%] border">
-        <div className="footText">&copy; Digestify</div>
       </div>
     </div>
   );
