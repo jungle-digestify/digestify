@@ -61,7 +61,7 @@ export default async function Page({ params }: { params: { params: string } }) {
     ["get-chats-for-chat-list"],
     {
       tags: ["get-chats-for-chat-list"],
-    },
+    }
   );
 
   const spaceId = params.params[0];
@@ -117,7 +117,7 @@ export default async function Page({ params }: { params: { params: string } }) {
           <ResizableHandle withHandle />
           {chatId === null ? (
             <ResizablePanel defaultSize={defaultLayout[1] + defaultLayout[2]}>
-              <VideoView2 chats={chats}></VideoView2>
+              <VideoView2 chats={chats} workspaceId={spaceId}></VideoView2>
             </ResizablePanel>
           ) : (
             <>

@@ -7,6 +7,7 @@ import { auth } from "@/auth";
 import { SignIn, SignOut } from "@/components/playground/auth-components";
 import { currentUser, getCurrentUserPersonalSpace } from "@/lib/auth";
 import { FaImage } from "react-icons/fa";
+import { ScrollArea } from "../ui/scroll-area";
 
 type SelectChatDto = Pick<SelectChat, "id" | "name" | "videoId">;
 
@@ -20,36 +21,38 @@ export default async function ChatList({
   chats: SelectChatDto[];
 }) {
   return (
-    <div className="chatlistUp flex w-full h-full">
-      <div className="chatlist w-full my-3">
-        <div className="h-[85%] flex flex-col gap-y-1 mx-1 overflow-y-auto">
-          <a
-            key=""
-            className="inline-flex items-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 justify-start"
-            href={`/playground-hjin/${spaceId}`}
-            style={{
-              backgroundColor: chatId === null ? "black" : "",
-              color: chatId === null ? "white" : "",
-            }}
-          >
-            <FaImage size={22} color={chatId === null ? "white" : "black"} />{" "}
-            <div className="mx-2">Show Thumbnail</div>
-          </a>
-          {chats.map((chat) => (
+    <ScrollArea className="h-full">
+      <div className="chatlistUp flex w-full h-full">
+        <div className="chatlist w-full my-3">
+          <div className="flex flex-col mx-1">
             <Link
-              key={chat.id}
-              href={`/playground-hjin/${spaceId}/${chat.id}`}
-              className={`chatlistitem truncate inline-flex items-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 justify-start`}
+              key=""
+              className="inline-flex items-center whitespace-nowrap text-base font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground  rounded-md px-3 justify-start leading-10 "
+              href={`/playground-hjin/${spaceId}`}
               style={{
-                backgroundColor: chatId === chat.id ? "black" : "",
-                color: chatId === chat.id ? "white" : "",
+                backgroundColor: chatId === null ? "black" : "",
+                color: chatId === null ? "white" : "",
               }}
-              dangerouslySetInnerHTML={{ __html: chat.name }}
-            ></Link>
-          ))}
+            >
+              <FaImage size={22} color={chatId === null ? "white" : "black"} />{" "}
+              <div className="mx-2">Show Thumbnail</div>
+            </Link>
+            {chats.map((chat) => (
+              <Link
+                key={chat.id}
+                href={`/playground-hjin/${spaceId}/${chat.id}`}
+                className={`chatlistitem truncate inline-flex items-center whitespace-nowrap text-lg font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground rounded-md px-3 justify-start leading-10`}
+                style={{
+                  backgroundColor: chatId === chat.id ? "black" : "",
+                  color: chatId === chat.id ? "white" : "",
+                }}
+                dangerouslySetInnerHTML={{ __html: chat.name }}
+              ></Link>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </ScrollArea>
   );
 }
 

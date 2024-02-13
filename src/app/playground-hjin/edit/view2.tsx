@@ -1,6 +1,6 @@
 "use client";
 
-import { chats } from "@/db/schema";
+import { chats, SelectChat } from "@/db/schema";
 import { time } from "console";
 import { Tienne } from "next/font/google";
 import { use, useEffect } from "react";
@@ -10,15 +10,23 @@ import ReactPlayer from "react-player";
 
 //scroll
 import { ScrollArea } from "@/components/ui/scroll-area";
+import Link from "next/link";
 
-export default function VideoView2(all: any) {
-  // console.log('all =', all);
+type SelectChatDto = Pick<SelectChat, "id" | "name" | "videoId">;
+
+export default function VideoView2({
+  chats,
+  workspaceId,
+}: {
+  chats: SelectChatDto[];
+  workspaceId: string;
+}) {
+  // console.log("all =", chats);
   const [showVideo, setShowVideo] = useState(false);
   const [getChats, setChats] = useState([]);
 
   useEffect(() => {
     if (document) {
-      setChats(all.chats.reverse());
       setShowVideo(true);
     }
   });
@@ -30,11 +38,11 @@ export default function VideoView2(all: any) {
       <ScrollArea className="h-full w-full ">
         <div className="videoPlayer2 m-3">
           <div className="oriVideo2 gap-5">
-            {getChats.length !== 0 ? (
-              getChats.map((item: any, index: number) => (
+            {chats.length !== 0 ? (
+              chats.map((item: any, index: number) => (
                 <div className="ori_video gap-2" key={index}>
                   <ReactPlayer
-                    url={"https://www.youtube.com/watch?v=" + item.video_id}
+                    url={"https://www.youtube.com/watch?v=" + item.videoId}
                     controls
                     width="400px"
                     height="220px"
@@ -43,10 +51,10 @@ export default function VideoView2(all: any) {
                     onReady={() => {}}
                   />
                   <div className="video_title">
-                    <a
-                      href={item.id}
+                    <Link
+                      href={`${workspaceId}/${item.id}`}
                       dangerouslySetInnerHTML={{ __html: item.name }}
-                    ></a>
+                    ></Link>
                   </div>
                 </div>
               ))

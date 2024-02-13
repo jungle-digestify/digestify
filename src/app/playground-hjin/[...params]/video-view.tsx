@@ -40,20 +40,23 @@ function ChangeSecond(timeArr: any[]) {
 }
 
 // export default function VideoView({ openVideoUrl }: VideoViewProps) {
-export default function VideoView(all: any) {
+export default function VideoView({
+  videoId,
+  getTimeLine,
+}: {
+  videoId: string | null;
+  getTimeLine: string[];
+}) {
   const [showVideo, setShowVideo] = useState(false); //document 가 업데이트 됬는지 확인용
   // const [secondeTimeLine, setSTL] = useState<number[][]>([]);
   // console.log('VideoView all = ', all);
   // let videoID = ''
-
-  let videoID = all.videoId;
 
   // let videoUrl = 'http://www.youtube.com/watch?v='+videoID;
 
   // const playerRef1 = useRef(null);
   // const playerRef2 = useRef(null);
 
-  let getSecondTimeLine = ChangeSecond(all.getTimeLine);
   // console.log('all.getTimeLine = ', all.getTimeLine);
   // console.log('getSTL = ', getSecondTimeLine);
 
@@ -62,9 +65,9 @@ export default function VideoView(all: any) {
 
   const playerRef = useRef(null); //하나만할때
 
-  for (let i = 0; i < all.getTimeLine.length; i++) {
+  for (let i = 0; i < getTimeLine.length; i++) {
     // playerRefs.push(useRef(null)); // 여러개 할땐 필요
-    timeLineArr.push(all.getTimeLine[i]);
+    timeLineArr.push(getTimeLine[i]);
   }
 
   // console.log('timeLineArr=', timeLineArr);
@@ -74,7 +77,7 @@ export default function VideoView(all: any) {
       //document 가 생성되고 난후에 reactplayer 할당
       setShowVideo(true);
     }
-  }, [all]);
+  }, [videoId, getTimeLine]);
 
   const timeLineBtn = (timeInSeconds: any) => {
     if (playerRef.current) {
@@ -99,7 +102,7 @@ export default function VideoView(all: any) {
           <ReactPlayer
             // url='/downloads/8VZvs6O5tZY.mp4'
             ref={playerRef}
-            url={"https://www.youtube.com/watch?v=" + videoID}
+            url={"https://www.youtube.com/watch?v=" + videoId}
             controls
             width="100%"
             height="100%"
