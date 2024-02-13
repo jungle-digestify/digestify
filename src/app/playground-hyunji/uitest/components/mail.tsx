@@ -1,5 +1,5 @@
-"use client"
-import * as React from "react"
+"use client";
+import * as React from "react";
 import {
   AlertCircle,
   Archive,
@@ -13,36 +13,35 @@ import {
   ShoppingCart,
   Trash2,
   Users2,
-} from "lucide-react"
+} from "lucide-react";
 
-import { AccountSwitcher } from "./account-switcher"
+import { AccountSwitcher } from "./account-switcher";
 // import { MailDisplay } from "./mail-display"
-import { MailList } from "./mail-list"
-import { Nav } from "./nav"
-import { Mail } from "../data"
-import { useMail } from "../use-mail"
-import { cn } from "@/lib/utils"
-import { Separator } from "../ui/separator"
-import { Input } from "../ui/input"
+import { MailList } from "./mail-list";
+import { Nav } from "./nav";
+import { Mail } from "../data";
+import { useMail } from "../use-mail";
+import { cn } from "@/lib/utils";
+import { Separator } from "../ui/separator";
+import { Input } from "../ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import { TooltipProvider } from "../ui/tooltip";
 import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "../ui/tabs"
-import { TooltipProvider } from "../ui/tooltip"
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "../ui/resizable"
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "../ui/resizable";
 
 interface MailProps {
   accounts: {
-    label: string
-    email: string
-    icon: React.ReactNode
-  }[]
-  mails: Mail[]
-  defaultLayout: number[] | undefined
-  defaultCollapsed?: boolean
-  navCollapsedSize: number
+    label: string;
+    email: string;
+    icon: React.ReactNode;
+  }[];
+  mails: Mail[];
+  defaultLayout: number[] | undefined;
+  defaultCollapsed?: boolean;
+  navCollapsedSize: number;
 }
 
 export function Mail({
@@ -52,8 +51,8 @@ export function Mail({
   defaultCollapsed = false,
   navCollapsedSize,
 }: MailProps) {
-  const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed)
-  const [mail] = useMail()
+  const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed);
+  const [mail] = useMail();
 
   return (
     <TooltipProvider delayDuration={0}>
@@ -61,8 +60,8 @@ export function Mail({
         direction="horizontal"
         onLayout={(sizes: number[]) => {
           document.cookie = `react-resizable-panels:layout=${JSON.stringify(
-            sizes
-          )}`
+            sizes,
+          )}`;
         }}
         className="h-full max-h-[800px] items-stretch"
       >
@@ -72,9 +71,17 @@ export function Mail({
           collapsible={true}
           minSize={15}
           maxSize={30}
-          className={cn(isCollapsed && "min-w-[50px] transition-all duration-300 ease-in-out")}
+          className={cn(
+            isCollapsed &&
+              "min-w-[50px] transition-all duration-300 ease-in-out",
+          )}
         >
-          <div className={cn("flex h-[52px] items-center justify-center", isCollapsed ? 'h-[52px]': 'px-2')}>
+          <div
+            className={cn(
+              "flex h-[52px] items-center justify-center",
+              isCollapsed ? "h-[52px]" : "px-2",
+            )}
+          >
             <AccountSwitcher isCollapsed={isCollapsed} accounts={accounts} />
           </div>
           <Separator />
@@ -162,8 +169,18 @@ export function Mail({
             <div className="flex items-center px-4 py-2">
               <h1 className="text-xl font-bold">Inbox</h1>
               <TabsList className="ml-auto">
-                <TabsTrigger value="all" className="text-zinc-600 dark:text-zinc-200">All mail</TabsTrigger>
-                <TabsTrigger value="unread" className="text-zinc-600 dark:text-zinc-200">Unread</TabsTrigger>
+                <TabsTrigger
+                  value="all"
+                  className="text-zinc-600 dark:text-zinc-200"
+                >
+                  All mail
+                </TabsTrigger>
+                <TabsTrigger
+                  value="unread"
+                  className="text-zinc-600 dark:text-zinc-200"
+                >
+                  Unread
+                </TabsTrigger>
               </TabsList>
             </div>
             <Separator />
@@ -191,5 +208,5 @@ export function Mail({
         </ResizablePanel>
       </ResizablePanelGroup>
     </TooltipProvider>
-  )
+  );
 }

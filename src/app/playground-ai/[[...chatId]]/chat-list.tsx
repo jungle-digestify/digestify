@@ -16,7 +16,7 @@ const getChats = cache(
   ["get-chats-for-chat-list"],
   {
     tags: ["get-chats-for-chat-list"],
-  }
+  },
 );
 export default async function ChatList() {
   const user = await currentUser();

@@ -15,7 +15,6 @@ export async function createChat() {
     return { error: "Unauthorized" };
   }
 
-
   const [result] = await db
     .insert(chats)
     .values({

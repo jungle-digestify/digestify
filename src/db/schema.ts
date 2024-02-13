@@ -21,49 +21,36 @@ export const posts = pgTable("post", {
   }).defaultNow(),
 });
 
-export const workspace = pgTable("workspace",
-  {
-    id: text("id")
-      .notNull()
-      .primaryKey()
-      .$defaultFn(() => createId()),
-    name:text("name")
-      .notNull()
-      .default("새 워크 스페이스"),
-    description:text("description"),
-    type: text("type", {enum: [ "personal", "team"]}).notNull(),
-    createdAt:timestamp("createdAt", {
-      mode: "date",
-      withTimezone: true,
-    }).defaultNow(),
-  }
-)
-export const userInWorkspace = pgTable("userInWorkspace",
-  {
-    workspaceId: text("workspaceId")
-      .notNull()
-      .references(() => workspace.id),
-    userId: text("userId")
-      .notNull()
-      .references(() => users.id),
-    accept: boolean("accept")
-      .notNull()
-      .default(false),
-    isHost: boolean("isHost")
-      .notNull()
-      .default(false),
-  }
-)
-export const metadata = pgTable(
-  "metadata",
-  {
-    chatId: text("chatId")
-      .notNull()
-      .primaryKey()
-      .references(() => chats.id),
-    keyword: text("keyword")
-  }
-)
+export const workspace = pgTable("workspace", {
+  id: text("id")
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => createId()),
+  name: text("name").notNull().default("새 워크 스페이스"),
+  description: text("description"),
+  type: text("type", { enum: ["personal", "team"] }).notNull(),
+  createdAt: timestamp("createdAt", {
+    mode: "date",
+    withTimezone: true,
+  }).defaultNow(),
+});
+export const userInWorkspace = pgTable("userInWorkspace", {
+  workspaceId: text("workspaceId")
+    .notNull()
+    .references(() => workspace.id),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id),
+  accept: boolean("accept").notNull().default(false),
+  isHost: boolean("isHost").notNull().default(false),
+});
+export const metadata = pgTable("metadata", {
+  chatId: text("chatId")
+    .notNull()
+    .primaryKey()
+    .references(() => chats.id),
+  keyword: text("keyword"),
+});
 // chatgpt 기본 예제
 export const chats = pgTable(
   "chats",
@@ -86,7 +73,7 @@ export const chats = pgTable(
     return {
       workspaceIdIndex: index("chats_auth_user_id_idx").on(table.workspaceId),
     };
-  }
+  },
 );
 // export const workspaceChatRelation = relations(workspace, ({one,many})=>({
 //   profile: one(chats,{
@@ -101,6 +88,7 @@ export const chats = pgTable(
 //   })
 // }))
 export type InsertChat = InferInsertModel<typeof chats>;
+export type SelectChat = InferSelectModel<typeof chats>;
 export const messages = pgTable("messages", {
   id: text("id")
     .notNull()
@@ -133,7 +121,7 @@ export const users = pgTable("user", {
     .notNull()
     .default("USER"),
   isTwoFactorEnabled: boolean("isTwoFactorEanbled").notNull().default(false),
-  defaultWorkspace: text("defaultWorkspace").references(() =>workspace.id)
+  defaultWorkspace: text("defaultWorkspace").references(() => workspace.id),
 });
 
 type UserSelect = InferSelectModel<typeof users>;
@@ -160,7 +148,7 @@ export const accounts = pgTable(
     compoundKey: primaryKey({
       columns: [account.provider, account.providerAccountId],
     }),
-  })
+  }),
 );
 export const verificationTokens = pgTable(
   "verificationToken",
@@ -174,7 +162,7 @@ export const verificationTokens = pgTable(
   },
   (vt) => ({
     compoundKey: primaryKey({ columns: [vt.id, vt.token] }),
-  })
+  }),
 );
 export const passwordResetTokens = pgTable(
   "passwordResetToken",
@@ -188,7 +176,7 @@ export const passwordResetTokens = pgTable(
   },
   (vt) => ({
     compoundKey: primaryKey({ columns: [vt.id, vt.token] }),
-  })
+  }),
 );
 export const twoFactorTokens = pgTable(
   "twoFactorToken",
@@ -202,7 +190,7 @@ export const twoFactorTokens = pgTable(
   },
   (vt) => ({
     compoundKey: primaryKey({ columns: [vt.id, vt.token] }),
-  })
+  }),
 );
 export const twoFactorConfirmation = pgTable("twoFactorConfirmation", {
   id: text("id")

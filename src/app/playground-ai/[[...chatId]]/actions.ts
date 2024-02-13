@@ -21,7 +21,10 @@ export async function createChat({
   // if (!user) {
   //   return { error: "Unauthorized" };
   // }
-  const user = db.select().from(userTable).where(eq(userTable.email, "x2xgudwls@gmail.com"))
+  const user = db
+    .select()
+    .from(userTable)
+    .where(eq(userTable.email, "x2xgudwls@gmail.com"));
 
   const [result] = await db
     .insert(chats)

@@ -12,7 +12,7 @@ import { eq } from "drizzle-orm";
 
 export const newPassword = async (
   values: z.infer<typeof NewPasswordSchema>,
-  token?: string | null
+  token?: string | null,
 ) => {
   if (!token) {
     return { error: "Missing token!" };

@@ -43,7 +43,7 @@ export const settings = async (values: z.infer<typeof SettingsSchema>) => {
     const verificationToken = await generateVerificationToken(values.email);
     await sendVerificationEmail(
       verificationToken.email,
-      verificationToken.token
+      verificationToken.token,
     );
 
     return { success: "Verification email sent!" };
@@ -52,7 +52,7 @@ export const settings = async (values: z.infer<typeof SettingsSchema>) => {
   if (values.password && values.newPassword && dbUser.password) {
     const passwordsMatch = await bcrypt.compare(
       values.password,
-      dbUser.password
+      dbUser.password,
     );
 
     if (!passwordsMatch) {

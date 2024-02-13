@@ -4,7 +4,6 @@
 // import { unstable_cache as cache } from "next/cache";
 // import { currentUser } from "@/lib/auth";
 
-
 // //db
 // import { db } from "@/db";
 // import { chats as chatsTable } from "@/db/schema";
@@ -63,7 +62,7 @@
 //         </div>
 
 //         <div className="main w-full h-[85%] flex flex-row">
-          
+
 //           <ResizablePanelGroup direction="horizontal">
 //             <ResizablePanel defaultSize={defaultLayout[0]} className="chat-list w-full h-full">
 //               <div className="h-full w-full">
@@ -72,13 +71,13 @@
 //                   <ChatList workspaceId={params.workspaceId} chatId ={chatId} pageName='edit'/>
 //                 </Suspense>
 //               </div>
-        
+
 //             </ResizablePanel>
 //             <ResizableHandle withHandle />
 //             <ResizablePanel defaultSize={defaultLayout[1]}>
 //               <VideoView2 chats={chats}></VideoView2>
 //             </ResizablePanel>
-           
+
 //           </ResizablePanelGroup>
 //         </div>
 
@@ -87,6 +86,5 @@
 //         </div>
 //     </div>
 
-    
 //   );
 // }

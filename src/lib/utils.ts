@@ -1,10 +1,9 @@
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
-
 
 export const convertFileToBase64 = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -16,7 +15,7 @@ export const convertFileToBase64 = (file: File): Promise<string> => {
 };
 
 export async function* makeStreamAsyncIterator(
-  reader: ReadableStreamDefaultReader<Uint8Array>
+  reader: ReadableStreamDefaultReader<Uint8Array>,
 ): AsyncGenerator<string, void, undefined> {
   const textDecoder = new TextDecoder();
   while (true) {
@@ -37,4 +36,3 @@ export function generateRandomString(bytes: number) {
   crypto.getRandomValues(array);
   return [...array].map((b) => b.toString(16).padStart(2, "0")).join("");
 }
-

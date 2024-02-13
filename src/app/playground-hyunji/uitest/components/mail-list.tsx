@@ -1,19 +1,19 @@
-import { ComponentProps } from "react"
+import { ComponentProps } from "react";
 // import formatDistanceToNow from "date-fns/formatDistanceToNow"
 
-import { cn } from "@/lib/utils"
-import { Badge } from "../ui/badge"
-import { ScrollArea } from "../ui/scroll-area"
-import { Separator } from "../ui/separator"
-import { Mail } from "../data"
-import { useMail } from "../use-mail"
+import { cn } from "@/lib/utils";
+import { Badge } from "../ui/badge";
+import { ScrollArea } from "../ui/scroll-area";
+import { Separator } from "../ui/separator";
+import { Mail } from "../data";
+import { useMail } from "../use-mail";
 
 interface MailListProps {
-  items: Mail[]
+  items: Mail[];
 }
 
 export function MailList({ items }: MailListProps) {
-  const [mail, setMail] = useMail()
+  const [mail, setMail] = useMail();
 
   return (
     <ScrollArea className="h-screen">
@@ -23,7 +23,7 @@ export function MailList({ items }: MailListProps) {
             key={item.id}
             className={cn(
               "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
-              mail.selected === item.id && "bg-muted"
+              mail.selected === item.id && "bg-muted",
             )}
             onClick={() =>
               setMail({
@@ -45,7 +45,7 @@ export function MailList({ items }: MailListProps) {
                     "ml-auto text-xs",
                     mail.selected === item.id
                       ? "text-foreground"
-                      : "text-muted-foreground"
+                      : "text-muted-foreground",
                   )}
                 >
                   {/* {formatDistanceToNow(new Date(item.date), {
@@ -71,19 +71,19 @@ export function MailList({ items }: MailListProps) {
         ))}
       </div>
     </ScrollArea>
-  )
+  );
 }
 
 function getBadgeVariantFromLabel(
-  label: string
+  label: string,
 ): ComponentProps<typeof Badge>["variant"] {
   if (["work"].includes(label.toLowerCase())) {
-    return "default"
+    return "default";
   }
 
   if (["personal"].includes(label.toLowerCase())) {
-    return "outline"
+    return "outline";
   }
 
-  return "secondary"
+  return "secondary";
 }

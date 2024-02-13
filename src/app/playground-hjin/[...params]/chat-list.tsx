@@ -1,6 +1,6 @@
 import { db } from "@/db";
 import { asc, desc, eq } from "drizzle-orm";
-import { chats as chatsTable } from "@/db/schema";
+import { SelectChat, chats as chatsTable } from "@/db/schema";
 import { unstable_cache as cache } from "next/cache";
 import Link from "next/link";
 import { auth } from "@/auth";
@@ -8,49 +8,46 @@ import { SignIn, SignOut } from "@/components/playground/auth-components";
 import { currentUser, getCurrentUserPersonalSpace } from "@/lib/auth";
 import { FaImage } from "react-icons/fa";
 
-const getChats = cache(
-  async (personalSpace: string | null ) =>
-    await db
-      .select({ id: chatsTable.id, name: chatsTable.name })
-      .from(chatsTable)
-      .where(eq(chatsTable.workspaceId, personalSpace ?? ""))
-      .orderBy(desc(chatsTable.createdAt))
-      ,
-  ["get-chats-for-chat-list"],
-  {
-    tags: ["get-chats-for-chat-list"],
-  }
-);
-export default async function ChatList(all: any) {
-  const session = await currentUser();
-  const currentUserPersonalSpace = await getCurrentUserPersonalSpace();
+type SelectChatDto = Pick<SelectChat, "id" | "name" | "videoId">;
 
-  const chats =  session ? await getChats(currentUserPersonalSpace) : [];
-  
-
-  const spaceId = all.spaceId;
-  const pageName = all.pageName;
-  const getChatId = all.chatId;
+export default async function ChatList({
+  spaceId,
+  chatId,
+  chats,
+}: {
+  spaceId: string | null;
+  chatId: string | null;
+  chats: SelectChatDto[];
+}) {
   return (
     <div className="chatlistUp flex w-full h-full">
       <div className="chatlist w-full my-3">
         <div className="h-[85%] flex flex-col gap-y-1 mx-1 overflow-y-auto">
-          <a key="" className="inline-flex items-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 justify-start" href={`/playground-hjin/${spaceId}`}
-          style={{backgroundColor: pageName === 'edit' ? 'black' : '', color: pageName === 'edit' ? 'white':''}}>
-            <FaImage size={22} color={pageName === 'edit' ? 'white': 'black'} /> <div className="mx-2">Show Thumbnail</div>
+          <a
+            key=""
+            className="inline-flex items-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 justify-start"
+            href={`/playground-hjin/${spaceId}`}
+            style={{
+              backgroundColor: chatId === null ? "black" : "",
+              color: chatId === null ? "white" : "",
+            }}
+          >
+            <FaImage size={22} color={chatId === null ? "white" : "black"} />{" "}
+            <div className="mx-2">Show Thumbnail</div>
           </a>
           {chats.map((chat) => (
             <Link
               key={chat.id}
               href={`/playground-hjin/${spaceId}/${chat.id}`}
               className={`chatlistitem truncate inline-flex items-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 justify-start`}
-              style={{backgroundColor: getChatId === chat.id ? 'black' : '', color: getChatId === chat.id ? 'white':''}}
+              style={{
+                backgroundColor: chatId === chat.id ? "black" : "",
+                color: chatId === chat.id ? "white" : "",
+              }}
               dangerouslySetInnerHTML={{ __html: chat.name }}
-            >
-            </Link>
+            ></Link>
           ))}
         </div>
-
       </div>
     </div>
   );

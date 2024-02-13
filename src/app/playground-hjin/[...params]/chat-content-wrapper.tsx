@@ -14,9 +14,9 @@ export default async function ChatContentWrapper({
     .select()
     .from(messagesTable)
     .where(
-      and(eq(messagesTable.chatId, chatId), eq(messagesTable.role, "system"))
+      and(eq(messagesTable.chatId, chatId), eq(messagesTable.role, "system")),
     )
-    .orderBy(desc(messagesTable.createdAt))
+    .orderBy(desc(messagesTable.createdAt));
 
   return (
     <ChatContent

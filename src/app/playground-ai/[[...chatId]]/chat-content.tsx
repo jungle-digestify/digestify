@@ -43,12 +43,15 @@ export default function ChatContent({
     <>
       <button
         className={
-          isLoading ? "hidden" : "px-4 ml-[99%] font-medium rounded flex relative h-0 pt-5"
+          isLoading
+            ? "hidden"
+            : "px-4 ml-[99%] font-medium rounded flex relative h-0 pt-5"
         }
         onClick={() => {
-          if (isEditing){
+          if (isEditing) {
             updateSubmit(
-              document.getElementById("markdownHolder " + message.id)!.innerHTML
+              document.getElementById("markdownHolder " + message.id)!
+                .innerHTML,
             );
           }
           setIsEditing(!isEditing);

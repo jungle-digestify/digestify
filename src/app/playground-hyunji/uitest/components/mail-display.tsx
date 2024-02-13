@@ -1,7 +1,7 @@
 // import addDays from "date-fns/addDays"
 // import addHours from "date-fns/addHours"
-import format from "date-fns/format"
-import nextSaturday from "date-fns/nextSaturday"
+import format from "date-fns/format";
+import nextSaturday from "date-fns/nextSaturday";
 import {
   Archive,
   ArchiveX,
@@ -11,45 +11,27 @@ import {
   Reply,
   ReplyAll,
   Trash2,
-} from "lucide-react"
+} from "lucide-react";
 
-import {
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from "../ui/dropdown-menu"
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "../ui/avatar"
-import { Button } from "../ui/button"
+import { DropdownMenuContent, DropdownMenuItem } from "../ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Button } from "../ui/button";
 // import { Calendar } from "@/registry/new-york/ui/calendar"
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu"
-import { Label } from "../ui/label"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "../ui/popover"
-import { Separator } from "../ui/separator"
-import { Switch } from "../ui/switch"
-import { Textarea } from "../ui/textarea"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "../ui/tooltip"
-import { Mail } from "../data"
+import { DropdownMenu, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import { Label } from "../ui/label";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Separator } from "../ui/separator";
+import { Switch } from "../ui/switch";
+import { Textarea } from "../ui/textarea";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import { Mail } from "../data";
 
 interface MailDisplayProps {
-  mail: Mail | null
+  mail: Mail | null;
 }
 
 export function MailDisplay({ mail }: MailDisplayProps) {
-  const today = new Date()
+  const today = new Date();
 
   return (
     <div className="flex h-full flex-col">
@@ -135,9 +117,7 @@ export function MailDisplay({ mail }: MailDisplayProps) {
                     </Button>
                   </div>
                 </div>
-                <div className="p-2">
-                  {/* <Calendar /> */}
-                </div>
+                <div className="p-2">{/* <Calendar /> */}</div>
               </PopoverContent>
             </Popover>
             <TooltipContent>Snooze</TooltipContent>
@@ -254,5 +234,5 @@ export function MailDisplay({ mail }: MailDisplayProps) {
         </div>
       )}
     </div>
-  )
+  );
 }

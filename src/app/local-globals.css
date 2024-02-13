@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -9,63 +9,63 @@
 
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
- 
+
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
- 
+
     --primary: 0 0% 9%;
     --primary-foreground: 0 0% 98%;
- 
+
     --secondary: 0 0% 96.1%;
     --secondary-foreground: 0 0% 9%;
- 
+
     --muted: 0 0% 96.1%;
     --muted-foreground: 0 0% 45.1%;
- 
+
     --accent: 0 0% 96.1%;
     --accent-foreground: 0 0% 9%;
- 
+
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
     --border: 0 0% 89.8%;
     --input: 0 0% 89.8%;
     --ring: 0 0% 3.9%;
- 
+
     --radius: 0.5rem;
   }
- 
+
   .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
- 
+
     --card: 0 0% 3.9%;
     --card-foreground: 0 0% 98%;
- 
+
     --popover: 0 0% 3.9%;
     --popover-foreground: 0 0% 98%;
- 
+
     --primary: 0 0% 98%;
     --primary-foreground: 0 0% 9%;
- 
+
     --secondary: 0 0% 14.9%;
     --secondary-foreground: 0 0% 98%;
- 
+
     --muted: 0 0% 14.9%;
     --muted-foreground: 0 0% 63.9%;
- 
+
     --accent: 0 0% 14.9%;
     --accent-foreground: 0 0% 98%;
- 
+
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
- 
+
     --border: 0 0% 14.9%;
     --input: 0 0% 14.9%;
     --ring: 0 0% 83.1%;
   }
 }
- 
+
 @layer base {
   * {
     @apply border-border;
@@ -73,7 +73,7 @@
   body {
     @apply bg-background text-foreground;
   }
-  
+
   ul {
     @apply list-disc list-outside ml-5;
   }
@@ -82,41 +82,41 @@
   }
 }
 
-@keyframes fade-in{
-  0%{
+@keyframes fade-in {
+  0% {
     opacity: 0;
   }
-  100%{
+  100% {
     opacity: 1;
   }
 }
 
-.ChatHeader{
+.ChatHeader {
   background-color: black;
   color: white;
 }
-*{
-  background-color: #43484C;
+* {
+  background-color: #43484c;
 }
 /* .header, .main, .footer{
   border: 2px solid white;
   box-sizing: border-box;     
 } */
 
-.header{
+.header {
   height: 10%;
   align-items: center;
   display: flex;
 }
-.main{
+.main {
   height: 80%;
   width: 100%;
 }
-.footer{
+.footer {
   height: 10%;
 }
 
-.aiBtn{
+.aiBtn {
   background-color: #efb2fe;
   color: white;
   padding: 0.5rem 1rem;
@@ -126,25 +126,25 @@
   display: flex;
   align-items: center;
 }
-.TeamSelectBtnUp{
+.TeamSelectBtnUp {
   display: flex;
 }
-.TeamSelectDiv{
+.TeamSelectDiv {
   /* background-color: #232323; */
   /* color:white; */
-  margin-left : 30px;
+  margin-left: 30px;
   position: relative;
   display: flex;
 }
-.form-group{
+.form-group {
   display: flex;
   flex-direction: row-reverse;
-  margin-right : 30px;
+  margin-right: 30px;
 }
-.SearchBtn{
+.SearchBtn {
   animation: fade-in 1s;
-} 
-.SearchInput{
+}
+.SearchInput {
   background-color: #232323;
   height: 32px;
   color: white;
@@ -160,7 +160,7 @@
   position: relative;
   /* color: black; */
   animation: fade-in 1s;
-  background-color: #43484C;
+  background-color: #43484c;
 }
 
 .dropdown button {
@@ -191,12 +191,11 @@
   cursor: pointer;
   background-color: rgb(240, 240, 240);
   border-bottom: 1px solid;
-  
 }
-.dropdown li:first-child{
+.dropdown li:first-child {
   border-radius: 10px 10px 0 0;
 }
-.dropdown li:last-child{
+.dropdown li:last-child {
   border-radius: 0px 0px 10px 10px;
 }
 .dropdown li:hover {
@@ -206,22 +205,20 @@
 .dropdown .active ul {
   display: block;
   border-radius: 20px;
-  
 }
-
 
 /* Drop Down */
 
-.chatlistUp{
-  border: 20px solid rgba(0,0,0,0);;
+.chatlistUp {
+  border: 20px solid rgba(0, 0, 0, 0);
   border-radius: 20px;
   /* width: 100%;
   height: 100%; */
 }
-.chatlist{
+.chatlist {
   /* display: flex;
   flex-direction: column; */
-  border: 20px solid rgba(0,0,0,0);;
+  border: 20px solid rgba(0, 0, 0, 0);
   border-radius: 20px;
   /* padding: 10px; */
   background-color: #232323;
@@ -233,39 +230,36 @@
   overflow-x: hidden;
   overflow-y: scroll;
 }
-.chatlist *{
-
+.chatlist * {
   background-color: #232323;
   color: white;
   /* border: ; */
   border-radius: 25px;
   box-sizing: border-box;
-
 }
 
-.ChatContentUp{
-  border: 20px solid rgba(0,0,0,0);;
+.ChatContentUp {
+  border: 20px solid rgba(0, 0, 0, 0);
   border-radius: 20px;
   box-sizing: border-box;
   width: 100%;
   height: 80%;
 }
-.ChatContentUp *{
+.ChatContentUp * {
   background-color: #232323;
-
 }
 
-.ChatContent{
+.ChatContent {
   background-color: #232323;
-  color:white;
+  color: white;
   box-sizing: border-box;
   border-radius: 20px;
-  border: 10px solid rgba(0,0,0,0);
+  border: 10px solid rgba(0, 0, 0, 0);
   animation: fade-in 1s;
 }
-.ChatContentDown ul{
+.ChatContentDown ul {
   list-style-type: circle;
-} 
+}
 
 /* 채팅 넘으면 자동으로 스크롤 못하나~? */
 /* @keyframes scrollAnimation{
@@ -278,39 +272,38 @@
 } */
 
 /* 입력창 숨기기 */
-.ExpandingInput{
+.ExpandingInput {
   display: none;
-  
 }
-.ExpandingInput textarea{
+.ExpandingInput textarea {
   /* height: 56px; */
 }
-.MetaDataUp{
-  border: 20px solid rgba(0,0,0,0);
-  
+.MetaDataUp {
+  border: 20px solid rgba(0, 0, 0, 0);
+
   border-radius: 20px;
   box-sizing: border-box;
   height: 20%;
   width: 100%;
 }
-.MetaData{
+.MetaData {
   animation: fade-in 1s;
   background-color: #232323;
   box-sizing: border-box;
   border-radius: 20px;
-  border: 20px solid rgba(0,0,0,0) ;
-  color : white;
+  border: 20px solid rgba(0, 0, 0, 0);
+  color: white;
 }
 
-.ChatlistDiv{
+.ChatlistDiv {
   height: 100%;
   width: 25%;
 }
-.ChatContentDiv{
+.ChatContentDiv {
   width: 85%;
   height: 100%;
 }
-.ChatContentDiv2{
+.ChatContentDiv2 {
   width: 100%;
 }
 
@@ -319,48 +312,47 @@
   .ChatlistDiv {
     display: none;
   }
-  
+
   .ChatContentDiv {
     width: 100%;
-
   }
 }
 
-@keyframes fade-in{
-  0%{
+@keyframes fade-in {
+  0% {
     opacity: 0;
   }
-  100%{
+  100% {
     opacity: 1;
   }
 }
 /* 01.25 */
-.ChatHeader{
+.ChatHeader {
   background-color: black;
   color: white;
 }
-*{
-  background-color: #43484C;
+* {
+  background-color: #43484c;
 }
 /* .header, .main, .footer{
   border: 2px solid white;
   box-sizing: border-box;     
 } */
 
-.header{
+.header {
   height: 10%;
   align-items: center;
   display: flex;
 }
-.main{
+.main {
   height: 80%;
   width: 100%;
 }
-.footer{
+.footer {
   height: 10%;
 }
 
-.aiBtn{
+.aiBtn {
   background-color: #efb2fe;
   color: white;
   padding: 0.5rem 1rem;
@@ -368,23 +360,23 @@
   margin-left: 30px;
 }
 
-.TeamSelectDiv{
+.TeamSelectDiv {
   /* background-color: #232323; */
   /* color:white; */
-  margin-left : 30px;
+  margin-left: 30px;
   position: relative;
   display: flex;
   height: 40px;
 }
-.form-group{
+.form-group {
   display: flex;
   flex-direction: row-reverse;
-  margin-right : 30px;
+  margin-right: 30px;
 }
-.SearchBtn{
+.SearchBtn {
   animation: fade-in 1s;
-} 
-.SearchInput{
+}
+.SearchInput {
   background-color: #232323;
   height: 32px;
   color: white;
@@ -400,7 +392,7 @@
   position: relative;
   /* color: black; */
   animation: fade-in 1s;
-  background-color: #43484C;
+  background-color: #43484c;
 }
 
 .dropdown button {
@@ -431,12 +423,11 @@
   cursor: pointer;
   background-color: rgb(240, 240, 240);
   border-bottom: 1px solid;
-  
 }
-.dropdown li:first-child{
+.dropdown li:first-child {
   border-radius: 10px 10px 0 0;
 }
-.dropdown li:last-child{
+.dropdown li:last-child {
   border-radius: 0px 0px 10px 10px;
 }
 .dropdown li:hover {
@@ -446,18 +437,16 @@
 .dropdown .active ul {
   display: block;
   border-radius: 20px;
-  
 }
-
 
 /* Drop Down */
 
-.chatlistUp{
-  border: 20px solid rgba(0,0,0,0);;
+.chatlistUp {
+  border: 20px solid rgba(0, 0, 0, 0);
   border-radius: 20px;
 }
-.chatlist{
-  border: 20px solid rgba(0,0,0,0);;
+.chatlist {
+  border: 20px solid rgba(0, 0, 0, 0);
   border-radius: 20px;
   /* padding: 10px; */
   background-color: #232323;
@@ -467,48 +456,43 @@
   height: 100%;
   animation: fade-in 1s;
 }
-.chatlist *{
-
+.chatlist * {
   background-color: #232323;
   color: white;
   /* border: ; */
   border-radius: 25px;
   box-sizing: border-box;
-
 }
 
-.ChatContentUp{
-  border: 20px solid rgba(0,0,0,0);;
+.ChatContentUp {
+  border: 20px solid rgba(0, 0, 0, 0);
   border-radius: 20px;
   box-sizing: border-box;
   width: 100%;
   height: 80%;
 }
-.ChatContentUp2{
-  border: 20px solid rgba(0,0,0,0);;
+.ChatContentUp2 {
+  border: 20px solid rgba(0, 0, 0, 0);
   border-radius: 20px;
   box-sizing: border-box;
   width: 100%;
   height: 100%;
-
 }
-.ChatContentUp *{
+.ChatContentUp * {
   background-color: #232323;
-
 }
 
-
-.ChatContent2{
+.ChatContent2 {
   background-color: #232323;
-  color:white;
+  color: white;
   box-sizing: border-box;
   border-radius: 20px;
-  border: 10px solid rgba(0,0,0,0);
+  border: 10px solid rgba(0, 0, 0, 0);
   animation: fade-in 1s;
 }
-.ChatContentDown ul{
+.ChatContentDown ul {
   list-style-type: circle;
-} 
+}
 
 /* 채팅 넘으면 자동으로 스크롤 못하나~? */
 /* @keyframes scrollAnimation{
@@ -521,37 +505,36 @@
 } */
 
 /* 입력창 숨기기 */
-.ExpandingInput{
+.ExpandingInput {
   display: none;
-  
 }
 
-.MetaDataUp{
-  border: 20px solid rgba(0,0,0,0);
-  
+.MetaDataUp {
+  border: 20px solid rgba(0, 0, 0, 0);
+
   border-radius: 20px;
   box-sizing: border-box;
   height: 20%;
   width: 100%;
 }
-.MetaData{
+.MetaData {
   animation: fade-in 1s;
   background-color: #232323;
   box-sizing: border-box;
   border-radius: 20px;
-  border: 20px solid rgba(0,0,0,0) ;
-  color : white;
+  border: 20px solid rgba(0, 0, 0, 0);
+  color: white;
 }
 
-.ChatlistDiv{
+.ChatlistDiv {
   height: 100%;
   width: 20%;
 }
-.ChatContentDiv{
+.ChatContentDiv {
   width: 79%;
   height: 100%;
 }
-.ChatContentDiv2{
+.ChatContentDiv2 {
   width: 100%;
 }
 
@@ -560,33 +543,31 @@
   .ChatlistDiv {
     display: none;
   }
-  
+
   .ChatContentDiv {
     width: 100%;
-
   }
-
 }
 
 /* video */
-.videoPlayer2{
+.videoPlayer2 {
   background-color: #232323;
 }
-.oriVideo{
+.oriVideo {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.oriVideo2{
+.oriVideo2 {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
   /* align-items: center; */
   background-color: #232323;
 }
-.ori_video{
-  border: 10px solid #43484C;
+.ori_video {
+  border: 10px solid #43484c;
   border-radius: 5px;
   box-sizing: border-box;
   display: flex;
@@ -594,25 +575,25 @@
   align-items: center;
   /* justify-content: center; */
 }
-.video_title{
+.video_title {
   width: 280px;
   text-overflow: ellipsis;
   /* overflow: hidden; */
   /* white-space: nowrap; */
 }
-.shortVideo{
+.shortVideo {
   display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-.short{
+.short {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.timeLine{
+.timeLine {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -620,20 +601,21 @@
   flex-wrap: wrap;
 }
 
-.showTimeLine{
-  color: #43484C;
+.showTimeLine {
+  color: #43484c;
   background-color: #a6b4c3;
   /* border: 2px solid #aebecd; */
   border-radius: 8px;
   box-sizing: border-box;
 
-  padding: 3px 8px; 
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); 
+  padding: 3px 8px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   animation: fade-in 1s;
 }
 
-.showTimeLine:hover, .showTimeLine:focus {
+.showTimeLine:hover,
+.showTimeLine:focus {
   background-color: #e6f0fd;
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
 }

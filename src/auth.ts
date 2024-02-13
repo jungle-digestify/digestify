@@ -53,35 +53,32 @@ export const {
         if (user.id === undefined) return false;
         const existingUser = await getUserById(user.id);
         if (!existingUser) return false;
-        if (!existingUser.defaultWorkspace){
+        if (!existingUser.defaultWorkspace) {
           const space = await db
-          .insert(workspace) //개인 스페이스 생성
-          .values(
-            {
-              name:"personalSpace",
-              description:"personalSpace",
-              type: "personal"
-            }
-          ).returning()
+            .insert(workspace) //개인 스페이스 생성
+            .values({
+              name: "personalSpace",
+              description: "personalSpace",
+              type: "personal",
+            })
+            .returning();
 
           await db // 유저 테이블에 개인 스페이스 넣기
             .update(users)
             .set({ defaultWorkspace: space[0].id })
-            .where(eq(users.id, String(existingUser.id)))
+            .where(eq(users.id, String(existingUser.id)));
 
           await db // userInSpace 관계 넣기
-          .insert(userInWorkspace)
-          .values(
-              {
-                workspaceId:space[0].id,
-                userId:existingUser.id,
-                isHost:true,
-                accept:true
-              }
-          )
+            .insert(userInWorkspace)
+            .values({
+              workspaceId: space[0].id,
+              userId: existingUser.id,
+              isHost: true,
+              accept: true,
+            });
         }
-        return true
-      };
+        return true;
+      }
       if (user.id === undefined) return false;
       const existingUser = await getUserById(user.id);
       // Prevent sign in without email verification
@@ -89,44 +86,41 @@ export const {
 
       if (existingUser.isTwoFactorEnabled) {
         const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(
-          existingUser.id
+          existingUser.id,
         );
 
         if (!twoFactorConfirmation) return false;
-      
+
         // Delete two factor confirmation for next sign in
         await db
           .delete(twoFactorConfirmationTable)
           .where(eq(twoFactorConfirmationTable.id, twoFactorConfirmation.id));
       }
-      if (!existingUser.defaultWorkspace){
+      if (!existingUser.defaultWorkspace) {
         const space = await db
-        .insert(workspace) //개인 스페이스 생성
-        .values(
-          {
-            name:"personalSpace",
-            description:"personalSpace",
-            type: "personal"
-          }
-        ).returning()
+          .insert(workspace) //개인 스페이스 생성
+          .values({
+            name: "personalSpace",
+            description: "personalSpace",
+            type: "personal",
+          })
+          .returning();
 
         await db // 유저 테이블에 개인 스페이스 넣기
           .update(users)
           .set({ defaultWorkspace: space[0].id })
-          .where(eq(users.id, String(existingUser.id)))
-          
+          .where(eq(users.id, String(existingUser.id)));
+
         await db // userInSpace 관계 넣기
-        .insert(userInWorkspace)
-        .values(
-            {
-              workspaceId:space[0].id,
-              userId:existingUser.id,
-              isHost:true,
-              accept:true
-            }
-        )
+          .insert(userInWorkspace)
+          .values({
+            workspaceId: space[0].id,
+            userId: existingUser.id,
+            isHost: true,
+            accept: true,
+          });
       }
-      
+
       return true;
     },
     async session({ token, session }) {

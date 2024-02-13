@@ -14,7 +14,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "../ui/navigation-menu";
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -24,16 +24,16 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { workspace, userInWorkspace, } from "../../db/schema"
-import React, { useState, useRef } from 'react';
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { workspace, userInWorkspace } from "../../db/schema";
+import React, { useState, useRef } from "react";
 import { Toaster, toast as sonnerToast } from "sonner";
 import { desc } from "drizzle-orm";
 import { auth } from "@/auth";
-import { useToast } from "@/components/ui/use-toast"
-import { ToastAction } from "@/components/ui/toast"
+import { useToast } from "@/components/ui/use-toast";
+import { ToastAction } from "@/components/ui/toast";
 import { TeamInviteButton } from "@/app/playground-hjin/[...params]/components/teamInviteButton";
 import {
   Menubar,
@@ -43,7 +43,7 @@ import {
   MenubarSeparator,
   MenubarShortcut,
   MenubarTrigger,
-} from "@/components/ui/menubar"
+} from "@/components/ui/menubar";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -54,11 +54,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-import { CopyIcon } from "@radix-ui/react-icons"
+} from "@/components/ui/alert-dialog";
+import { CopyIcon } from "@radix-ui/react-icons";
 import { db } from "@/db";
-
-
 
 const font = Poppins({
   subsets: ["latin"],
@@ -71,133 +69,129 @@ type TeamSpace = {
 };
 
 export async function sendContactEmail(sender: any) {
-  const response = await fetch('/api/team/invite', {
-      method: 'POST',
-      body: JSON.stringify(sender),
-      headers: {
-      'Content-Type': 'application/json',
-      },
+  const response = await fetch("/api/team/invite", {
+    method: "POST",
+    body: JSON.stringify(sender),
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
 
   const data = await response.json();
 
   if (!response.ok) {
-      throw new Error(data.message || '서버 요청에 실패함');
+    throw new Error(data.message || "서버 요청에 실패함");
   }
 
-  console.log("response:",response)
+  console.log("response:", response);
 
   return data;
 }
 
-export function MainNav({currentUserPersonalSpace, currentUserTeamSpace} : 
-  {currentUserPersonalSpace:string | null ,
-   currentUserTeamSpace: TeamSpace[] | null }) {
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const { toast } = useToast()
+export function MainNav({
+  currentUserPersonalSpace,
+  currentUserTeamSpace,
+}: {
+  currentUserPersonalSpace: string | null;
+  currentUserTeamSpace: TeamSpace[] | null;
+}) {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const { toast } = useToast();
 
-    const handleTitleChange = (e:any) => {
-      setTitle(e.target.value);
-    };
-    const [guestEmail, setEmail] = useState('');
-    const handleEmailChange = (e: any) => {
-      setEmail(e.target.value);
-    };
-  
-    const handleDescriptionChange = (e: any) => {
-      setDescription(e.target.value);
-    };
-    
-    const onClickCreate = async () => {
-        console.log("clicked!")
-        const body = JSON.stringify({ title:title, description:description});
-        try {
-          await fetch("/api/team/create", {
-            method: "POST",
-            body: body,
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-        } catch (error: any) {
-            toast({
-              variant: "destructive",
-              title: "팀 생성에 실패하였습니다.",
-              description: "다시 시도해보시겠어요?",
-              action: <ToastAction altText="Try again">Try again</ToastAction>,
-            })
-            return 
-        }
-        sonnerToast("팀 생성이 완료되었습니다!", {
-          description: "친구를 초대하여 협업해보세요",
-          action: {
-            label: "OK",
-            onClick: () => console.log("OK"),
-          },
-        })
-  }
-    
+  const handleTitleChange = (e: any) => {
+    setTitle(e.target.value);
+  };
+  const [guestEmail, setEmail] = useState("");
+  const handleEmailChange = (e: any) => {
+    setEmail(e.target.value);
+  };
+
+  const handleDescriptionChange = (e: any) => {
+    setDescription(e.target.value);
+  };
+
+  const onClickCreate = async () => {
+    console.log("clicked!");
+    const body = JSON.stringify({ title: title, description: description });
+    try {
+      await fetch("/api/team/create", {
+        method: "POST",
+        body: body,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "팀 생성에 실패하였습니다.",
+        description: "다시 시도해보시겠어요?",
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      });
+      return;
+    }
+    sonnerToast("팀 생성이 완료되었습니다!", {
+      description: "친구를 초대하여 협업해보세요",
+      action: {
+        label: "OK",
+        onClick: () => console.log("OK"),
+      },
+    });
+  };
 
   const onClickLeave = async () => {
-    return
-  }
+    return;
+  };
   const onClickDelete = async () => {
-    return
-  }
+    return;
+  };
   const onClickConsole = () => {
-    console.log("clicked!")
-  }
+    console.log("clicked!");
+  };
 
   const onClickInvite = async () => {
-    const sender={
-        to : guestEmail,
-        from : process.env.USER_EMAIL,
-        html : "<p>안녕하세요. 내용입니다.</p>", // 잘 바꾸면 이쁨 
-        subject : "안녕하세요. 제목입니다."
-    }
-    sendContactEmail(sender)
+    const sender = {
+      to: guestEmail,
+      from: process.env.USER_EMAIL,
+      html: "<p>안녕하세요. 내용입니다.</p>", // 잘 바꾸면 이쁨
+      subject: "안녕하세요. 제목입니다.",
+    };
+    sendContactEmail(sender);
 
-    
     try {
-      const body = JSON.stringify({ title:title, description:description});
-      
+      const body = JSON.stringify({ title: title, description: description });
     } catch (error: any) {
-        toast({
-          variant: "destructive",
-          title: "팀 생성에 실패하였습니다.",
-          description: "다시 시도해보시겠어요?",
-          action: <ToastAction altText="Try again">Try again</ToastAction>,
-        })
-        return 
-    }
-    
-    sonnerToast("초대가 완료되었습니다!", {
-        description: "상대방이 초대를 수락하면 팀으로 합류합니다.",
-        action: {
-          label: "OK",
-          onClick: () => console.log("OK"),
-        },
-      })
+      toast({
+        variant: "destructive",
+        title: "팀 생성에 실패하였습니다.",
+        description: "다시 시도해보시겠어요?",
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      });
+      return;
     }
 
+    sonnerToast("초대가 완료되었습니다!", {
+      description: "상대방이 초대를 수락하면 팀으로 합류합니다.",
+      action: {
+        label: "OK",
+        onClick: () => console.log("OK"),
+      },
+    });
+  };
 
   return (
     <div className="flex items-center space-x-2 lg:space-x-6">
       <CustomLink href="/playground-hjin">
-        
-        <span className={cn(
-            "font-semibold text-2xl",
-            font.className,
-          )}>
-            Digest
-          </span>
+        <span className={cn("font-semibold text-2xl", font.className)}>
+          Digest
+        </span>
       </CustomLink>
       <NavigationMenu>
         <NavigationMenuList>
-        <NavigationMenuItem>
+          <NavigationMenuItem>
             <NavigationMenuLink
-                href={`/playground-hjin/${currentUserPersonalSpace}`}
+              href={`/playground-hjin/${currentUserPersonalSpace}`}
               className={navigationMenuTriggerStyle()}
             >
               개인 스페이스
@@ -205,107 +199,137 @@ export function MainNav({currentUserPersonalSpace, currentUserTeamSpace} :
           </NavigationMenuItem>
           <NavigationMenuItem>
             <NavigationMenuTrigger>팀 스페이스</NavigationMenuTrigger>
-            <NavigationMenuContent className="overflow-y-scroll" style={{ maxHeight: '400px' }}>
+            <NavigationMenuContent
+              className="overflow-y-scroll"
+              style={{ maxHeight: "400px" }}
+            >
               <ul className="grid gap-3 p-6 md:w-[500px] lg:w-[500px] lg:grid-cols-[1fr]">
-              {currentUserTeamSpace ? (
-                  currentUserTeamSpace.map(teamSpace => (
+                {currentUserTeamSpace ? (
+                  currentUserTeamSpace.map((teamSpace) => (
                     <Menubar className="md:w-[500px] lg:w-[450px] md:h-[100px] ">
-                        <MenubarMenu >
-                          <MenubarTrigger className="sm:w-[10px] lg:w-[10px]">
-                            <Button className="sm:w-[20px] lg:h-[98px] md:h-[98px] bg-white text-primary-foreground text-black hover:bg-black hover:text-white">⠿
-                            </Button>
-                          </MenubarTrigger>
-                          <ListItem
-                                  key={teamSpace.id} // 고유한 key prop으로 id 사용
-                                  href={`/playground-hjin/${teamSpace.id}`} // 팀 스페이스의 Id를 사용하여 href 설정
-                                  title={teamSpace.name} // 팀 스페이스의 title 설정
-                                  className="md:w-[500px] lg:w-[417px] md:h-[100px]"
-                                >
-                                  {teamSpace.description}
-                                </ListItem>
-                          <MenubarContent>
-                            <>
-                              <Dialog>
-                                <DialogTrigger asChild>
-                                <Button className="sm:w-[180px] bg-white text-primary-foreground text-black hover:bg-black hover:text-white">팀 스페이스 초대</Button>
-                                  </DialogTrigger>
-                                  <DialogContent className="sm:max-w-[425px]">
-                                    <DialogHeader>
-                                      <DialogTitle>팀 스페이스 초대</DialogTitle>
-                                      <DialogDescription>
-                                        이메일을 입력하여 초대하세요! 메일로 초대장이 발송됩니다.
-                                      </DialogDescription>
-                                    </DialogHeader>
-                                    <div className="grid gap-4 py-4">
-                                      <div className="grid grid-cols-4 items-center gap-4">
-                                        <Label htmlFor="email" className="text-right">
-                                          Email
-                                        </Label>
-                                        <Input id="email" placeholder="email" className="col-span-3" onChange={handleEmailChange}/>
-                                      </div>
-                                      
-                                    </div>
-                                    <DialogFooter>
-                                        <Button onClick={onClickInvite}>초대하기</Button>
-                                    </DialogFooter>
-                                  </DialogContent>
-                                  </Dialog>
-                                <Toaster />
-                            </>
-                            <MenubarSeparator />
-                            <AlertDialog>
-                              <AlertDialogTrigger>
-                                <Button className="sm:w-[180px] bg-white text-primary-foreground text-black hover:bg-black hover:text-white">팀 스페이스 탈퇴하기
+                      <MenubarMenu>
+                        <MenubarTrigger className="sm:w-[10px] lg:w-[10px]">
+                          <Button className="sm:w-[20px] lg:h-[98px] md:h-[98px] bg-white text-primary-foreground text-black hover:bg-black hover:text-white">
+                            ⠿
+                          </Button>
+                        </MenubarTrigger>
+                        <ListItem
+                          key={teamSpace.id} // 고유한 key prop으로 id 사용
+                          href={`/playground-hjin/${teamSpace.id}`} // 팀 스페이스의 Id를 사용하여 href 설정
+                          title={teamSpace.name} // 팀 스페이스의 title 설정
+                          className="md:w-[500px] lg:w-[417px] md:h-[100px]"
+                        >
+                          {teamSpace.description}
+                        </ListItem>
+                        <MenubarContent>
+                          <>
+                            <Dialog>
+                              <DialogTrigger asChild>
+                                <Button className="sm:w-[180px] bg-white text-primary-foreground text-black hover:bg-black hover:text-white">
+                                  팀 스페이스 초대
                                 </Button>
-                              </AlertDialogTrigger>
+                              </DialogTrigger>
+                              <DialogContent className="sm:max-w-[425px]">
+                                <DialogHeader>
+                                  <DialogTitle>팀 스페이스 초대</DialogTitle>
+                                  <DialogDescription>
+                                    이메일을 입력하여 초대하세요! 메일로
+                                    초대장이 발송됩니다.
+                                  </DialogDescription>
+                                </DialogHeader>
+                                <div className="grid gap-4 py-4">
+                                  <div className="grid grid-cols-4 items-center gap-4">
+                                    <Label
+                                      htmlFor="email"
+                                      className="text-right"
+                                    >
+                                      Email
+                                    </Label>
+                                    <Input
+                                      id="email"
+                                      placeholder="email"
+                                      className="col-span-3"
+                                      onChange={handleEmailChange}
+                                    />
+                                  </div>
+                                </div>
+                                <DialogFooter>
+                                  <Button onClick={onClickInvite}>
+                                    초대하기
+                                  </Button>
+                                </DialogFooter>
+                              </DialogContent>
+                            </Dialog>
+                            <Toaster />
+                          </>
+                          <MenubarSeparator />
+                          <AlertDialog>
+                            <AlertDialogTrigger>
+                              <Button className="sm:w-[180px] bg-white text-primary-foreground text-black hover:bg-black hover:text-white">
+                                팀 스페이스 탈퇴하기
+                              </Button>
+                            </AlertDialogTrigger>
 
-                              <AlertDialogContent>
-                                <AlertDialogHeader>
-                                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                                  <AlertDialogDescription>
-                                    This action cannot be undone. This will permanently delete your account
-                                    and remove your data from our servers.
-                                  </AlertDialogDescription>
-                                </AlertDialogHeader>
-                                <AlertDialogFooter>
-                                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                  <AlertDialogAction>Continue</AlertDialogAction>
-                                </AlertDialogFooter>
-                              </AlertDialogContent>
-                            </AlertDialog>
-                            <MenubarSeparator />
-                            <>
-                              <Dialog>
-                                <DialogTrigger asChild>
-                                  <Button className="sm:w-[180px] bg-white text-primary-foreground text-black hover:bg-black hover:text-white">팀 스페이스 삭제하기</Button>
-                                  </DialogTrigger>
-                                  <DialogContent className="sm:max-w-[425px]">
-                                    <DialogHeader>
-                                      <DialogTitle>팀 스페이스 초대</DialogTitle>
-                                      <DialogDescription>
-                                        이메일을 입력하여 초대하세요! 메일로 초대장이 발송됩니다.
-                                      </DialogDescription>
-                                    </DialogHeader>
-                                    <div className="grid gap-4 py-4">
-                                      <div className="grid grid-cols-4 items-center gap-4">
-                                        <Label htmlFor="email" className="text-right">
-                                          Email
-                                        </Label>
-                                        <Input id="email" placeholder="email" className="col-span-3" />
-                                      </div>
-                                      
-                                    </div>
-                                    <DialogFooter>
-                                        <Button onClick={onClickInvite}>초대하기</Button>
-                                    </DialogFooter>
-                                  </DialogContent>
-                                  </Dialog>
-                                <Toaster />
-                            </>
-                          </MenubarContent>
-                        </MenubarMenu>
-                      </Menubar>
-                  
+                            <AlertDialogContent>
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>
+                                  Are you absolutely sure?
+                                </AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  This action cannot be undone. This will
+                                  permanently delete your account and remove
+                                  your data from our servers.
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction>Continue</AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
+                          <MenubarSeparator />
+                          <>
+                            <Dialog>
+                              <DialogTrigger asChild>
+                                <Button className="sm:w-[180px] bg-white text-primary-foreground text-black hover:bg-black hover:text-white">
+                                  팀 스페이스 삭제하기
+                                </Button>
+                              </DialogTrigger>
+                              <DialogContent className="sm:max-w-[425px]">
+                                <DialogHeader>
+                                  <DialogTitle>팀 스페이스 초대</DialogTitle>
+                                  <DialogDescription>
+                                    이메일을 입력하여 초대하세요! 메일로
+                                    초대장이 발송됩니다.
+                                  </DialogDescription>
+                                </DialogHeader>
+                                <div className="grid gap-4 py-4">
+                                  <div className="grid grid-cols-4 items-center gap-4">
+                                    <Label
+                                      htmlFor="email"
+                                      className="text-right"
+                                    >
+                                      Email
+                                    </Label>
+                                    <Input
+                                      id="email"
+                                      placeholder="email"
+                                      className="col-span-3"
+                                    />
+                                  </div>
+                                </div>
+                                <DialogFooter>
+                                  <Button onClick={onClickInvite}>
+                                    초대하기
+                                  </Button>
+                                </DialogFooter>
+                              </DialogContent>
+                            </Dialog>
+                            <Toaster />
+                          </>
+                        </MenubarContent>
+                      </MenubarMenu>
+                    </Menubar>
                   ))
                 ) : (
                   <>
@@ -313,51 +337,53 @@ export function MainNav({currentUserPersonalSpace, currentUserTeamSpace} :
                   </>
                 )}
               </ul>
-                <Dialog >
-                  <DialogTrigger asChild>
-                    <Button variant="outline" className="m-auto w-full">팀 스페이스 생성하기</Button>
-                  </DialogTrigger>
-                  <DialogContent className="sm:max-w-[425px]">
-                    <DialogHeader>
-                      <DialogTitle>팀 스페이스 만들기</DialogTitle>
-                      <DialogDescription>
-                        팀 스페이스를 만들고 친구를 초대하여 협업하세요!
-                      </DialogDescription>
-                    </DialogHeader>
-                    <div className="grid gap-4 py-4">
-                      <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="title" className="text-right">
-                          title
-                        </Label>
-                        <Input
-                          id="title"
-                          className="col-span-3"
-                          onChange={handleTitleChange}
-                        />
-                      </div>
-                      <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="desc" className="text-right">
-                          description
-                        </Label>
-                        <Input
-                          id="username"
-                          className="col-span-3"
-                          onChange={handleDescriptionChange}
-                        />
-                      </div>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline" className="m-auto w-full">
+                    팀 스페이스 생성하기
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle>팀 스페이스 만들기</DialogTitle>
+                    <DialogDescription>
+                      팀 스페이스를 만들고 친구를 초대하여 협업하세요!
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="grid gap-4 py-4">
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="title" className="text-right">
+                        title
+                      </Label>
+                      <Input
+                        id="title"
+                        className="col-span-3"
+                        onChange={handleTitleChange}
+                      />
                     </div>
-                    <DialogFooter>
-                      <Button type="submit" onClick={onClickCreate}>팀 스페이스 만들기</Button>
-                    </DialogFooter>
-                  </DialogContent>
-                </Dialog>
-              
-              
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="desc" className="text-right">
+                        description
+                      </Label>
+                      <Input
+                        id="username"
+                        className="col-span-3"
+                        onChange={handleDescriptionChange}
+                      />
+                    </div>
+                  </div>
+                  <DialogFooter>
+                    <Button type="submit" onClick={onClickCreate}>
+                      팀 스페이스 만들기
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
             </NavigationMenuContent>
           </NavigationMenuItem>
           <NavigationMenuItem>
             <NavigationMenuTrigger>팀 스페이스 가입</NavigationMenuTrigger>
-              <NavigationMenuContent>
+            <NavigationMenuContent>
               <Dialog>
                 <DialogTrigger asChild>
                   <Button variant="outline">Share</Button>
@@ -398,7 +424,7 @@ export function MainNav({currentUserPersonalSpace, currentUserTeamSpace} :
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
-    <Toaster />
+      <Toaster />
     </div>
   );
 }
@@ -414,7 +440,7 @@ const ListItem = React.forwardRef<
           ref={ref}
           className={cn(
             "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
+            className,
           )}
           {...props}
         >
@@ -424,7 +450,6 @@ const ListItem = React.forwardRef<
           </p>
         </a>
       </NavigationMenuLink>
-
     </li>
   );
 });

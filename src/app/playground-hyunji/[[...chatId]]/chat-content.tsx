@@ -13,12 +13,12 @@ import Tiptap from "@/components/Tiptap";
 import { PenBoxIcon } from "lucide-react";
 import rehypeRaw from "rehype-raw";
 
-import { Toggle } from "@/components/ui/toggle"
+import { Toggle } from "@/components/ui/toggle";
 import {
   FontBoldIcon,
   FontItalicIcon,
   UnderlineIcon,
-} from "@radix-ui/react-icons"
+} from "@radix-ui/react-icons";
 
 export default function ChatContent({
   createChat,
@@ -33,23 +33,23 @@ export default function ChatContent({
 }) {
   // console.log("initialAssistantResponse:",initialAssistantResponse)
   const [assisnantResponse, setAssistantResponse] = useState(
-    initialAssistantResponse
+    initialAssistantResponse,
   );
   const [isLoading, setIsLoading] = useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
   const [chatId, setChatId] = useState("");
-  const [isEditing, setIsEditing] = useState(false)
+  const [isEditing, setIsEditing] = useState(false);
   const [messageId, setMessageId] = useState("");
 
-  const updateSubmit = async (value: string)=> {
-    setIsLoading(true)
-    setMessageId(messageResponseId!.toString())
+  const updateSubmit = async (value: string) => {
+    setIsLoading(true);
+    setMessageId(messageResponseId!.toString());
 
-    let body = ""
-    body = JSON.stringify({ content: value, id: messageResponseId })
+    let body = "";
+    body = JSON.stringify({ content: value, id: messageResponseId });
 
     try {
-      abortControllerRef.current = new AbortController()
+      abortControllerRef.current = new AbortController();
       await fetch("/api/update", {
         method: "POST",
         body: body,
@@ -57,30 +57,29 @@ export default function ChatContent({
           "Content-Type": "application/json",
         },
         signal: abortControllerRef.current.signal,
-      })
+      });
     } catch (error: any) {
       if (error.name !== "AbortError") {
-        alert("Error sending message")
+        alert("Error sending message");
       }
     }
 
-    setIsLoading(false)
-  }
+    setIsLoading(false);
+  };
 
   const handleSubmit = async (value: string, file?: File) => {
     let currentChatId = chatId;
     if (!currentChatId) {
       // create a new chat in the database
       const chat = await createChat();
-      if(chat.id !==undefined) {
-
-      currentChatId = chat.id;
-      // and get the id and store it in state
-      setChatId(chat.id);
+      if (chat.id !== undefined) {
+        currentChatId = chat.id;
+        // and get the id and store it in state
+        setChatId(chat.id);
+      }
     }
-    }
 
-    setMessageId(messageResponseId!.toString())
+    setMessageId(messageResponseId!.toString());
     setIsLoading(true);
     setAssistantResponse("");
 
@@ -162,10 +161,14 @@ export default function ChatContent({
       <div className="h-full max-w-4xl w-full mx-auto flex-1 px-5 py-5 prose dark:prose-invert overflow-y-auto">
         {isEditing ? (
           <Tiptap
-            description={document.getElementById('markdownHolder ' + messageId)!.innerHTML}
-            onChange={(newRichText) => setAssistantResponse(newRichText)} id={messageId}          />
-        ):(
-          <div id={"markdownHolder "+messageId}>
+            description={
+              document.getElementById("markdownHolder " + messageId)!.innerHTML
+            }
+            onChange={(newRichText) => setAssistantResponse(newRichText)}
+            id={messageId}
+          />
+        ) : (
+          <div id={"markdownHolder " + messageId}>
             <Markdown
               remarkPlugins={[remarkGfm]}
               components={{
@@ -197,12 +200,21 @@ export default function ChatContent({
         )}
         {/* <button className={messageResponseId ? (isLoading ? ("hidden"):("px-4 py-2 ml-[95%] al font-medium rounded")):("hidden")} onClick={() => { if(isEditing) updateSubmit(document.getElementById('markdownHolder '+messageId)!.innerHTML);setIsEditing(!isEditing)}}><PenBoxIcon className="h-4 w-4" style={{fill: 'black'}}></PenBoxIcon></button> */}
         <div className="w-full flex justify-end">
-          <Toggle variant="outline" aria-label="Toggle italic"
-          onClick={() => { if(isEditing) updateSubmit(document.getElementById('markdownHolder '+messageId)!.innerHTML);setIsEditing(!isEditing)}}>
+          <Toggle
+            variant="outline"
+            aria-label="Toggle italic"
+            onClick={() => {
+              if (isEditing)
+                updateSubmit(
+                  document.getElementById("markdownHolder " + messageId)!
+                    .innerHTML,
+                );
+              setIsEditing(!isEditing);
+            }}
+          >
             <PenBoxIcon className="h-4 w-4" />
           </Toggle>
         </div>
-        
       </div>
       <ChatInput
         onSubmit={handleSubmit}

@@ -7,23 +7,22 @@ import { currentUser, getCurrentUserPersonalSpace } from "@/lib/auth";
 import { generateRandomString } from "@/lib/utils";
 import { eq } from "drizzle-orm";
 import { revalidateTag } from "next/cache";
-import {error} from "console"
+import { error } from "console";
 import { VideoDetails } from "youtube-caption-extractor";
 
 export async function createChat({
   videoDetails,
   videoURL,
 }: {
-  videoDetails?: VideoDetails|undefined;
-  videoURL?: string|undefined;
+  videoDetails?: VideoDetails | undefined;
+  videoURL?: string | undefined;
 }) {
-
   const user = await currentUser();
 
   const currentUserPersonalSpace = await getCurrentUserPersonalSpace();
   if (!user) {
-    console.log("unauthorized")
-    throw error("Unauthorized")
+    console.log("unauthorized");
+    throw error("Unauthorized");
   }
 
   const [result] = await db
@@ -37,7 +36,7 @@ export async function createChat({
 
   revalidateTag("get-chats-for-chat-list");
 
-  return result
+  return result;
 }
 
 export type CreateChat = typeof createChat;

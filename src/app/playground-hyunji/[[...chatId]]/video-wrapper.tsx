@@ -32,7 +32,7 @@ export default async function VideoWrapper({
     .select()
     .from(messagesTable)
     .where(
-      and(eq(messagesTable.chatId, chatId), eq(messagesTable.role, "system"))
+      and(eq(messagesTable.chatId, chatId), eq(messagesTable.role, "system")),
     )
     .orderBy(desc(messagesTable.createdAt));
 

@@ -1,42 +1,42 @@
 {
-    "name": "Local extension",
-    "version": "0.1.3",
-    "description": "Saving timestamps in YT videos",
-    "permissions": ["storage", "tabs","cookies"],
-    "host_permissions": ["<all_urls>"],
-    "background": {
-      "service_worker": "background.js"
+  "name": "Local extension",
+  "version": "0.1.3",
+  "description": "Saving timestamps in YT videos",
+  "permissions": ["storage", "tabs", "cookies"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["contentScript.js"],
+      "type": "module"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/bookmark.png",
+        "assets/play.png",
+        "assets/delete.png",
+        "assets/save.png",
+        "assets/d-icon.png"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "action": {
+    "default_icon": {
+      "16": "assets/d-icon.png",
+      "24": "assets/d-icon.png",
+      "32": "assets/d-icon.png"
     },
-    "content_scripts": [
-      {
-        "matches": ["<all_urls>"],
-        "js": ["contentScript.js"],
-        "type": "module"
-      }
-    ],
-    "content_security_policy": {
-      "extension_pages": "script-src 'self'; object-src 'self';"
-    },
-    "web_accessible_resources": [
-      {
-        "resources": [
-          "assets/bookmark.png",
-          "assets/play.png",
-          "assets/delete.png",
-          "assets/save.png",
-          "assets/d-icon.png"
-        ],
-        "matches": ["<all_urls>"]
-      }
-    ],
-    "action": {
-      "default_icon": {
-        "16": "assets/d-icon.png",
-        "24": "assets/d-icon.png",
-        "32": "assets/d-icon.png"
-      },
-      "default_title": "My YT Bookmarks",
-      "default_popup": "popup.html"
-    },
-    "manifest_version": 3
+    "default_title": "My YT Bookmarks",
+    "default_popup": "popup.html"
+  },
+  "manifest_version": 3
 }

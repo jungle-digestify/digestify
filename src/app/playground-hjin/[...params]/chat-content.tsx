@@ -26,23 +26,23 @@ export default function ChatContent({
 }) {
   // console.log("initialAssistantResponse:",initialAssistantResponse)
   const [assisnantResponse, setAssistantResponse] = useState(
-    initialAssistantResponse
+    initialAssistantResponse,
   );
   const [isLoading, setIsLoading] = useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
   const [chatId, setChatId] = useState("");
-  const [isEditing, setIsEditing] = useState(false)
+  const [isEditing, setIsEditing] = useState(false);
   const [messageId, setMessageId] = useState("");
 
-  const updateSubmit = async (value: string)=> {
-    setIsLoading(true)
-    setMessageId(messageResponseId!.toString())
+  const updateSubmit = async (value: string) => {
+    setIsLoading(true);
+    setMessageId(messageResponseId!.toString());
 
-    let body = ""
-    body = JSON.stringify({ content: value, id: messageResponseId })
+    let body = "";
+    body = JSON.stringify({ content: value, id: messageResponseId });
 
     try {
-      abortControllerRef.current = new AbortController()
+      abortControllerRef.current = new AbortController();
       await fetch("/api/update", {
         method: "POST",
         body: body,
@@ -50,15 +50,15 @@ export default function ChatContent({
           "Content-Type": "application/json",
         },
         signal: abortControllerRef.current.signal,
-      })
+      });
     } catch (error: any) {
       if (error.name !== "AbortError") {
-        alert("Error sending message")
+        alert("Error sending message");
       }
     }
 
-    setIsLoading(false)
-  }
+    setIsLoading(false);
+  };
 
   const handleSubmit = async (value: string, file?: File) => {
     let currentChatId = chatId;
@@ -66,14 +66,14 @@ export default function ChatContent({
       // create a new chat in the database
       const chat = await createChat({
         videoDetails: undefined,
-        videoURL: ""
+        videoURL: "",
       });
-      currentChatId = chat.id ;
+      currentChatId = chat.id;
       // and get the id and store it in state
       setChatId(chat.id);
     }
 
-    setMessageId(messageResponseId!.toString())
+    setMessageId(messageResponseId!.toString());
     setIsLoading(true);
     setAssistantResponse("");
 
@@ -155,10 +155,14 @@ export default function ChatContent({
       <div className="h-full max-w-4xl w-full mx-auto flex-1 px-5 py-5 prose dark:prose-invert">
         {isEditing ? (
           <Tiptap
-            description={document.getElementById('markdownHolder ' + messageId)!.innerHTML}
-            onChange={(newRichText) => setAssistantResponse(newRichText)} id={messageId}          />
-        ):(
-          <div id={"markdownHolder "+messageId}>
+            description={
+              document.getElementById("markdownHolder " + messageId)!.innerHTML
+            }
+            onChange={(newRichText) => setAssistantResponse(newRichText)}
+            id={messageId}
+          />
+        ) : (
+          <div id={"markdownHolder " + messageId}>
             <Markdown
               remarkPlugins={[remarkGfm]}
               components={{
@@ -188,7 +192,25 @@ export default function ChatContent({
             </Markdown>
           </div>
         )}
-        <button className={messageResponseId ? (isLoading ? ("hidden"):("px-4 py-2 ml-[95%] al font-medium rounded ")):("hidden")} onClick={() => { if(isEditing) updateSubmit(document.getElementById('markdownHolder '+messageId)!.innerHTML);setIsEditing(!isEditing)}}><PenBoxIcon></PenBoxIcon></button>
+        <button
+          className={
+            messageResponseId
+              ? isLoading
+                ? "hidden"
+                : "px-4 py-2 ml-[95%] al font-medium rounded "
+              : "hidden"
+          }
+          onClick={() => {
+            if (isEditing)
+              updateSubmit(
+                document.getElementById("markdownHolder " + messageId)!
+                  .innerHTML,
+              );
+            setIsEditing(!isEditing);
+          }}
+        >
+          <PenBoxIcon></PenBoxIcon>
+        </button>
       </div>
       <ChatInput
         onSubmit={handleSubmit}

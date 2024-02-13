@@ -1,5 +1,5 @@
 import NextAuth from "next-auth";
-import { NextResponse } from 'next/server'
+import { NextResponse } from "next/server";
 
 import authConfig from "@/auth.config";
 import {
@@ -14,11 +14,20 @@ const { auth } = NextAuth(authConfig);
 export default auth((req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
-  if(req.nextUrl.pathname==='/api/extension'){
+  if (req.nextUrl.pathname === "/api/extension") {
     const response = NextResponse.next();
-    response.headers.set('Access-Control-Allow-Origin', req.headers.get('origin') ?? "*");
-    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    response.headers.set('Access-Control-Allow-Headers', "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version");
+    response.headers.set(
+      "Access-Control-Allow-Origin",
+      req.headers.get("origin") ?? "*",
+    );
+    response.headers.set(
+      "Access-Control-Allow-Methods",
+      "GET, POST, PUT, DELETE, OPTIONS",
+    );
+    response.headers.set(
+      "Access-Control-Allow-Headers",
+      "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
+    );
     return response;
   }
 
@@ -46,7 +55,7 @@ export default auth((req) => {
     const encodedCallbackUrl = encodeURIComponent(callbackUrl);
 
     return Response.redirect(
-      new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl)
+      new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl),
     );
   }
 
@@ -55,5 +64,10 @@ export default auth((req) => {
 
 // Optionally, don't invoke Middleware on some paths
 export const config = {
-  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)","/api/extension"],
+  matcher: [
+    "/((?!.+\\.[\\w]+$|_next).*)",
+    "/",
+    "/(api|trpc)(.*)",
+    "/api/extension",
+  ],
 };

@@ -13,11 +13,11 @@ const getChats = cache(
       .select({ id: chatsTable.id, name: chatsTable.name })
       .from(chatsTable)
       .where(eq(chatsTable.userId, userId)),
-      ["get-chats-for-chat-list"],
-      {
-        tags: ["get-chats-for-chat-list"],
-      }
-    );
+  ["get-chats-for-chat-list"],
+  {
+    tags: ["get-chats-for-chat-list"],
+  },
+);
 export default async function ChatHeader() {
   const user = await currentUser();
 

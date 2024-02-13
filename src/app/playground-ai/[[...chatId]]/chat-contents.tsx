@@ -95,7 +95,7 @@ export default function ChatContents({
     setIsLoading(false);
     await refreshChat(chatId!);
     setAssistantResponse("");
-    scrollToBottom()
+    scrollToBottom();
   };
 
   const handleStop = () => {
@@ -108,7 +108,10 @@ export default function ChatContents({
 
   return (
     <>
-      <div id="wraper" className="h-full max-w-4xl w-full mx-auto px-10 py-5 overflow-x-hidden overflow-y-auto dark:prose-invert">
+      <div
+        id="wraper"
+        className="h-full max-w-4xl w-full mx-auto px-10 py-5 overflow-x-hidden overflow-y-auto dark:prose-invert"
+      >
         {messages?.map((message) => (
           <ChatContent
             key={message.id}

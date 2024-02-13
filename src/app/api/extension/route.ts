@@ -15,7 +15,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
   console.log("Post 요청 들어옴");
   // 스패너 돌기 시작
   // const user = await currentUser();
-  
+
   // console.log("inside POST:", user)
   // if (!user) {
   //   return NextResponse.json(
@@ -147,7 +147,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
         }
       },
     });
-    
+
     return new StreamingTextResponse(stream);
 
     return new Response("OK");
