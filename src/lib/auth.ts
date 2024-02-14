@@ -7,17 +7,6 @@ import { inArray } from "drizzle-orm";
 export const currentUser = async () => {
   const session = await auth();
   return session?.user ?? null;
-
-  // if (!process.env.USER_EMAIL) {
-  //   return null;
-  // }
-
-  // const [user] = await db
-  //   .select()
-  //   .from(users)
-  //   .where(eq(users.email, process.env.USER_EMAIL));
-
-  // return user;
 };
 
 export const currentRole = async () => {
@@ -27,7 +16,6 @@ export const currentRole = async () => {
 };
 
 export const getCurrentUserPersonalSpace = async () => {
-  // const session = await auth();
   const user = await currentUser();
   if (!user) {
     return null;

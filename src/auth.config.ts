@@ -8,6 +8,16 @@ import { LoginSchema } from "@/zod-schemas";
 import { getUserByEmail } from "@/data/user";
 
 export default {
+  cookies: {
+    sessionToken: {
+      name: "new-authjs.session-token",
+      options: {
+        sameSite: "none",
+        secure: true,
+        path: "/",
+      },
+    },
+  },
   providers: [
     Google({
       clientId: process.env.GOOGLE_ID,

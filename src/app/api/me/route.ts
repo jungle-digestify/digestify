@@ -14,6 +14,8 @@ export async function GET(req: NextRequest, res: NextResponse) {
         "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
         "Access-Control-Allow-Headers": "Content-Type, Authorization",
         "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Expose-Headers":
+          "date, etag, access-control-allow-origin, access-control-allow-credentials, access-control-allow-headers",
       },
     });
   }
@@ -24,6 +26,8 @@ export async function GET(req: NextRequest, res: NextResponse) {
       "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type, Authorization",
       "Access-Control-Allow-Credentials": "true",
+      "Access-Control-Expose-Headers":
+        "date, etag, access-control-allow-origin, access-control-allow-credentials, access-control-allow-headers",
     },
   });
 }
@@ -41,6 +45,8 @@ export const OPTIONS = async (req: NextRequest, res: NextResponse) => {
       "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type, Authorization",
       "Access-Control-Allow-Credentials": "true",
+      "Access-Control-Expose-Headers":
+        "date, etag, access-control-allow-origin, access-control-allow-credentials, access-control-allow-headers",
     },
   });
 };

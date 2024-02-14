@@ -23,7 +23,6 @@ export const {
   unstable_update: update,
 } = NextAuth({
   adapter: DrizzleAdapter(db),
-
   pages: {
     signIn: "/auth/login",
     error: "/auth/error",

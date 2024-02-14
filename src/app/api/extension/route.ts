@@ -13,6 +13,7 @@ import fs from "fs";
 
 export const POST = async (req: NextRequest, res: NextResponse) => {
   console.log("Post 요청 들어옴");
+  const origin = req.headers.get("origin");
   // 스패너 돌기 시작
   const user = await currentUser();
 
@@ -96,9 +97,12 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
       return new Response("error", {
         status: 500,
         headers: {
-          "Access-Control-Allow-Origin": "https://www.youtube.com",
+          "Access-Control-Allow-Origin": `${origin}`,
           "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
           "Access-Control-Allow-Headers": "Content-Type, Authorization",
+          "Access-Control-Allow-Credentials": "true",
+          "Access-Control-Expose-Headers":
+            "date, etag, access-control-allow-origin, access-control-allow-credentials, access-control-allow-headers",
         },
       });
     }
@@ -159,9 +163,12 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
     return new StreamingTextResponse(stream, {
       status: 200,
       headers: {
-        "Access-Control-Allow-Origin": "https://www.youtube.com",
+        "Access-Control-Allow-Origin": `${origin}`,
         "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
         "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Expose-Headers":
+          "date, etag, access-control-allow-origin, access-control-allow-credentials, access-control-allow-headers",
       },
     });
   } else {
@@ -173,9 +180,12 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
   return new Response("OK", {
     status: 200,
     headers: {
-      "Access-Control-Allow-Origin": "https://www.youtube.com",
+      "Access-Control-Allow-Origin": `${origin}`,
       "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      "Access-Control-Allow-Credentials": "true",
+      "Access-Control-Expose-Headers":
+        "date, etag, access-control-allow-origin, access-control-allow-credentials, access-control-allow-headers",
     },
   });
 };
@@ -190,14 +200,16 @@ async function readRequestBody(req: Request) {
 
 // preflight - OPTIONS
 export const OPTIONS = async (req: NextRequest, res: NextResponse) => {
-  console.log("options..");
-  console.log(req);
+  const origin = req.headers.get("origin");
   return new Response("OK", {
     status: 200,
     headers: {
-      "Access-Control-Allow-Origin": "https://www.youtube.com",
+      "Access-Control-Allow-Origin": `${origin}`,
       "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      "Access-Control-Allow-Credentials": "true",
+      "Access-Control-Expose-Headers":
+        "date, etag, access-control-allow-origin, access-control-allow-credentials, access-control-allow-headers",
     },
   });
 };
