@@ -1,12 +1,7 @@
 import NextAuth, { type DefaultSession } from "next-auth";
-import type { UserRole } from "@/db/schema";
+import type { UserRole, UserSelect } from "@/db/schema";
 
-export type ExtendedUser = DefaultSession["user"] & {
-  role: UserRole;
-  isTwoFactorEnabled: boolean;
-  isOAuth: boolean;
-  id: string;
-};
+export type ExtendedUser = DefaultSession["user"] & UserSelect;
 
 declare module "next-auth" {
   interface Session {

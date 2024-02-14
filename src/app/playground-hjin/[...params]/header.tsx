@@ -16,10 +16,11 @@ const getChats = cache(
   ["get-chats-for-chat-list"],
   {
     tags: ["get-chats-for-chat-list"],
-  },
+  }
 );
 export default async function ChatHeader() {
-  const user = await currentUser();
+  const session = await auth();
+  const user = session?.user ?? null;
 
   const chats = user ? await getChats(user.personalSpace) : [];
 

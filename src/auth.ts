@@ -86,7 +86,7 @@ export const {
 
       if (existingUser.isTwoFactorEnabled) {
         const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(
-          existingUser.id,
+          existingUser.id
         );
 
         if (!twoFactorConfirmation) return false;
@@ -150,6 +150,17 @@ export const {
       if (!existingUser) return token;
 
       const existingAccount = await getAccountByUserId(existingUser.id);
+      /*
+      id: string;
+    name: string | null;
+    email: string;
+    emailVerified: Date | null;
+    image: string | null;
+    password: string | null;
+    role: "ADMIN" | "USER";
+    isTwoFactorEnabled: boolean;
+    defaultWorkspace: string | null;
+      */
 
       token.isOAuth = !!existingAccount;
       token.name = existingUser.name;

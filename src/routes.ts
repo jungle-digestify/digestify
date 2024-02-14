@@ -9,6 +9,7 @@ export const publicRoutes = [
   "/playground-ai",
   "/playground-trpc",
   "/playground-hyunji",
+  "/playground-hjin",
 ];
 
 /**
