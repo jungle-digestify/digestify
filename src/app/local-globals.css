@@ -599,6 +599,7 @@
   justify-content: flex-start;
   flex-direction: row;
   flex-wrap: wrap;
+  padding-bottom: 10px;
 }
 
 .showTimeLine {

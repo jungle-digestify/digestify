@@ -22,16 +22,13 @@ function ChangeSecond(timeArr: any[]) {
   // console.log('getTime =', getTime);
 
   if (getTime !== null && getTime.length !== 0 && shortTime.length === 0) {
-    for (let i = 0; i < getTime.length; i++) {
+    for (let i = 0; i < getTime.length-1; i++) {
       if (getTime.length === 1) {
         return shortTime.push([0, getTime[0]]);
       } else {
         if (i != getTime.length - 1) {
           shortTime.push([getTime[i], getTime[i + 1] - 2]);
         }
-        // else{
-        //     shortTime.push([getTime[i], getTime[i]+10]); //마지막꺼 영상 끝시간 알수없나..
-        // }
       }
     }
   }
@@ -65,7 +62,7 @@ export default function VideoView({
 
   const playerRef = useRef(null); //하나만할때
 
-  for (let i = 0; i < getTimeLine.length; i++) {
+  for (let i = 0; i < getTimeLine.length-1; i++) {
     // playerRefs.push(useRef(null)); // 여러개 할땐 필요
     timeLineArr.push(getTimeLine[i]);
   }
