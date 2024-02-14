@@ -93,7 +93,14 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
     const chatId = chat.id;
 
     if (chatId === undefined) {
-      return new Response("error");
+      return new Response("error", {
+        status: 500,
+        headers: {
+          "Access-Control-Allow-Origin": "https://www.youtube.com",
+          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        },
+      });
     }
 
     const content = JSON.stringify(parsed_script);
@@ -148,16 +155,28 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
       },
     });
 
-    return new StreamingTextResponse(stream);
-
-    return new Response("OK");
+    return new StreamingTextResponse(stream, {
+      status: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "https://www.youtube.com",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      },
+    });
   } else {
     // 유튜브 동영상 말고 그냥 데이터 인 경우
     let url = data.url;
     let contents = data.contents;
     console.log(url, contents);
   }
-  return new Response("OK");
+  return new Response("OK", {
+    status: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "https://www.youtube.com",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    },
+  });
 };
 
 async function readRequestBody(req: Request) {
@@ -172,5 +191,12 @@ async function readRequestBody(req: Request) {
 export const OPTIONS = async (req: NextRequest, res: NextResponse) => {
   console.log("options..");
   console.log(req);
-  return new Response("OK");
+  return new Response("OK", {
+    status: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "https://www.youtube.com",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    },
+  });
 };

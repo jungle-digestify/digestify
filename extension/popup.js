@@ -1,18 +1,23 @@
 import { getActiveTabURL } from "./utils.js";
 
 async function checkLoginStatus() {
-  return new Promise((resolve, reject) => {
-    chrome.cookies.get(
-      { url: "http://localhost:3000", name: "authjs.session-token" },
-      function (cookie) {
-        if (cookie) {
-          resolve(true); // 로그인된 상태
-        } else {
-          resolve(false); // 로그인되지 않은 상태
-        }
-      },
-    );
-  });
+  // 로그인 체크 안하도록 변경
+  console.log("최신입니다");
+  return true;
+  // await fetch("http://localhost:3000/api/me", {
+  //   method: "GET",
+  //   credentials: "include",
+  // })
+  //   .then((response) => {
+  //     if (response.status === 200) {
+  //       return true;
+  //     }
+  //     return false;
+  //   })
+  //   .catch((error) => {
+  //     console.error("Error:", error);
+  //     return false;
+  //   });
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -41,7 +46,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   const activeTab = await getActiveTabURL();
-
+  console.log("안녕하세요");
   const isLoggedIn = await checkLoginStatus();
 
   if (!isLoggedIn) {
@@ -51,7 +56,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       '<div class="title"><a href="#" id="loginLink">로그인 하러 가기</a></div>';
 
     document.getElementById("loginLink").addEventListener("click", function () {
-      window.open("http://localhost:3000/login", "_blank");
+      window.open("http://localhost:3000/playground-hjin", "_blank");
     });
 
     return;
