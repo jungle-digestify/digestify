@@ -28,7 +28,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { workspace, userInWorkspace } from "../../db/schema";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Toaster, toast as sonnerToast } from "sonner";
 import { desc } from "drizzle-orm";
 import { auth } from "@/auth";
@@ -91,9 +91,14 @@ export async function sendContactEmail(sender: any) {
 export function MainNav({
   currentUserPersonalSpace,
   currentUserTeamSpace,
+  defaultLayout,
+  chatToggle,
+
 }: {
   currentUserPersonalSpace: string | null;
   currentUserTeamSpace: TeamSpace[] | null;
+  defaultLayout: number[] | undefined;
+  chatToggle : boolean | undefined;
 }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -180,8 +185,64 @@ export function MainNav({
     });
   };
 
+  // console.log('defaultLayout=',defaultLayout);
+  // console.log('chatToggle=',chatToggle);
+
+  const [isVisible, setIsVisible] = useState(chatToggle);
+  const [getSize, setSize] = useState(defaultLayout);
+
+  // console.log('cookie isVisible1 =', isVisible);
+  
+  const onLayout = (sizes: number[]) => {
+
+    document.cookie = `react-resizable-panels:layout=${JSON.stringify(sizes)}`;
+
+  };
+
+  const resize = getSize;
+  const toggleVisibility = () => {
+
+    // console.log('header !isVisible=', !isVisible);
+    setIsVisible(!isVisible);
+    // console.log('isVisible2 =', isVisible);
+    document.cookie = `react-chatlist-toggle:show=${JSON.stringify(!isVisible)}`
+    
+    
+    if(resize){
+      if(isVisible){ //true
+        resize[0]=0;
+        resize[1]+=10;
+        resize[2]+=10;
+      }else{
+        resize[0]=20;
+        resize[1]-=10;
+        resize[2]-=10;
+       
+      }
+      onLayout(resize);
+      // document.location=''; //여기서 값 바뀐거 서버에 어떻게 알려줘 ㅜ
+     }
+  };
+
+  // useEffect(()=>{
+  //   // console.log('clicked! ');
+  //   if(resize){
+  //     if(isVisible){ //true
+  //       resize[0]=0;
+  //       resize[1]+=10;
+  //       resize[2]+=10;
+  //     }else{
+  //       resize[0]=20;
+  //       resize[1]-=10;
+  //       resize[2]-=10;
+       
+  //     }
+  //     onLayout(resize);
+  //   }
+  // },[isVisible])
   return (
     <div className="flex items-center space-x-2 lg:space-x-6">
+      <button className="ListBtn" onClick={toggleVisibility}>리스트</button>
       <CustomLink href="/playground-hjin">
         <span className={cn("font-semibold text-2xl", font.className)}>
           Digest

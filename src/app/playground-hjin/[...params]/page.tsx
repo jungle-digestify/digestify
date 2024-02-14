@@ -39,7 +39,9 @@ import {
 import VideoView2 from "../edit/view2";
 import { PgSchema } from "drizzle-orm/pg-core";
 
-let allscript = "";
+import { cookies } from "next/headers";
+import { ClientComponent } from "./resizable_page"
+import { request } from "http";
 
 interface TeamSpace {
   title: string;
@@ -68,91 +70,58 @@ export default async function Page({ params }: { params: { params: string } }) {
   const chatId = params.params[1] ?? null;
   const chats = spaceId ? await getChats(spaceId) : [];
 
-  console.log("spaceid:", spaceId);
-  console.log("chatId:", chatId);
+  // console.log("spaceid:", spaceId);
+  // console.log("chatId:", chatId);
   const currentSpace = await getSpace(spaceId);
 
   const currentUserPersonalSpace = await getCurrentUserPersonalSpace();
   const currentUserTeamSpace: TeamSpace[] = await getCurrentUserTeamSpace();
 
-  // if (!currentSpace){
-  //   return <>not exist space!</>
-  // }
-
-  // if (spaceId === currentUserPersonalSpace){
-  //   return <>this is personal space!</>
-  // }
-
-  // const inTeamSpace = currentUserTeamSpace.map(teamSpace => teamSpace.id === spaceId)
-  // console.log("teamspace 입니다")
-  // if (!inTeamSpace){
-  //   return <>you are not in this space!</>
-  // }
-
-  const defaultLayout = [20, 40, 40];
+  const layout = cookies().get("react-resizable-panels:layout");
+  const toggleList = cookies().get("react-chatlist-toggle:show");
+  
+  console.log('cookies =', cookies());
+  let defaultLayout, chatToggle;
+  console.log('chatToggle =', chatToggle);
+  if (layout) {
+    // console.log('layout =', layout);
+    defaultLayout = JSON.parse(layout.value);
+  }
+  if(toggleList){
+    chatToggle = JSON.parse(toggleList.value);
+  }else{
+    chatToggle = 'false';
+  }
 
   return (
-    <div className="w-full h-full flex flex-col">
-      <div
-        className="main w-full h-full flex flex-row"
-        suppressContentEditableWarning={true}
-      >
-        <ResizablePanelGroup direction="horizontal">
-          <ResizablePanel
-            defaultSize={defaultLayout[0]}
-            className="chat-list w-full h-full"
-            minSize={10}
-          >
-            <div className="h-full">
-              {/* <Suspense fallback={<ChatListSkeleton />}> */}
-              <Suspense>
-                <ChatList
-                  spaceId={currentUserPersonalSpace}
-                  chats={chats}
-                  chatId={chatId}
-                />
-              </Suspense>
-            </div>
-          </ResizablePanel>
-          <ResizableHandle withHandle />
-          {chatId === null ? (
-            <ResizablePanel defaultSize={defaultLayout[1] + defaultLayout[2]}>
-              <VideoView2 chats={chats} workspaceId={spaceId}></VideoView2>
-            </ResizablePanel>
+    <ClientComponent defaultLayout={defaultLayout} chatId={chatId} chatToggle={chatToggle}>
+    {/* first children */}
+      <Suspense>
+      <ChatList
+            spaceId={currentUserPersonalSpace}
+            chats={chats}
+            chatId={chatId}
+          />
+      </Suspense>
+
+    {/* second children */}
+      {chatId ? (
+        <Suspense fallback={<div className="flex-1" />}>
+          <ChatContentWrapper chatId={chatId} />
+        </Suspense>
+      ) : (
+
+        <div className="w-full h-full flex flex-col justify-center align-middle items-center"><FaRegCircleXmark size={25}></FaRegCircleXmark>요약 없음</div>
+      )}
+    {/* third children */}
+      {chatId ? (
+          <div >
+            <VideoWrapper chatId={chatId}></VideoWrapper>
+          </div>
           ) : (
-            <>
-              <ResizablePanel defaultSize={defaultLayout[1]} minSize={10}>
-                {/* <ScrollArea className="w-96 whitespace-nowrap rounded-md border"> */}
-                {chatId ? (
-                  <Suspense fallback={<div className="flex-1" />}>
-                    <ChatContentWrapper chatId={chatId} />
-                  </Suspense>
-                ) : (
-                  // <ChatContent createChat={createChat} script={allscript}/>
-                  <div className="w-full h-full flex flex-col justify-center align-middle items-center">
-                    <FaRegCircleXmark size={25}></FaRegCircleXmark>요약 없음
-                  </div>
-                )}
-                {/* <ScrollBar orientation="horizontal" /> */}
-                {/* </ScrollArea> */}
-              </ResizablePanel>
-              <ResizableHandle withHandle />
-              <ResizablePanel defaultSize={defaultLayout[2]} minSize={10}>
-                {chatId ? (
-                  <div>
-                    <VideoWrapper chatId={chatId}></VideoWrapper>
-                  </div>
-                ) : (
-                  <div className="w-full h-full flex flex-col justify-center align-middle items-center">
-                    {" "}
-                    <FaRegCircleXmark size={25}></FaRegCircleXmark>동영상 없음{" "}
-                  </div>
-                )}
-              </ResizablePanel>
-            </>
-          )}
-        </ResizablePanelGroup>
-      </div>
-    </div>
+          <div className="w-full h-full flex flex-col justify-center align-middle items-center"> <FaRegCircleXmark size={25}></FaRegCircleXmark>동영상 없음 </div>
+      )}
+    
+  </ClientComponent>
   );
 }
