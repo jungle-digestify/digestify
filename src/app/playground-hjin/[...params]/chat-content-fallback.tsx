@@ -4,9 +4,17 @@ import { useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
 import { usePathname } from "next/navigation";
+import { useCompletion } from "ai/react";
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export default function ChatContentFallback({ chatId }: { chatId: string }) {
   const path = usePathname();
+  const [assisnantResponse, setAssistantResponse] = useState("");
+  const { complete } = useCompletion({
+    api: "/api/completion",
+  });
+
   const [isLoading, setIsLoading] = useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
 
@@ -17,7 +25,7 @@ export default function ChatContentFallback({ chatId }: { chatId: string }) {
 
     try {
       abortControllerRef.current = new AbortController();
-      await fetch("/api/retry", {
+      const res = await fetch("/api/retry", {
         method: "POST",
         body: body,
         headers: {
@@ -25,12 +33,35 @@ export default function ChatContentFallback({ chatId }: { chatId: string }) {
         },
         signal: abortControllerRef.current.signal,
       });
+
+      if (!res.ok || !res.body) {
+        const data = await res.json();
+        toast.error(data.error.message);
+        setIsLoading(false);
+        return;
+      }
+
+      const reader = res.body.getReader();
+
+      const decoder = new TextDecoder();
+      // chunk가 올 때마다 응답을 세트한다. 다 왔으면 탈출함
+      while (true) {
+        const { value, done } = await reader.read();
+
+        const text = decoder.decode(value);
+        setAssistantResponse((currentValue) => currentValue + text);
+
+        if (done) {
+          break;
+        }
+      }
     } catch (error: any) {
       if (error.name !== "AbortError") {
-        toast(`error:${error.message}`);
+        toast.error(error.message);
+        setIsLoading(false);
       }
     }
-
+    abortControllerRef.current = null;
     setIsLoading(false);
   };
 
@@ -44,6 +75,9 @@ export default function ChatContentFallback({ chatId }: { chatId: string }) {
       <Button onClick={handleRetry} disabled={isLoading}>
         재시도하기
       </Button>
+      <div className="max-w-4xl w-full mx-auto flex-1 px-10 py-5 overflow-x-hidden overflow-y-auto prose dark:prose-invert">
+        <Markdown remarkPlugins={[remarkGfm]}>{assisnantResponse}</Markdown>
+      </div>
     </div>
   );
 }

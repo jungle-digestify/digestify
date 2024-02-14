@@ -55,24 +55,23 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
     const openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
     });
+    try {
+      const chatCompletion = await openai.chat.completions.create({
+        messages: [
+          ...initialProgrammerMessages,
+          ...allDBMessages,
+          { role: "user", content },
+        ],
+        model: "gpt-3.5-turbo-1106",
+        stream: true,
+        max_tokens: 4096,
+      });
 
-    const chatCompletion = await openai.chat.completions.create({
-      messages: [
-        ...initialProgrammerMessages,
-        ...allDBMessages,
-        { role: "user", content },
-      ],
-      model: "gpt-3.5-turbo-1106",
-      stream: true,
-      max_tokens: 4096,
-    });
-
-    const stream = OpenAIStream(chatCompletion, {
-      onStart: async () => {},
-      onToken: async (token: string) => {},
-      onCompletion: async (completion: string) => {
-        console.log("retry completed, insertDB");
-        try {
+      const stream = OpenAIStream(chatCompletion, {
+        onStart: async () => {},
+        onToken: async (token: string) => {},
+        onCompletion: async (completion: string) => {
+          console.log("retry completed, insertDB");
           await db.insert(messages).values([
             {
               chatId,
@@ -85,21 +84,17 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
               content: completion,
             },
           ]);
-        } catch (e) {
-          console.error(e);
-        }
-        console.log("messages 들어감");
-      },
-    });
+          console.log("messages 들어감");
+        },
+      });
 
-    return new StreamingTextResponse(stream);
+      return new StreamingTextResponse(stream);
+    } catch (error: any) {
+      return new Response(JSON.stringify(error), { status: 500 });
+    }
+
+    return new Response("BAD");
   }
-
-  // 유튜브 동영상 말고 그냥 데이터 인 경우
-  let url = data.url;
-  let contents = data.contents;
-  console.log(url, contents);
-  return new Response("OK");
 };
 
 async function readRequestBody(req: Request) {
