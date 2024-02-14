@@ -23,79 +23,18 @@ export const {
   unstable_update: update,
 } = NextAuth({
   adapter: DrizzleAdapter(db),
-  cookies: {
-    sessionToken: {
-      name: `authjs.session-token`,
-      options: {
-        httpOnly: false,
-        sameSite: "none",
-        path: "/",
-        secure: true,
-      },
-    },
-  },
+
   pages: {
     signIn: "/auth/login",
     error: "/auth/error",
   },
   events: {
-    async linkAccount({ user }) {
-      await db
-        .update(users)
-        .set({ emailVerified: new Date() })
-        .where(eq(users.id, user.id!));
-    },
-  },
-  callbacks: {
-    async signIn({ user, account }) {
-      // Allow OAuth without email verification
-      if (account?.provider !== "credentials") {
-        if (user.id === undefined) return false;
-        const existingUser = await getUserById(user.id);
-        if (!existingUser) return false;
-        if (!existingUser.defaultWorkspace) {
-          const space = await db
-            .insert(workspace) //개인 스페이스 생성
-            .values({
-              name: "personalSpace",
-              description: "personalSpace",
-              type: "personal",
-            })
-            .returning();
-
-          await db // 유저 테이블에 개인 스페이스 넣기
-            .update(users)
-            .set({ defaultWorkspace: space[0].id })
-            .where(eq(users.id, String(existingUser.id)));
-
-          await db // userInSpace 관계 넣기
-            .insert(userInWorkspace)
-            .values({
-              workspaceId: space[0].id,
-              userId: existingUser.id,
-              isHost: true,
-              accept: true,
-            });
-        }
-        return true;
-      }
-      if (user.id === undefined) return false;
+    async createUser({ user }) {
+      console.log("user", user);
+      if (user.id === undefined) return;
       const existingUser = await getUserById(user.id);
-      // Prevent sign in without email verification
-      if (!existingUser?.emailVerified) return false;
-
-      if (existingUser.isTwoFactorEnabled) {
-        const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(
-          existingUser.id
-        );
-
-        if (!twoFactorConfirmation) return false;
-
-        // Delete two factor confirmation for next sign in
-        await db
-          .delete(twoFactorConfirmationTable)
-          .where(eq(twoFactorConfirmationTable.id, twoFactorConfirmation.id));
-      }
+      console.log("existingUser", existingUser);
+      if (!existingUser) return;
       if (!existingUser.defaultWorkspace) {
         const space = await db
           .insert(workspace) //개인 스페이스 생성
@@ -120,6 +59,36 @@ export const {
             accept: true,
           });
       }
+    },
+
+    async linkAccount({ user }) {
+      await db
+        .update(users)
+        .set({ emailVerified: new Date() })
+        .where(eq(users.id, user.id!));
+    },
+  },
+  callbacks: {
+    async signIn({ user, account }) {
+      // Allow OAuth without email verification
+      if (account?.provider !== "credentials") return true;
+      if (user.id === undefined) return false;
+      const existingUser = await getUserById(user.id);
+      // Prevent sign in without email verification
+      if (!existingUser?.emailVerified) return false;
+
+      if (existingUser.isTwoFactorEnabled) {
+        const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(
+          existingUser.id
+        );
+
+        if (!twoFactorConfirmation) return false;
+
+        // Delete two factor confirmation for next sign in
+        await db
+          .delete(twoFactorConfirmationTable)
+          .where(eq(twoFactorConfirmationTable.id, twoFactorConfirmation.id));
+      }
 
       return true;
     },
@@ -140,6 +109,7 @@ export const {
         session.user.name = token.name;
         session.user.email = token.email;
         session.user.isOAuth = token.isOAuth as boolean;
+        session.user.defaultWorkspace = token.defaultWorkspace;
       }
       return session;
     },
@@ -150,23 +120,13 @@ export const {
       if (!existingUser) return token;
 
       const existingAccount = await getAccountByUserId(existingUser.id);
-      /*
-      id: string;
-    name: string | null;
-    email: string;
-    emailVerified: Date | null;
-    image: string | null;
-    password: string | null;
-    role: "ADMIN" | "USER";
-    isTwoFactorEnabled: boolean;
-    defaultWorkspace: string | null;
-      */
 
       token.isOAuth = !!existingAccount;
       token.name = existingUser.name;
       token.email = existingUser.email;
       token.role = existingUser.role;
       token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
+      token.defaultWorkspace = existingUser.defaultWorkspace;
 
       return token;
     },
