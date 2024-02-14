@@ -8,6 +8,10 @@ import { SignIn, SignOut } from "@/components/playground/auth-components";
 import { currentUser, getCurrentUserPersonalSpace } from "@/lib/auth";
 import { FaImage } from "react-icons/fa";
 import { ScrollArea } from "../ui/scroll-area";
+import { Input } from "../ui/input";
+import { Search } from "lucide-react";
+import { searchAction } from "@/actions/search";
+import { SearchForm } from "@/components/search-form";
 
 type SelectChatDto = Pick<SelectChat, "id" | "name" | "videoId">;
 
@@ -15,10 +19,12 @@ export default async function ChatList({
   spaceId,
   chatId,
   chats,
+  search,
 }: {
   spaceId: string | null;
   chatId: string | null;
   chats: SelectChatDto[];
+  search?: string;
 }) {
   return (
     <ScrollArea className="h-full">
@@ -27,7 +33,7 @@ export default async function ChatList({
           <div className="flex flex-col mx-1">
             <Link
               key=""
-              className="inline-flex items-center whitespace-nowrap text-base font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground  rounded-md px-3 justify-start leading-10 "
+              className="inline-flex items-center whitespace-nowrap text-base font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground  rounded-md px-3 justify-start leading-10"
               href={`/playground-hjin/${spaceId}`}
               style={{
                 backgroundColor: chatId === null ? "black" : "",
@@ -37,10 +43,11 @@ export default async function ChatList({
               <FaImage size={22} color={chatId === null ? "white" : "black"} />{" "}
               <div className="mx-2">Show Thumbnail</div>
             </Link>
+            <SearchForm search={search} />
             {chats.map((chat) => (
               <Link
                 key={chat.id}
-                href={`/playground-hjin/${spaceId}/${chat.id}`}
+                href={`/playground-hjin/${spaceId}/${chat.id}?search=${search}`}
                 className={`chatlistitem truncate inline-flex items-center whitespace-nowrap text-lg font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground rounded-md px-3 justify-start leading-10`}
                 style={{
                   backgroundColor: chatId === chat.id ? "black" : "",

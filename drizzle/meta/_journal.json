@@ -1,0 +1,20 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1707911455176,
+      "tag": "0000_married_the_spike",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1707912249956,
+      "tag": "0001_black_russian",
+      "breakpoints": true
+    }
+  ]
+}

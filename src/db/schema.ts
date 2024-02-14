@@ -12,6 +12,37 @@ import {
 import { InferSelectModel, InferInsertModel } from "drizzle-orm";
 import { createId } from "@paralleldrive/cuid2";
 import type { AdapterAccount } from "@auth/core/adapters";
+import { customType } from "drizzle-orm/pg-core";
+
+function genExpWithWeights(input: string[]) {
+  const columnExpressions = input.map((column, index) => {
+    const weight = String.fromCharCode(index + 65);
+    return `setweight(to_tsvector('config_2_gram_cjk', coalesce(${column}, '')), '${weight}')`;
+  });
+
+  const tsvectorColumn = `tsvector GENERATED ALWAYS AS (${columnExpressions.join(
+    " || "
+  )}) STORED`;
+
+  return tsvectorColumn;
+}
+
+export const tsvector = customType<{
+  data: string;
+  config: { sources: string[]; weighted: boolean };
+}>({
+  dataType(config) {
+    if (config) {
+      const sources = config.sources.join(" || ' ' || ");
+      return config.weighted
+        ? genExpWithWeights(config.sources)
+        : `tsvector generated always as (to_tsvector(${sources})) stored`;
+    } else {
+      return `tsvector`;
+    }
+  },
+});
+
 export const posts = pgTable("post", {
   id: serial("id").primaryKey(),
   name: varchar("name", { length: 256 }),
@@ -103,6 +134,10 @@ export const messages = pgTable("messages", {
     mode: "date",
     withTimezone: true,
   }).defaultNow(),
+  vec: tsvector("vec", {
+    sources: ["content"],
+    weighted: true,
+  }),
 });
 type MessageSelect = InferSelectModel<typeof messages>;
 type MessageInsert = InferInsertModel<typeof messages>;

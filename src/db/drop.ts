@@ -20,6 +20,8 @@ async function drop() {
     return sql.raw(`DROP TABLE "${table.dbName}" CASCADE;`);
   });
 
+  queries.push(sql.raw(`DROP SCHEMA drizzle CASCADE;`));
+
   console.log("📨 Sending drop queries...");
   for (let query of queries) {
     try {

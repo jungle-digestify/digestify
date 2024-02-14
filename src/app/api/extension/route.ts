@@ -152,6 +152,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
         } catch (e) {
           console.error(e);
         }
+        console.log("messages 들어감");
       },
     });
 

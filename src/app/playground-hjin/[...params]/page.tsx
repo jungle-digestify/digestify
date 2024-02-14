@@ -16,7 +16,7 @@ import { unstable_cache as cache } from "next/cache";
 //db
 import { db } from "@/db";
 import { chats as chatsTable } from "@/db/schema";
-import { desc, eq } from "drizzle-orm";
+import { desc, eq, sql } from "drizzle-orm";
 import { error } from "console";
 import {
   getCurrentUserPersonalSpace,
@@ -47,9 +47,32 @@ interface TeamSpace {
   id: string;
   type: "team";
 }
-export default async function Page({ params }: { params: { params: string } }) {
+export default async function Page({
+  params,
+  searchParams,
+}: {
+  params: { params: string };
+  searchParams: { search?: string };
+}) {
+  const search = searchParams.search;
+
+  const effectiveSearch = search?.replace(/ /g, " | ") ?? null;
+
+  const searchedChats = async () =>
+    await db.execute<{
+      id: string;
+      name: string;
+      videoId: string;
+    }>(
+      sql.raw(`SELECT chat_id as id, name, video_id as videoId , ts_rank(vec, to_tsquery('config_2_gram_cjk', '${effectiveSearch}')) AS rank
+FROM messages
+left join chats on messages.chat_id = chats.id
+WHERE vec @@ to_tsquery('config_2_gram_cjk', '${effectiveSearch}') and role = 'system'
+ORDER BY rank DESC;`)
+    );
+
   const getChats = cache(
-    async (spoaceId: string) =>
+    async (spaceId: string) =>
       await db
         .select({
           id: chatsTable.id,
@@ -57,7 +80,8 @@ export default async function Page({ params }: { params: { params: string } }) {
           videoId: chatsTable.videoId,
         })
         .from(chatsTable)
-        .where(eq(chatsTable.workspaceId, spoaceId)),
+        .where(eq(chatsTable.workspaceId, spaceId))
+        .orderBy(desc(chatsTable.createdAt)),
     ["get-chats-for-chat-list"],
     {
       tags: ["get-chats-for-chat-list"],
@@ -66,7 +90,9 @@ export default async function Page({ params }: { params: { params: string } }) {
 
   const spaceId = params.params[0];
   const chatId = params.params[1] ?? null;
-  const chats = spaceId ? await getChats(spaceId) : [];
+  const chats = effectiveSearch
+    ? await searchedChats()
+    : await getChats(spaceId);
 
   console.log("spaceid:", spaceId);
   console.log("chatId:", chatId);
@@ -110,6 +136,7 @@ export default async function Page({ params }: { params: { params: string } }) {
                   spaceId={currentUserPersonalSpace}
                   chats={chats}
                   chatId={chatId}
+                  search={search}
                 />
               </Suspense>
             </div>

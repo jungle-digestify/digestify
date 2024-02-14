@@ -21,7 +21,7 @@ export const SettingsSchema = z
     {
       message: "New password is required!",
       path: ["newPassword"],
-    },
+    }
   )
   .refine(
     (data) => {
@@ -34,7 +34,7 @@ export const SettingsSchema = z
     {
       message: "Password is required!",
       path: ["password"],
-    },
+    }
   )
   .refine((data) => data.confirmNewPassword === data.newPassword, {
     message: "new Passwords don't match",
@@ -79,3 +79,9 @@ export const RegisterSchema = z
     message: "Passwords don't match",
     path: ["confirmPassword"],
   });
+
+export const SearchSchema = z.object({
+  query: z.string().min(1, {
+    message: "Query is required",
+  }),
+});
