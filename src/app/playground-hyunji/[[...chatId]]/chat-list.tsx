@@ -24,7 +24,8 @@ const getChats = cache(
   }
 );
 export default async function ChatList(all: any) {
-  const user = await currentUser();
+  const session = await auth();
+  const user = session?.user ?? null;
 
   const chats = user ? await getChats(user.id) : [];
 
@@ -38,16 +39,30 @@ export default async function ChatList(all: any) {
           {/* <a key="new" href={"/playground-hyunji"} className="truncate inline-flex items-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 justify-start">
             New Chat
           </a> */}
-          <a key="" className="inline-flex items-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 justify-start" href="/playground-hyunji/edit"
-          style={{backgroundColor: pageName === 'edit' ? 'black' : '', color: pageName === 'edit' ? 'white':''}}>
-            <FaImage size={22} color={pageName === 'edit' ? 'white': 'black'} /> <div className="mx-2">Show Thumbnail</div>
+          <a
+            key=""
+            className="inline-flex items-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 justify-start"
+            href="/playground-hyunji/edit"
+            style={{
+              backgroundColor: pageName === "edit" ? "black" : "",
+              color: pageName === "edit" ? "white" : "",
+            }}
+          >
+            <FaImage
+              size={22}
+              color={pageName === "edit" ? "white" : "black"}
+            />{" "}
+            <div className="mx-2">Show Thumbnail</div>
           </a>
           {chats.map((chat) => (
             <Link
               key={chat.id}
               href={`/playground-hyunji/${chat.id}`}
               className={`chatlistitem truncate inline-flex items-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 justify-start`}
-              style={{backgroundColor: getChatId === chat.id ? 'black' : '', color: getChatId === chat.id ? 'white':''}}
+              style={{
+                backgroundColor: getChatId === chat.id ? "black" : "",
+                color: getChatId === chat.id ? "white" : "",
+              }}
               dangerouslySetInnerHTML={{ __html: chat.name }}
             >
               {/* {chat.name} */}
