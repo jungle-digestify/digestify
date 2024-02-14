@@ -22,7 +22,7 @@ export default async function ChatHeader() {
   const session = await auth();
   const user = session?.user ?? null;
 
-  const chats = user ? await getChats(user.personalSpace) : [];
+  const chats = user ? await getChats(user.defaultWorkspace!) : [];
 
   return (
     <div className="ChatHeader">
