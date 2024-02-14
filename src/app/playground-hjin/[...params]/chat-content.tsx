@@ -152,7 +152,7 @@ export default function ChatContent({
 
   return (
     <>
-      <div className="h-full max-w-4xl w-full mx-auto flex-1 px-5 py-5 prose dark:prose-invert">
+      <div className="h-full max-w-4xl w-full mx-auto flex-1 px-5 py-5 prose dark:prose-invert overflow-y-auto">
         {isEditing ? (
           <Tiptap
             description={
@@ -197,7 +197,7 @@ export default function ChatContent({
             messageResponseId
               ? isLoading
                 ? "hidden"
-                : "px-4 py-2 ml-[95%] al font-medium rounded "
+                : "ml-[95%] al font-medium rounded black"
               : "hidden"
           }
           onClick={() => {

@@ -9,17 +9,22 @@ import {
     ResizablePanelGroup,
   } from "@/components/ui/resizable"
 import { number } from "zod";
+import VideoView2 from "../edit/view2";
 
 export function ClientComponent({
   defaultLayout = [20, 40, 40],
   chatId,
   children,
-  chatToggle
+  chatToggle,
+  chats,
+  spaceId
 }: {
   defaultLayout: number[] | undefined;
   chatId : string | undefined;
   children : ReactNode[];
   chatToggle : boolean | undefined;
+  chats: { id: string; name: string; videoId: string | null; }[];
+  spaceId: string ;
 }) {
   const [isVisible, setIsVisible] = useState(chatToggle);
   // console.log('defaultLayout=',defaultLayout);
@@ -55,8 +60,23 @@ export function ClientComponent({
   return (
     <div className="w-full h-full flex flex-col">
       <div className="main w-full h-full flex flex-row" suppressContentEditableWarning={true}>
+        {chatId === null ? 
+        // show thumbnail
         <ResizablePanelGroup direction="horizontal" onLayout={onLayout}>
-          
+          <ResizablePanel defaultSize={20} >
+          <div className="h-full">
+            {children && children[0]}
+            </div>
+
+          </ResizablePanel>
+          <ResizableHandle withHandle disabled/>
+          <ResizablePanel defaultSize={80}>
+            <VideoView2 chats={chats} workspaceId={spaceId}></VideoView2>
+          </ResizablePanel>
+          </ResizablePanelGroup>
+        :
+        //select list
+        <ResizablePanelGroup direction="horizontal" onLayout={onLayout}>
           <ResizablePanel defaultSize={defaultLayout[0]} >
             <div className="h-full">
             {children && children[0]}
@@ -79,6 +99,8 @@ export function ClientComponent({
         
           
         </ResizablePanelGroup>
+        }
+        
       </div>
 
     </div>

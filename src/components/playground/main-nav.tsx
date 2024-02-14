@@ -57,6 +57,8 @@ import {
 } from "@/components/ui/alert-dialog";
 import { CopyIcon } from "@radix-ui/react-icons";
 import { db } from "@/db";
+import { revalidatePath } from "next/cache";
+import { useRouter } from "next/navigation";
 
 const font = Poppins({
   subsets: ["latin"],
@@ -100,6 +102,7 @@ export function MainNav({
   defaultLayout: number[] | undefined;
   chatToggle : boolean | undefined;
 }) {
+  // const router = useRouter();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const { toast } = useToast();
@@ -196,7 +199,7 @@ export function MainNav({
   const onLayout = (sizes: number[]) => {
 
     document.cookie = `react-resizable-panels:layout=${JSON.stringify(sizes)}`;
-
+    console.log('nav size=', sizes);
   };
 
   const resize = getSize;
@@ -204,7 +207,11 @@ export function MainNav({
 
     // console.log('header !isVisible=', !isVisible);
     setIsVisible(!isVisible);
-    // console.log('isVisible2 =', isVisible);
+    
+    // console.log('document.cookie =', document.cookie);
+    if(document.cookie){
+      document.cookie = '';
+    }
     document.cookie = `react-chatlist-toggle:show=${JSON.stringify(!isVisible)}`
     
     
@@ -221,6 +228,7 @@ export function MainNav({
       }
       onLayout(resize);
       // document.location=''; //여기서 값 바뀐거 서버에 어떻게 알려줘 ㅜ
+      // router.refresh();
      }
   };
 
