@@ -93,12 +93,11 @@ export function MainNav({
   currentUserTeamSpace,
   defaultLayout,
   chatToggle,
-
 }: {
   currentUserPersonalSpace: string | null;
   currentUserTeamSpace: TeamSpace[] | null;
   defaultLayout: number[] | undefined;
-  chatToggle : boolean | undefined;
+  chatToggle: boolean | undefined;
 }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -192,36 +191,34 @@ export function MainNav({
   const [getSize, setSize] = useState(defaultLayout);
 
   // console.log('cookie isVisible1 =', isVisible);
-  
+
   const onLayout = (sizes: number[]) => {
-
     document.cookie = `react-resizable-panels:layout=${JSON.stringify(sizes)}`;
-
   };
 
   const resize = getSize;
   const toggleVisibility = () => {
-
     // console.log('header !isVisible=', !isVisible);
     setIsVisible(!isVisible);
     // console.log('isVisible2 =', isVisible);
-    document.cookie = `react-chatlist-toggle:show=${JSON.stringify(!isVisible)}`
-    
-    
-    if(resize){
-      if(isVisible){ //true
-        resize[0]=0;
-        resize[1]+=10;
-        resize[2]+=10;
-      }else{
-        resize[0]=20;
-        resize[1]-=10;
-        resize[2]-=10;
-       
+    document.cookie = `react-chatlist-toggle:show=${JSON.stringify(
+      !isVisible
+    )}`;
+
+    if (resize) {
+      if (isVisible) {
+        //true
+        resize[0] = 0;
+        resize[1] += 10;
+        resize[2] += 10;
+      } else {
+        resize[0] = 20;
+        resize[1] -= 10;
+        resize[2] -= 10;
       }
       onLayout(resize);
       // document.location=''; //여기서 값 바뀐거 서버에 어떻게 알려줘 ㅜ
-     }
+    }
   };
 
   // useEffect(()=>{
@@ -235,14 +232,16 @@ export function MainNav({
   //       resize[0]=20;
   //       resize[1]-=10;
   //       resize[2]-=10;
-       
+
   //     }
   //     onLayout(resize);
   //   }
   // },[isVisible])
   return (
     <div className="flex items-center space-x-2 lg:space-x-6">
-      <button className="ListBtn" onClick={toggleVisibility}>리스트</button>
+      <button className="ListBtn" onClick={toggleVisibility}>
+        리스트
+      </button>
       <CustomLink href="/playground-hjin">
         <span className={cn("font-semibold text-2xl", font.className)}>
           Digest
@@ -267,7 +266,10 @@ export function MainNav({
               <ul className="grid gap-3 p-6 md:w-[500px] lg:w-[500px] lg:grid-cols-[1fr]">
                 {currentUserTeamSpace ? (
                   currentUserTeamSpace.map((teamSpace) => (
-                    <Menubar className="md:w-[500px] lg:w-[450px] md:h-[100px] ">
+                    <Menubar
+                      className="md:w-[500px] lg:w-[450px] md:h-[100px] "
+                      key={teamSpace.id}
+                    >
                       <MenubarMenu>
                         <MenubarTrigger className="sm:w-[10px] lg:w-[10px]">
                           <Button className="sm:w-[20px] lg:h-[98px] md:h-[98px] bg-white text-primary-foreground text-black hover:bg-black hover:text-white">

@@ -14,17 +14,17 @@ import fs from "fs";
 export const POST = async (req: NextRequest, res: NextResponse) => {
   console.log("Post 요청 들어옴");
   // 스패너 돌기 시작
-  // const user = await currentUser();
+  const user = await currentUser();
 
-  // console.log("inside POST:", user)
-  // if (!user) {
-  //   return NextResponse.json(
-  //     { error: "not logged in" },
-  //     {
-  //       status: 401,
-  //     }
-  //   );
-  // }
+  console.log("inside POST:", user);
+  if (!user) {
+    return NextResponse.json(
+      { error: "not logged in" },
+      {
+        status: 401,
+      }
+    );
+  }
 
   const data = await readRequestBody(req);
 

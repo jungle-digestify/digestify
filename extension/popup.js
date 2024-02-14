@@ -3,21 +3,17 @@ import { getActiveTabURL } from "./utils.js";
 async function checkLoginStatus() {
   // 로그인 체크 안하도록 변경
   console.log("최신입니다");
-  return true;
-  // await fetch("http://localhost:3000/api/me", {
-  //   method: "GET",
-  //   credentials: "include",
-  // })
-  //   .then((response) => {
-  //     if (response.status === 200) {
-  //       return true;
-  //     }
-  //     return false;
-  //   })
-  //   .catch((error) => {
-  //     console.error("Error:", error);
-  //     return false;
-  //   });
+  const result = await fetch("http://localhost:3000/api/me", {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (result.status === 200) {
+    return true;
+  }
+  return false;
 }
 
 document.addEventListener("DOMContentLoaded", async () => {

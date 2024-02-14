@@ -5,19 +5,19 @@ import { eq } from "drizzle-orm";
 import { inArray } from "drizzle-orm";
 
 export const currentUser = async () => {
-  // const session = await auth();
-  // return session?.user ?? null;
+  const session = await auth();
+  return session?.user ?? null;
 
-  if (!process.env.USER_EMAIL) {
-    return null;
-  }
+  // if (!process.env.USER_EMAIL) {
+  //   return null;
+  // }
 
-  const [user] = await db
-    .select()
-    .from(users)
-    .where(eq(users.email, process.env.USER_EMAIL));
+  // const [user] = await db
+  //   .select()
+  //   .from(users)
+  //   .where(eq(users.email, process.env.USER_EMAIL));
 
-  return user;
+  // return user;
 };
 
 export const currentRole = async () => {
