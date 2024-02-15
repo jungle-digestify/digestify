@@ -21,7 +21,7 @@ export default function VideoView2(all: any) {
       setChats(all.chats.reverse());
       setShowVideo(true);
     }
-  });
+  }, [all.chats]);
 
   if (!showVideo) {
     return <></>;

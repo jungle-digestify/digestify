@@ -1,4 +1,4 @@
-import { createChat } from "@/app/playground-ai/[[...chatId]]/actions";
+import { createChat } from "@/app/playground-hjin/[...params]/actions";
 import { db } from "@/db";
 import { chats, messages } from "@/db/schema";
 import { currentUser } from "@/lib/auth";

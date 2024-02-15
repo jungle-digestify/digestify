@@ -60,7 +60,7 @@ export default function VideoView(all: any) {
   const playerRefs: (React.LegacyRef<ReactPlayer> | undefined)[] = [];
   const timeLineArr: (React.LegacyRef<ReactPlayer> | undefined)[] = [];
 
-  const playerRef = useRef(null); //하나만할때
+  const playerRef = useRef<ReactPlayer | null>(null); //하나만할때
 
   for (let i = 0; i < all.getTimeLine.length; i++) {
     // playerRefs.push(useRef(null)); // 여러개 할땐 필요

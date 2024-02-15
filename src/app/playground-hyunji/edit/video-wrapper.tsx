@@ -1,11 +1,7 @@
-import ChatContent from "./chat-content";
-import { createChat } from "./actions";
-
 import { db } from "@/db";
 import { chats as chatsTable } from "@/db/schema";
 import { eq, desc, and } from "drizzle-orm";
 import VideoView from "./video-view";
-import fs from "fs";
 
 import { messages as messagesTable } from "@/db/schema";
 const lang = "ko"; // Optional, default is 'ko' (English)
@@ -32,10 +28,7 @@ export default async function VideoWrapper({
     .select()
     .from(messagesTable)
     .where(
-      and(
-        eq(messagesTable.chatId, chatId),
-        eq(messagesTable.role, "assistant"),
-      ),
+      and(eq(messagesTable.chatId, chatId), eq(messagesTable.role, "assistant"))
     )
     .orderBy(desc(messagesTable.createdAt));
 

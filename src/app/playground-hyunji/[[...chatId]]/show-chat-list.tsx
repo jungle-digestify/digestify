@@ -28,7 +28,7 @@ import {
 
 export default function ShowChatList(all: any) {
   const defaultLayout = all.defaultSize;
-
+  const chatId = all.chatId;
   return (
     <div>
       <ResizablePanel defaultSize={defaultLayout} className="chat-list">

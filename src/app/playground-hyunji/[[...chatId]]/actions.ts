@@ -9,7 +9,7 @@ import { eq } from "drizzle-orm";
 import { revalidateTag } from "next/cache";
 
 export async function createChat() {
-  // const user = await currentUser();
+  const user = await currentUser();
 
   if (!user) {
     return { error: "Unauthorized" };
@@ -19,7 +19,7 @@ export async function createChat() {
     .insert(chats)
     .values({
       name: "새로운 채팅",
-      userId: user.id,
+      workspaceId: user.defaultWorkspace!,
     })
     .returning();
 

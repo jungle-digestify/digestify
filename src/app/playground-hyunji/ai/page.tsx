@@ -95,7 +95,7 @@ export default async function Page2(all: any) {
           writeStream.on("finish", () => {
             console.log(`다운로드가 완료되어 ${outputPath}에 저장되었습니다.`);
           });
-        } catch (error) {
+        } catch (error: any) {
           console.error(`에러 발생: ${error.message}`);
         }
 
