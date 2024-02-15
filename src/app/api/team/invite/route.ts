@@ -31,14 +31,23 @@ async function sendMail({
 }
 
 export async function POST(req: Request) {
-  const body = await req.json(); // body = ReadableStream
+  const request = await req.json(); // body = ReadableStream
+  const workspaceId = request.teamSpaceId;
+  const userId = request.userId;
+
+  const body = {
+    to: request.to,
+    from: request.from,
+    subject: request.subject,
+    html: request.html,
+  };
   console.log("invite : ", body);
   return sendMail(body)
     .then(
       () =>
         new Response(JSON.stringify({ message: "메일을 성공적으로 보냈음" }), {
           status: 200,
-        }),
+        })
     )
     .catch((error) => {
       console.error(error);

@@ -93,11 +93,13 @@ export function MainNav({
   currentUserTeamSpace,
   defaultLayout,
   chatToggle,
+  userId,
 }: {
   currentUserPersonalSpace: string | null;
   currentUserTeamSpace: TeamSpace[] | null;
   defaultLayout: number[] | undefined;
   chatToggle: boolean | undefined;
+  userId: string | undefined;
 }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -147,14 +149,18 @@ export function MainNav({
   const onClickLeave = async () => {
     return;
   };
-  const onClickDelete = async () => {
+  const onClickDelete = async (teamSpaceId: string) => {
+    const deleter = {};
     return;
   };
   const onClickConsole = () => {
     console.log("clicked!");
   };
 
-  const onClickInvite = async (teamSpaceId: string) => {
+  const onClickInvite = async (
+    teamSpaceId: string,
+    userId: string | undefined
+  ) => {
     const sender = {
       to: guestEmail,
       from: process.env.USER_EMAIL,
@@ -162,6 +168,8 @@ export function MainNav({
       <p>팀스페이스 가입에 워크스페이스 아이디를 입력하고 가입해주세요!</p>
       <p>워크스페이스 id: ${teamSpaceId}</p>`, // 잘 바꾸면 이쁨
       subject: "Digest 워크스페이스에 초대합니다.",
+      teamSpaceId: teamSpaceId,
+      userId: userId,
     };
     sendContactEmail(sender);
 
@@ -320,7 +328,9 @@ export function MainNav({
                                 </div>
                                 <DialogFooter>
                                   <Button
-                                    onClick={() => onClickInvite(teamSpace.id)}
+                                    onClick={() =>
+                                      onClickInvite(teamSpace.id, userId)
+                                    }
                                   >
                                     초대하기
                                   </Button>
@@ -370,7 +380,9 @@ export function MainNav({
                                   </DialogDescription>
                                 </DialogHeader>
                                 <DialogFooter>
-                                  <Button onClick={onClickDelete}>
+                                  <Button
+                                    onClick={() => onClickDelete(teamSpace.id)}
+                                  >
                                     삭제하기
                                   </Button>
                                 </DialogFooter>

@@ -65,16 +65,18 @@ export const workspace = pgTable("workspace", {
     withTimezone: true,
   }).defaultNow(),
 });
+
 export const userInWorkspace = pgTable("userInWorkspace", {
   workspaceId: text("workspaceId")
     .notNull()
-    .references(() => workspace.id),
+    .references(() => workspace.id, { onDelete: "cascade" }),
   userId: text("userId")
     .notNull()
-    .references(() => users.id),
+    .references(() => users.id, { onDelete: "cascade" }),
   accept: boolean("accept").notNull().default(false),
   isHost: boolean("isHost").notNull().default(false),
 });
+
 export const metadata = pgTable("metadata", {
   chatId: text("chatId")
     .notNull()
@@ -92,7 +94,7 @@ export const chats = pgTable(
       .$defaultFn(() => createId()),
     workspaceId: text("user_id")
       .notNull()
-      .references(() => workspace.id),
+      .references(() => workspace.id, { onDelete: "cascade" }),
     name: text("name").notNull(),
     videoId: text("video_id"),
     createdAt: timestamp("createdAt", {
@@ -127,7 +129,7 @@ export const messages = pgTable("messages", {
     .$defaultFn(() => createId()),
   chatId: text("chat_id")
     .notNull()
-    .references(() => chats.id),
+    .references(() => chats.id, { onDelete: "cascade" }),
   role: text("role", { enum: ["user", "assistant", "system"] }).notNull(),
   content: text("content").notNull(),
   createdAt: timestamp("createdAt", {
