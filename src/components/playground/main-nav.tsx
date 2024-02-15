@@ -154,12 +154,14 @@ export function MainNav({
     console.log("clicked!");
   };
 
-  const onClickInvite = async () => {
+  const onClickInvite = async (teamSpaceId: string) => {
     const sender = {
       to: guestEmail,
       from: process.env.USER_EMAIL,
-      html: "<p>안녕하세요. 내용입니다.</p>", // 잘 바꾸면 이쁨
-      subject: "안녕하세요. 제목입니다.",
+      html: `<p>당신은 워크스페이스에 초대되셨습니다.</p>
+      <p>팀스페이스 가입에 워크스페이스 아이디를 입력하고 가입해주세요!</p>
+      <p>워크스페이스 id: ${teamSpaceId}</p>`, // 잘 바꾸면 이쁨
+      subject: "Digest 워크스페이스에 초대합니다.",
     };
     sendContactEmail(sender);
 
@@ -317,7 +319,9 @@ export function MainNav({
                                   </div>
                                 </div>
                                 <DialogFooter>
-                                  <Button onClick={onClickInvite}>
+                                  <Button
+                                    onClick={() => onClickInvite(teamSpace.id)}
+                                  >
                                     초대하기
                                   </Button>
                                 </DialogFooter>
@@ -360,30 +364,14 @@ export function MainNav({
                               </DialogTrigger>
                               <DialogContent className="sm:max-w-[425px]">
                                 <DialogHeader>
-                                  <DialogTitle>팀 스페이스 초대</DialogTitle>
+                                  <DialogTitle>팀 스페이스 삭제</DialogTitle>
                                   <DialogDescription>
-                                    이메일을 입력하여 초대하세요! 메일로
-                                    초대장이 발송됩니다.
+                                    정말로 이 팀스페이스를 삭제하시겠습니까?
                                   </DialogDescription>
                                 </DialogHeader>
-                                <div className="grid gap-4 py-4">
-                                  <div className="grid grid-cols-4 items-center gap-4">
-                                    <Label
-                                      htmlFor="email"
-                                      className="text-right"
-                                    >
-                                      Email
-                                    </Label>
-                                    <Input
-                                      id="email"
-                                      placeholder="email"
-                                      className="col-span-3"
-                                    />
-                                  </div>
-                                </div>
                                 <DialogFooter>
-                                  <Button onClick={onClickInvite}>
-                                    초대하기
+                                  <Button onClick={onClickDelete}>
+                                    삭제하기
                                   </Button>
                                 </DialogFooter>
                               </DialogContent>
@@ -448,7 +436,7 @@ export function MainNav({
             <NavigationMenuTrigger>팀 스페이스 가입</NavigationMenuTrigger>
             <NavigationMenuContent>
               <Dialog>
-                <DialogTrigger asChild>
+                <DialogTrigger className="w-94">
                   <Button variant="outline">Share</Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-md">
@@ -461,17 +449,21 @@ export function MainNav({
                   <div className="flex items-center space-x-2">
                     <div className="grid flex-1 gap-2">
                       <Label htmlFor="link" className="sr-only">
-                        Link
+                        workspaceId
                       </Label>
                       <Input
                         id="link"
-                        defaultValue="https://ui.shadcn.com/docs/installation"
+                        placeholder="워크스페이스 id를 입력해 주세요"
                         readOnly
                       />
                     </div>
-                    <Button type="submit" size="sm" className="px-3">
-                      <span className="sr-only">Copy</span>
-                      <CopyIcon className="h-4 w-4" />
+                    <Button
+                      type="submit"
+                      size="sm"
+                      className="px-3"
+                      onClick={onClickCreate}
+                    >
+                      가입하기
                     </Button>
                   </div>
                   <DialogFooter className="sm:justify-start">

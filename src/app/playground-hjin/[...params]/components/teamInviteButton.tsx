@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export async function sendContactEmail(sender: any) {
+  console.log("sender = ", sender);
   const response = await fetch("/api/invite", {
     method: "POST",
     body: JSON.stringify(sender),
@@ -24,8 +25,10 @@ export async function sendContactEmail(sender: any) {
       "Content-Type": "application/json",
     },
   });
+  console.log("response = ", response);
 
   const data = await response.json();
+  console.log("data = ", data);
 
   if (!response.ok) {
     throw new Error(data.message || "서버 요청에 실패함");
@@ -44,8 +47,9 @@ export const TeamInviteButton = React.forwardRef<
       to: "x1xgudwls@naver.com",
       from: process.env.USER_EMAIL,
       html: "<p>안녕하세요. 내용입니다.</p>", // 잘 바꾸면 이쁨
-      subject: "안녕하세요. 제목입니다.",
+      subject: "Digest 워크스페이스에 초대합니다.",
     };
+    console.log("sender:", sender);
     sendContactEmail(sender);
     toast("초대가 완료되었습니다!", {
       description: "상대방이 초대를 수락하면 팀으로 합류합니다.",
