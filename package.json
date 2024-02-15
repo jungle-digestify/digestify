@@ -16,7 +16,7 @@
     "db:push": "drizzle-kit push:pg"
   },
   "dependencies": {
-    "@auth/core": "^0.22.0",
+    "@auth/core": "0.22.0",
     "@auth/drizzle-adapter": "^0.3.17",
     "@babel/helper-module-imports": "^7.22.15",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
@@ -73,7 +73,7 @@
     "lucide-react": "^0.314.0",
     "net": "^1.0.2",
     "next": "^14.1.0",
-    "next-auth": "5.0.0-beta.9",
+    "next-auth": "5.0.0-beta.5",
     "next-themes": "^0.2.1",
     "nodemailer": "^6.9.9",
     "openai": "^4.26.0",

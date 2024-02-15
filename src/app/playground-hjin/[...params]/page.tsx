@@ -58,7 +58,7 @@ export default async function Page({
 }) {
   const search = searchParams.search;
 
-  const effectiveSearch = search?.replace(/ /g, " | ") ?? null;
+  const effectiveSearch = search?.trim().replace(/ /g, " | ") ?? null;
 
   const searchedChats = async () =>
     await db.execute<{
