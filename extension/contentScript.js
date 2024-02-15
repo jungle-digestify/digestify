@@ -145,7 +145,7 @@ const showExtensionIcon = (element) => {
     extensionIcon.addEventListener('animationend', () => {
       extensionIcon.classList.remove('icon-animate');
     }, {once: true});
-    
+
   };
   extensionIcon.addEventListener("click", extensionIcon.clickEventListener);
 
@@ -267,5 +267,5 @@ function createButton() {
 }
 
 if (!window.location.href.includes("www.youtube.com")) {
-  createButton();
+  //createButton();
 }

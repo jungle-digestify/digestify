@@ -63,13 +63,14 @@ const font = Poppins({
   weight: ["600"],
 });
 type TeamSpace = {
-  name: string;
-  description: string;
-  id: string;
+  name: string | null;
+  description: string | null;
+  id: string | null;
+  isHost: boolean;
 };
 
 export async function sendContactEmail(sender: any) {
-  const response = await fetch("/api/team/invite", {
+  const response = await fetch("/api/team/sendMail", {
     method: "POST",
     body: JSON.stringify(sender),
     headers: {
@@ -103,6 +104,11 @@ export function MainNav({
 }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [teamWorkspaceId, setteamWorkspaceId] = useState('');
+
+  const handleTeamSpaceChange = (e: any) => {
+    setteamWorkspaceId(e.target.value);
+  };
   const { toast } = useToast();
 
   const handleTitleChange = (e: any) => {
@@ -146,11 +152,89 @@ export function MainNav({
     });
   };
 
-  const onClickLeave = async () => {
+  const onClickLeave = async (teamSpaceId: string) => {
+    try{
+      const leaveSpace = {
+        teamSpaceId: teamSpaceId,
+        userId: userId
+      }
+
+      const response = await fetch("/api/team/leave", {
+        method: "DELETE",
+        body: JSON.stringify(leaveSpace),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    
+      const data = await response.json();
+    
+      if (!response.ok) {
+        throw new Error(data.message || "서버 요청에 실패함");
+      }
+    
+      console.log("response:", response);
+  
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "탈퇴에 실패하였습니다.",
+        description: "다시 시도해보시겠어요?",
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      });
+      return;
+    }
+
+    sonnerToast("탈퇴가 완료되었습니다!", {
+      description: "",
+      action: {
+        label: "OK",
+        onClick: () => console.log("OK"),
+      },
+    });
+    
     return;
   };
   const onClickDelete = async (teamSpaceId: string) => {
-    const deleter = {};
+    try{
+      const deleteSpace = {
+        teamSpaceId: teamSpaceId
+      }
+
+      const response = await fetch("/api/team/delete", {
+        method: "DELETE",
+        body: JSON.stringify(deleteSpace),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    
+      const data = await response.json();
+    
+      if (!response.ok) {
+        throw new Error(data.message || "서버 요청에 실패함");
+      }
+    
+      console.log("response:", response);
+  
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "삭제에 실패하였습니다.",
+        description: "다시 시도해보시겠어요?",
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      });
+      return;
+    }
+
+    sonnerToast("삭제가 완료되었습니다!", {
+      description: "",
+      action: {
+        label: "OK",
+        onClick: () => console.log("OK"),
+      },
+    });
+    
     return;
   };
   const onClickConsole = () => {
@@ -158,8 +242,7 @@ export function MainNav({
   };
 
   const onClickInvite = async (
-    teamSpaceId: string,
-    userId: string | undefined
+    teamSpaceId: string
   ) => {
     const sender = {
       to: guestEmail,
@@ -168,17 +251,36 @@ export function MainNav({
       <p>팀스페이스 가입에 워크스페이스 아이디를 입력하고 가입해주세요!</p>
       <p>워크스페이스 id: ${teamSpaceId}</p>`, // 잘 바꾸면 이쁨
       subject: "Digest 워크스페이스에 초대합니다.",
-      teamSpaceId: teamSpaceId,
-      userId: userId,
     };
-    sendContactEmail(sender);
+    sendContactEmail(sender); // api/sendMail 호출
+    
+    // api/invite 호출
+    try{
+      const invite = {
+        teamSpaceId: teamSpaceId,
+        userEmail: guestEmail
+      }
 
-    try {
-      const body = JSON.stringify({ title: title, description: description });
+      const response = await fetch("/api/team/invite", {
+        method: "POST",
+        body: JSON.stringify(invite),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    
+      const data = await response.json();
+    
+      if (!response.ok) {
+        throw new Error(data.message || "서버 요청에 실패함");
+      }
+    
+      console.log("response:", response);
+  
     } catch (error: any) {
       toast({
         variant: "destructive",
-        title: "팀 생성에 실패하였습니다.",
+        title: "초대에 실패하였습니다.",
         description: "다시 시도해보시겠어요?",
         action: <ToastAction altText="Try again">Try again</ToastAction>,
       });
@@ -193,7 +295,46 @@ export function MainNav({
       },
     });
   };
-
+  const onClickJoin= async () => {
+    try{
+      const join = {
+        teamSpaceId: teamWorkspaceId,
+        userId: userId
+      }
+      console.log("join:",join)
+      const response = await fetch("/api/team/join", {
+        method: "POST",
+        body: JSON.stringify(join),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    
+      const data = await response.json();
+    
+      if (!response.ok) {
+        throw new Error(data.message || "서버 요청에 실패함");
+      }
+    
+      console.log("response:", response);
+  
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "가입에 실패하였습니다.",
+        description: "다시 시도해보시겠어요?",
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      });
+      return;
+    }
+    sonnerToast("가입이 완료되었습니다!", {
+      description: "팀원들과 공유해보세요!",
+      action: {
+        label: "OK",
+        onClick: () => console.log("OK"),
+      },
+    });
+  }
   // console.log('defaultLayout=',defaultLayout);
   // console.log('chatToggle=',chatToggle);
 
@@ -289,7 +430,7 @@ export function MainNav({
                         <ListItem
                           key={teamSpace.id} // 고유한 key prop으로 id 사용
                           href={`/playground-hjin/${teamSpace.id}`} // 팀 스페이스의 Id를 사용하여 href 설정
-                          title={teamSpace.name} // 팀 스페이스의 title 설정
+                          title={teamSpace.name!} // 팀 스페이스의 title 설정
                           className="md:w-[500px] lg:w-[417px] md:h-[100px]"
                         >
                           {teamSpace.description}
@@ -329,7 +470,7 @@ export function MainNav({
                                 <DialogFooter>
                                   <Button
                                     onClick={() =>
-                                      onClickInvite(teamSpace.id, userId)
+                                      onClickInvite(teamSpace.id!)
                                     }
                                   >
                                     초대하기
@@ -340,6 +481,7 @@ export function MainNav({
                             <Toaster />
                           </>
                           <MenubarSeparator />
+                          { !teamSpace.isHost ? ( 
                           <AlertDialog>
                             <AlertDialogTrigger>
                               <Button className="sm:w-[180px] bg-white text-primary-foreground text-black hover:bg-black hover:text-white">
@@ -350,21 +492,21 @@ export function MainNav({
                             <AlertDialogContent>
                               <AlertDialogHeader>
                                 <AlertDialogTitle>
-                                  Are you absolutely sure?
+                                  팀 스페이스 탈퇴
                                 </AlertDialogTitle>
                                 <AlertDialogDescription>
-                                  This action cannot be undone. This will
-                                  permanently delete your account and remove
-                                  your data from our servers.
+                                  이 팀스페이스를 탈퇴하시겠습니까?
                                 </AlertDialogDescription>
                               </AlertDialogHeader>
                               <AlertDialogFooter>
-                                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                <AlertDialogAction>Continue</AlertDialogAction>
+                                <AlertDialogCancel>취소</AlertDialogCancel>
+                                <AlertDialogAction onClick={() => onClickLeave(teamSpace.id!)}>탈퇴하기</AlertDialogAction>
                               </AlertDialogFooter>
                             </AlertDialogContent>
-                          </AlertDialog>
+                          </AlertDialog>) : ( <></> )
+                          }
                           <MenubarSeparator />
+                          { teamSpace.isHost ? (
                           <>
                             <Dialog>
                               <DialogTrigger asChild>
@@ -376,12 +518,12 @@ export function MainNav({
                                 <DialogHeader>
                                   <DialogTitle>팀 스페이스 삭제</DialogTitle>
                                   <DialogDescription>
-                                    정말로 이 팀스페이스를 삭제하시겠습니까?
+                                    이 팀스페이스를 삭제하시겠습니까?
                                   </DialogDescription>
                                 </DialogHeader>
                                 <DialogFooter>
                                   <Button
-                                    onClick={() => onClickDelete(teamSpace.id)}
+                                    onClick={() => onClickDelete(teamSpace.id!)}
                                   >
                                     삭제하기
                                   </Button>
@@ -389,7 +531,8 @@ export function MainNav({
                               </DialogContent>
                             </Dialog>
                             <Toaster />
-                          </>
+                          </>) : ( <></>)
+                        }
                         </MenubarContent>
                       </MenubarMenu>
                     </Menubar>
@@ -448,8 +591,9 @@ export function MainNav({
             <NavigationMenuTrigger>팀 스페이스 가입</NavigationMenuTrigger>
             <NavigationMenuContent>
               <Dialog>
-                <DialogTrigger className="w-94">
-                  <Button variant="outline">Share</Button>
+                <DialogTrigger className="w-[425px] h-[100px]">
+                  {/* <Button variant="outline">Share</Button> */}
+                  가입하기
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-md">
                   <DialogHeader>
@@ -466,14 +610,14 @@ export function MainNav({
                       <Input
                         id="link"
                         placeholder="워크스페이스 id를 입력해 주세요"
-                        readOnly
+                        onChange={handleTeamSpaceChange}
                       />
                     </div>
                     <Button
                       type="submit"
                       size="sm"
                       className="px-3"
-                      onClick={onClickCreate}
+                      onClick={onClickJoin}
                     >
                       가입하기
                     </Button>

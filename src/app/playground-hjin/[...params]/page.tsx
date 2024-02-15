@@ -42,12 +42,38 @@ import { PgSchema } from "drizzle-orm/pg-core";
 import { cookies } from "next/headers";
 import { ClientComponent } from "./resizable_page";
 import { request } from "http";
-
-interface TeamSpace {
-  title: string;
-  desc: string;
-  id: string;
-  type: "team";
+import { CopyIcon } from "@radix-ui/react-icons"
+ 
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Share } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import ShareSelector from "@/components/playground/shareSelector";
+import DelebeButton from "@/components/playground/delebeButton";
+export interface TeamSpace {
+  id: string | null;
+  name: string | null;
+  description: string | null;
+  isHost: boolean;
 }
 export default async function Page({
   params,
@@ -73,7 +99,7 @@ WHERE vec @@ to_tsquery('config_2_gram_cjk', '${effectiveSearch}') and role = 's
 ORDER BY rank DESC;`)
     );
 
-  const getChats = cache(
+  const getChats = 
     async (spaceId: string) =>
       await db
         .select({
@@ -83,12 +109,7 @@ ORDER BY rank DESC;`)
         })
         .from(chatsTable)
         .where(eq(chatsTable.workspaceId, spaceId))
-        .orderBy(desc(chatsTable.createdAt)),
-    ["get-chats-for-chat-list"],
-    {
-      tags: ["get-chats-for-chat-list"],
-    }
-  );
+        .orderBy(desc(chatsTable.createdAt))
 
   const spaceId = params.params[0];
   const chatId = params.params[1] ?? null;
@@ -118,6 +139,8 @@ ORDER BY rank DESC;`)
   } else {
     chatToggle = "false";
   }
+  const teamSpaces = await getCurrentUserTeamSpace();
+  
 
   return (
     <ClientComponent
@@ -128,7 +151,7 @@ ORDER BY rank DESC;`)
       {/* first children */}
       <Suspense>
         <ChatList
-          spaceId={currentUserPersonalSpace}
+          spaceId={spaceId}
           chats={chats}
           chatId={chatId}
           search={search}
@@ -149,6 +172,14 @@ ORDER BY rank DESC;`)
       {chatId ? (
         <div>
           <VideoWrapper chatId={chatId}></VideoWrapper>
+          { currentSpace.type === "personal" ? ( 
+            <div className="flex flex-row">
+            <ShareSelector teamSpaces={teamSpaces} chatId={chatId}/>
+            <DelebeButton spaceId={spaceId} chatId={chatId} />
+            </ div>
+          ) : (<>
+            <DelebeButton spaceId={spaceId} chatId={chatId} />
+          </>)}
         </div>
       ) : (
         <div className="w-full h-full flex flex-col justify-center align-middle items-center">

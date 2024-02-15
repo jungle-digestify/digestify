@@ -70,12 +70,39 @@ export const {
   callbacks: {
     async signIn({ user, account }) {
       // Allow OAuth without email verification
-      if (account?.provider !== "credentials") return true;
+      if (account?.provider !== "credentials") {
+        return true;
+      }
       if (user.id === undefined) return false;
       const existingUser = await getUserById(user.id);
       // Prevent sign in without email verification
       if (!existingUser?.emailVerified) return false;
 
+        if (!existingUser.defaultWorkspace) {
+          const space = await db
+            .insert(workspace) //개인 스페이스 생성
+            .values({
+              name: "personalSpace",
+              description: "personalSpace",
+              type: "personal",
+            })
+            .returning();
+  
+          await db // 유저 테이블에 개인 스페이스 넣기
+            .update(users)
+            .set({ defaultWorkspace: space[0].id })
+            .where(eq(users.id, String(existingUser.id)));
+  
+          await db // userInSpace 관계 넣기
+            .insert(userInWorkspace)
+            .values({
+              workspaceId: space[0].id,
+              userId: existingUser.id,
+              isHost: true,
+              accept: true,
+            });
+        }
+      
       if (existingUser.isTwoFactorEnabled) {
         const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(
           existingUser.id
@@ -88,6 +115,7 @@ export const {
           .delete(twoFactorConfirmationTable)
           .where(eq(twoFactorConfirmationTable.id, twoFactorConfirmation.id));
       }
+      
 
       return true;
     },

@@ -92,7 +92,7 @@ export const chats = pgTable(
       .notNull()
       .primaryKey()
       .$defaultFn(() => createId()),
-    workspaceId: text("user_id")
+    workspaceId: text("workspace_id")
       .notNull()
       .references(() => workspace.id, { onDelete: "cascade" }),
     name: text("name").notNull(),

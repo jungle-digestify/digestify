@@ -85,5 +85,10 @@ export default async function VideoWrapper({
   // }
   // // 다운로드 완료
 
-  return <VideoView videoId={chat?.videoId} getTimeLine={getTimeLine} />;
+  return (
+    <>
+    <VideoView videoId={chat?.videoId} getTimeLine={getTimeLine} />
+    {/* { isPersonalSpace ? ( <button>공유하기</button>) : (<></>)} */}
+    </>
+  )
 }

@@ -33,16 +33,16 @@ export async function POST(req: Request) {
         .returning();
     } catch (e) {
       return new Response(JSON.stringify({ message: "팀 생성 실패1" }), {
-        status: 200,
+        status: 500,
       });
     }
   } catch (e) {
     return new Response(JSON.stringify({ message: "팀 생성 실패2" }), {
-      status: 200,
+      status: 500,
     });
   }
 
   return new Response(JSON.stringify({ message: "팀 생성 성공" }), {
-    status: 500,
+    status: 200,
   });
 }
