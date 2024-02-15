@@ -42,7 +42,7 @@ const addVideoEventHandler = async () => {
 let hideTimeout;
 function onMouseOverHandler() {
   clearTimeout(hideTimeout);
-  showExtensionIcon(this); // 'this'는 이벤트가 발생한 엘리먼트를 가리킵니다.
+  showExtensionIcon(this); 
 }
 
 function onMouseOutHandler() {
@@ -62,16 +62,28 @@ const removeEventListeners = (element) => {
 const initializeExtensionIconOnHover = (checked) => {
   console.log("initialExHover:", checked);
   const targetElements = document.querySelectorAll(
-    "#contents > ytd-rich-item-renderer",
+    "#contents > ytd-rich-item-renderer"
   );
+  const searchElements = document.querySelectorAll(
+    "#contents > ytd-video-renderer"
+  );
+  const otherElements = document.querySelectorAll(
+    "#items > ytd-video-renderer"
+  )
+
   if (checked) {
     targetElements.forEach((element) => applyEventListeners(element));
+    searchElements.forEach((element) => applyEventListeners(element));
+    otherElements.forEach((element) => applyEventListeners(element));
+    console.log("apply button")
   } else {
     targetElements.forEach((element) => removeEventListeners(element));
+    searchElements.forEach((element) => removeEventListeners(element));
+    otherElements.forEach((element) => removeEventListeners(element));
+    console.log("not apply button")
   }
-
   const targetContainer = document.querySelector("#contents");
-  if (!targetContainer) return;
+  // if (!targetContainer) return;
 
   const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
@@ -114,7 +126,6 @@ const showExtensionIcon = (element) => {
   // 이전에 추가된 이벤트 리스너를 제거
   extensionIcon.removeEventListener("click", extensionIcon.clickEventListener);
 
-  // 새로운 이벤트 리스너를 추가
   extensionIcon.clickEventListener = () => {
     const videoUrl = element.querySelector("a#thumbnail").href;
     // 콘솔이 아니라 fetch로 백으로 보내야함
@@ -128,6 +139,13 @@ const showExtensionIcon = (element) => {
     sendYoutubeUrl("http://localhost:3000/api/extension", {
       videoUrl: get_v_id,
     });
+
+
+    extensionIcon.classList.add('icon-animate');
+    extensionIcon.addEventListener('animationend', () => {
+      extensionIcon.classList.remove('icon-animate');
+    }, {once: true});
+    
   };
   extensionIcon.addEventListener("click", extensionIcon.clickEventListener);
 
