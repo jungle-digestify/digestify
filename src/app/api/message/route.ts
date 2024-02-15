@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
       { error: "not logged in" },
       {
         status: 401,
-      },
+      }
     );
   }
 
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
   const [chat] = await db
     .select()
     .from(chats)
-    .where(and(eq(chats.id, chatId), eq(chats.userId, user.id)));
+    .where(and(eq(chats.id, chatId), eq(chats.workspaceId, user.id)));
 
   if (!chat) {
     return new NextResponse("chat is not found", { status: 400 });

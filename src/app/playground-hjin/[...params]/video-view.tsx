@@ -22,7 +22,7 @@ function ChangeSecond(timeArr: any[]) {
   // console.log('getTime =', getTime);
 
   if (getTime !== null && getTime.length !== 0 && shortTime.length === 0) {
-    for (let i = 0; i < getTime.length-1; i++) {
+    for (let i = 0; i < getTime.length - 1; i++) {
       if (getTime.length === 1) {
         return shortTime.push([0, getTime[0]]);
       } else {
@@ -60,9 +60,9 @@ export default function VideoView({
   const playerRefs: (React.LegacyRef<ReactPlayer> | undefined)[] = [];
   const timeLineArr: (React.LegacyRef<ReactPlayer> | undefined)[] = [];
 
-  const playerRef = useRef(null); //하나만할때
+  const playerRef = useRef<ReactPlayer | null>(null); //하나만할때
 
-  for (let i = 0; i < getTimeLine.length-1; i++) {
+  for (let i = 0; i < getTimeLine.length - 1; i++) {
     // playerRefs.push(useRef(null)); // 여러개 할땐 필요
     timeLineArr.push(getTimeLine[i]);
   }

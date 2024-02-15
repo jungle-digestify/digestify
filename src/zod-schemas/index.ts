@@ -85,3 +85,8 @@ export const SearchSchema = z.object({
     message: "Query is required",
   }),
 });
+
+export const RetrySchema = z.object({
+  chatId: z.string(),
+  path: z.string(),
+});

@@ -23,7 +23,6 @@ export const {
   unstable_update: update,
 } = NextAuth({
   adapter: DrizzleAdapter(db),
-
   pages: {
     signIn: "/auth/login",
     error: "/auth/error",
@@ -106,10 +105,10 @@ export const {
       }
 
       if (session.user) {
-        session.user.name = token.name;
-        session.user.email = token.email;
+        session.user.name = token.name as string;
+        session.user.email = token.email as string;
         session.user.isOAuth = token.isOAuth as boolean;
-        session.user.defaultWorkspace = token.defaultWorkspace;
+        session.user.defaultWorkspace = token.defaultWorkspace as string;
       }
       return session;
     },
@@ -132,5 +131,6 @@ export const {
     },
   },
   session: { strategy: "jwt" },
+
   ...authConfig,
 });

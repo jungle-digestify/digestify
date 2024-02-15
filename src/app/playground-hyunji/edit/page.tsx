@@ -39,11 +39,11 @@ export default async function Page2({
           video_id: chatsTable.videoId,
         })
         .from(chatsTable)
-        .where(eq(chatsTable.userId, userId)),
+        .where(eq(chatsTable.workspaceId, userId)),
     ["get-chats-for-chat-list"],
     {
       tags: ["get-chats-for-chat-list"],
-    },
+    }
   );
 
   const user = await currentUser();

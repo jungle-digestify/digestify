@@ -29,7 +29,7 @@ export default function VideoView2({
     if (document) {
       setShowVideo(true);
     }
-  });
+  }, []);
 
   if (!showVideo) {
     return <></>;

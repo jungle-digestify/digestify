@@ -12,11 +12,11 @@ const getChats = cache(
     await db
       .select({ id: chatsTable.id, name: chatsTable.name })
       .from(chatsTable)
-      .where(eq(chatsTable.userId, userId)),
+      .where(eq(chatsTable.workspaceId, userId)),
   ["get-chats-for-chat-list"],
   {
     tags: ["get-chats-for-chat-list"],
-  },
+  }
 );
 export default async function ChatHeader() {
   const user = await currentUser();

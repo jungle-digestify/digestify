@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 export default function ImageUploadComponent({
@@ -56,7 +57,7 @@ export default function ImageUploadComponent({
       </label>
       {preview && (
         <div className="w-full p-2">
-          <img
+          <Image
             src={preview}
             alt="Selected"
             className="object-cover w-32 h-32"

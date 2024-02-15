@@ -56,6 +56,7 @@ export default async function ChatList({
                   color: chatId === chat.id ? "white" : "",
                 }}
                 dangerouslySetInnerHTML={{ __html: chat.name }}
+                scroll={false}
               ></Link>
             ))}
           </div>

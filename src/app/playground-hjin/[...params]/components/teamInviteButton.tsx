@@ -40,7 +40,7 @@ export async function sendContactEmail(sender: any) {
 export const TeamInviteButton = React.forwardRef<
   HTMLButtonElement,
   React.HTMLProps<HTMLButtonElement>
->((props, ref) => {
+>((_props) => {
   console.log("inside Team!");
   const onSubmit = () => {
     const sender = {
@@ -90,6 +90,8 @@ export const TeamInviteButton = React.forwardRef<
     </>
   );
 });
+
+TeamInviteButton.displayName = "Search";
 
 // const TeamInviteButton = React.forwardRef<HTMLButtonElement, // 여기서 ref의 타입을 HTMLButtonElement로 지정합니다.
 //   React.ComponentPropsWithoutRef<'button'> & {

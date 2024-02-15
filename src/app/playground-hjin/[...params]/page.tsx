@@ -106,9 +106,9 @@ ORDER BY rank DESC;`)
   const layout = cookies().get("react-resizable-panels:layout");
   const toggleList = cookies().get("react-chatlist-toggle:show");
 
-  console.log("cookies =", cookies());
+  // console.log("cookies =", cookies());
   let defaultLayout, chatToggle;
-  console.log("chatToggle =", chatToggle);
+  // console.log("chatToggle =", chatToggle);
   if (layout) {
     // console.log('layout =', layout);
     defaultLayout = JSON.parse(layout.value);

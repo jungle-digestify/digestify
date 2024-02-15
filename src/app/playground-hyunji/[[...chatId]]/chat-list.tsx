@@ -16,7 +16,7 @@ const getChats = cache(
     await db
       .select({ id: chatsTable.id, name: chatsTable.name })
       .from(chatsTable)
-      .where(eq(chatsTable.userId, userId))
+      .where(eq(chatsTable.workspaceId, userId))
       .orderBy(desc(chatsTable.createdAt)),
   ["get-chats-for-chat-list"],
   {
