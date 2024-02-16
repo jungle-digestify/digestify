@@ -23,8 +23,15 @@ export function ClientComponent({
 }) {
   const [isVisible, setIsVisible] = useState(chatToggle);
   // console.log('defaultLayout=',defaultLayout);
-  const onLayout = (sizes: number[]) => {
+  // console.log('children.length=',children);
 
+  function deleteCookie(name:string) {
+    // 만료일을 과거로 설정하여 쿠키 삭제
+    document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  }
+
+  const onLayout = (sizes: number[]) => {
+    
     document.cookie = `react-resizable-panels:layout=${JSON.stringify(sizes)}`;
     // console.log('sizes =', sizes);
 
@@ -65,7 +72,8 @@ export function ClientComponent({
           </ResizablePanel>
           <ResizableHandle withHandle disabled/>
         
-        
+        { children[2] ? 
+        <>
           <ResizablePanel defaultSize={defaultLayout[1]} minSize={10} maxSize={isVisible?70:90}>
 
           {children && children[1]}
@@ -76,8 +84,20 @@ export function ClientComponent({
           {children && children[2]}
 
           </ResizablePanel>
-        
+        </>
           
+        :
+        <>
+          <ResizablePanel defaultSize={80} minSize={10}>
+
+          {children && children[1]}
+
+          </ResizablePanel>
+          
+          
+        </>
+        }
+  
         </ResizablePanelGroup>
       </div>
 

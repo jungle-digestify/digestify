@@ -15,10 +15,11 @@ import { unstable_cache as cache } from "next/cache";
 
 //db
 import { db } from "@/db";
-import { chats as chatsTable } from "@/db/schema";
-import { desc, eq, sql } from "drizzle-orm";
+import { chats as chatsTable, userInWorkspace, workspace } from "@/db/schema";
+import { and, desc, eq, sql } from "drizzle-orm";
 import { error } from "console";
 import {
+  currentUser,
   getCurrentUserPersonalSpace,
   getCurrentUserTeamSpace,
   getSpace,
@@ -43,9 +44,9 @@ import { PgSchema } from "drizzle-orm/pg-core";
 import { cookies } from "next/headers";
 import { ClientComponent } from "./resizable_page";
 import { request } from "http";
-import { CopyIcon } from "@radix-ui/react-icons"
- 
-import { Button } from "@/components/ui/button"
+import { CopyIcon } from "@radix-ui/react-icons";
+
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -55,9 +56,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Share } from "lucide-react";
 import {
   Select,
@@ -102,17 +103,16 @@ WHERE vec @@ to_tsquery('config_2_gram_cjk', '${effectiveSearch}') and role = 's
 ORDER BY rank DESC;`)
     );
 
-  const getChats = 
-    async (spaceId: string) =>
-      await db
-        .select({
-          id: chatsTable.id,
-          name: chatsTable.name,
-          videoId: chatsTable.videoId,
-        })
-        .from(chatsTable)
-        .where(eq(chatsTable.workspaceId, spaceId))
-        .orderBy(desc(chatsTable.createdAt))
+  const getChats = async (spaceId: string) =>
+    await db
+      .select({
+        id: chatsTable.id,
+        name: chatsTable.name,
+        videoId: chatsTable.videoId,
+      })
+      .from(chatsTable)
+      .where(eq(chatsTable.workspaceId, spaceId))
+      .orderBy(desc(chatsTable.createdAt));
 
   const spaceId = params.params[0];
   const chatId = params.params[1] ?? null;
@@ -123,9 +123,26 @@ ORDER BY rank DESC;`)
   // console.log("spaceid:", spaceId);
   // console.log("chatId:", chatId);
   const currentSpace = await getSpace(spaceId);
+  const user = await currentUser();
+  if (user === null) {
+    window.location.href = `/playground-hjin/${spaceId}`;
+    return;
+  }
 
-  const currentUserPersonalSpace = await getCurrentUserPersonalSpace();
-  const currentUserTeamSpace: TeamSpace[] = await getCurrentUserTeamSpace();
+  const [isUserDeserveForWorkspace] = await db
+    .select()
+    .from(userInWorkspace)
+    .where(
+      and(
+        eq(userInWorkspace.userId, user.id),
+        eq(userInWorkspace.workspaceId, spaceId),
+        eq(userInWorkspace.accept, true)
+      )
+    );
+
+  if (isUserDeserveForWorkspace === undefined) {
+    return <AccessDenied />;
+  }
 
   const layout = cookies().get("react-resizable-panels:layout");
   const toggleList = cookies().get("react-chatlist-toggle:show");
@@ -182,13 +199,18 @@ ORDER BY rank DESC;`)
       {/* third children */}
       {chatId && (
         <div>
-          <VideoWrapper
-          chatId={chatId}
-          spaceId={spaceId}
-          spaceType={currentSpace.type}
-        ></VideoWrapper>
+          <VideoWrapper chatId={chatId}></VideoWrapper>
         </div>
-      )}
+      )
+      
+      //  : (
+      //   null
+        // <div className="w-full h-full flex flex-col justify-center align-middle items-center">
+        //   {" "}
+        //   <FaRegCircleXmark size={25}></FaRegCircleXmark>동영상 없음{" "}
+        // </div>
+      // )
+    }
     </ClientComponent>
   );
 }
