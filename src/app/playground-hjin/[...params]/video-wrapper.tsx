@@ -106,12 +106,12 @@ export default async function VideoWrapper({
     <>
       <VideoView videoId={chat?.videoId} getTimeLine={getTimeLine} />
       {spaceType === "personal" ? (
-        <div className="flex flex-row p-2 gap-4">
+        <div className="flex flex-row p-2 gap-2">
           <ShareSelector teamSpaces={teamSpaces} chatId={chatId} />
           <DelebeButton spaceId={spaceId} chatId={chatId} />
         </div>
       ) : (
-        <div className="flex flex-row p-2 gap-4">
+        <div className="flex flex-row p-2 gap-2">
           <DelebeButton spaceId={spaceId} chatId={chatId} />
         </div>
       )}
