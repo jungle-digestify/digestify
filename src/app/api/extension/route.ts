@@ -23,7 +23,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
       { error: "not logged in" },
       {
         status: 401,
-      }
+      },
     );
   }
 

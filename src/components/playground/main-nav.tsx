@@ -29,7 +29,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { workspace, userInWorkspace } from "../../db/schema";
 import React, { useState, useRef, useEffect } from "react";
-import { Toaster, toast as sonnerToast } from "sonner";
+import { toast as sonnerToast } from "sonner";
 import { desc } from "drizzle-orm";
 import { auth } from "@/auth";
 import { useToast } from "@/components/ui/use-toast";
@@ -314,12 +314,17 @@ export function MainNav({
       });
 
       const data = await response.json();
+      console.log("response:", response, data);
 
       if (!response.ok) {
-        throw new Error(data.message || "서버 요청에 실패함");
+        toast({
+          variant: "destructive",
+          title: "가입에 실패하였습니다.",
+          description: "다시 시도해보시겠어요?",
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+        });
+        return;
       }
-
-      console.log("response:", response);
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -360,7 +365,7 @@ export function MainNav({
     setIsVisible(!isVisible);
     // console.log('isVisible2 =', isVisible);
     document.cookie = `react-chatlist-toggle:show=${JSON.stringify(
-      !isVisible
+      !isVisible,
     )}`;
 
     if (resize) {
@@ -483,7 +488,6 @@ export function MainNav({
                                 </DialogFooter>
                               </DialogContent>
                             </Dialog>
-                            <Toaster />
                           </>
                           <MenubarSeparator />
                           {!teamSpace.isHost ? (
@@ -543,7 +547,6 @@ export function MainNav({
                                   </DialogFooter>
                                 </DialogContent>
                               </Dialog>
-                              <Toaster />
                             </>
                           ) : (
                             <></>
@@ -644,7 +647,6 @@ export function MainNav({
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
-      <Toaster />
     </div>
   );
 }
@@ -660,7 +662,7 @@ const ListItem = React.forwardRef<
           ref={ref}
           className={cn(
             "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
+            className,
           )}
           {...props}
         >

@@ -21,7 +21,7 @@ function genExpWithWeights(input: string[]) {
   });
 
   const tsvectorColumn = `tsvector GENERATED ALWAYS AS (${columnExpressions.join(
-    " || "
+    " || ",
   )}) STORED`;
 
   return tsvectorColumn;
@@ -106,7 +106,7 @@ export const chats = pgTable(
     return {
       workspaceIdIndex: index("chats_auth_user_id_idx").on(table.workspaceId),
     };
-  }
+  },
 );
 // export const workspaceChatRelation = relations(workspace, ({one,many})=>({
 //   profile: one(chats,{
@@ -185,7 +185,7 @@ export const accounts = pgTable(
     compoundKey: primaryKey({
       columns: [account.provider, account.providerAccountId],
     }),
-  })
+  }),
 );
 export const verificationTokens = pgTable(
   "verificationToken",
@@ -199,7 +199,7 @@ export const verificationTokens = pgTable(
   },
   (vt) => ({
     compoundKey: primaryKey({ columns: [vt.id, vt.token] }),
-  })
+  }),
 );
 export const passwordResetTokens = pgTable(
   "passwordResetToken",
@@ -213,7 +213,7 @@ export const passwordResetTokens = pgTable(
   },
   (vt) => ({
     compoundKey: primaryKey({ columns: [vt.id, vt.token] }),
-  })
+  }),
 );
 export const twoFactorTokens = pgTable(
   "twoFactorToken",
@@ -227,7 +227,7 @@ export const twoFactorTokens = pgTable(
   },
   (vt) => ({
     compoundKey: primaryKey({ columns: [vt.id, vt.token] }),
-  })
+  }),
 );
 export const twoFactorConfirmation = pgTable("twoFactorConfirmation", {
   id: text("id")

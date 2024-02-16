@@ -1,27 +1,26 @@
 @keyframes clickEffect {
-    0% {
-      transform: scale(1);
-      filter: brightness(100%);
-    }
-    25% {
-      transform: scale(1.1);
-      filter: brightness(150%);
-    }
-    50% {
-      transform: scale(1) rotate(360deg);
-      filter: brightness(100%);
-    }
-    75% {
-      transform: scale(1.1);
-      filter: brightness(150%);
-    }
-    100% {
-      transform: scale(1);
-      filter: brightness(100%);
-    }
+  0% {
+    transform: scale(1);
+    filter: brightness(100%);
   }
-  
-  .icon-animate {
-    animation: clickEffect 2s ease-in-out;
+  25% {
+    transform: scale(1.1);
+    filter: brightness(150%);
   }
-  
+  50% {
+    transform: scale(1) rotate(360deg);
+    filter: brightness(100%);
+  }
+  75% {
+    transform: scale(1.1);
+    filter: brightness(150%);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(100%);
+  }
+}
+
+.icon-animate {
+  animation: clickEffect 2s ease-in-out;
+}

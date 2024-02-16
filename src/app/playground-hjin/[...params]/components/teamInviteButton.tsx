@@ -86,7 +86,6 @@ export const TeamInviteButton = React.forwardRef<
           </DialogFooter>
         </DialogContent>
       </Dialog>
-      <Toaster />
     </>
   );
 });

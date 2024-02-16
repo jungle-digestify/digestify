@@ -16,7 +16,7 @@ async function rawQuery() {
   console.log(new_search_word);
   // without sql<T> type defined
   const res0 = await db.execute(
-    sql.raw(`SELECT to_tsquery('config_2_gram_cjk', '${new_search_word}')`)
+    sql.raw(`SELECT to_tsquery('config_2_gram_cjk', '${new_search_word}')`),
   );
   console.log("res0: ", res0);
 
@@ -24,7 +24,7 @@ async function rawQuery() {
     sql.raw(`SELECT *, ts_rank(vec, to_tsquery('config_2_gram_cjk', '${new_search_word}')) AS rank
   FROM posts
   WHERE vec @@ to_tsquery('config_2_gram_cjk', '${new_search_word}')
-  ORDER BY rank DESC;`)
+  ORDER BY rank DESC;`),
   );
   console.log("res: ", res);
 

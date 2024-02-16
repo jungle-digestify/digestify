@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
       { error: "not logged in" },
       {
         status: 401,
-      }
+      },
     );
   }
 

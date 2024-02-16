@@ -21,7 +21,7 @@ const getChats = cache(
   ["get-chats-for-chat-list"],
   {
     tags: ["get-chats-for-chat-list"],
-  }
+  },
 );
 export default async function ChatList(all: any) {
   const session = await auth();

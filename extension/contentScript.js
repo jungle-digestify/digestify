@@ -42,7 +42,7 @@ const addVideoEventHandler = async () => {
 let hideTimeout;
 function onMouseOverHandler() {
   clearTimeout(hideTimeout);
-  showExtensionIcon(this); 
+  showExtensionIcon(this);
 }
 
 function onMouseOutHandler() {
@@ -62,25 +62,25 @@ const removeEventListeners = (element) => {
 const initializeExtensionIconOnHover = (checked) => {
   console.log("initialExHover:", checked);
   const targetElements = document.querySelectorAll(
-    "#contents > ytd-rich-item-renderer"
+    "#contents > ytd-rich-item-renderer",
   );
   const searchElements = document.querySelectorAll(
-    "#contents > ytd-video-renderer"
+    "#contents > ytd-video-renderer",
   );
   const otherElements = document.querySelectorAll(
-    "#items > ytd-video-renderer"
-  )
+    "#items > ytd-video-renderer",
+  );
 
   if (checked) {
     targetElements.forEach((element) => applyEventListeners(element));
     searchElements.forEach((element) => applyEventListeners(element));
     otherElements.forEach((element) => applyEventListeners(element));
-    console.log("apply button")
+    console.log("apply button");
   } else {
     targetElements.forEach((element) => removeEventListeners(element));
     searchElements.forEach((element) => removeEventListeners(element));
     otherElements.forEach((element) => removeEventListeners(element));
-    console.log("not apply button")
+    console.log("not apply button");
   }
   const targetContainer = document.querySelector("#contents");
   // if (!targetContainer) return;
@@ -140,12 +140,14 @@ const showExtensionIcon = (element) => {
       videoUrl: get_v_id,
     });
 
-
-    extensionIcon.classList.add('icon-animate');
-    extensionIcon.addEventListener('animationend', () => {
-      extensionIcon.classList.remove('icon-animate');
-    }, {once: true});
-
+    extensionIcon.classList.add("icon-animate");
+    extensionIcon.addEventListener(
+      "animationend",
+      () => {
+        extensionIcon.classList.remove("icon-animate");
+      },
+      { once: true },
+    );
   };
   extensionIcon.addEventListener("click", extensionIcon.clickEventListener);
 

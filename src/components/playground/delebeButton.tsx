@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
-import { Toaster, toast as sonnerToast } from "sonner";
+import { toast as sonnerToast } from "sonner";
 
 import { db } from "@/db";
 import { chats } from "@/db/schema";
@@ -47,11 +47,8 @@ export default function DelebeButton({
 
     sonnerToast("요약 삭제", {
       description: "요약이 삭제 되었습니다!",
-      action: {
-        label: "OK",
-        onClick: () => console.log("OK"),
-      },
     });
+
     setTimeout(() => {
       window.location.href = `/playground-hjin/${spaceId}`;
     }, 800);

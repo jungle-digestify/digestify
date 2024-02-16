@@ -6,31 +6,26 @@ export async function POST(req: Request) {
   const body = await req.json();
   const { teamSpaceId, userId } = body;
 
-  console.log("팀 스페이스 가입 버튼 POST 요청!" , body,teamSpaceId, userId)
   try {
-    const result = await db
-      .select()
-      .from(userInWorkspace)
-      .where(and(eq(userInWorkspace.workspaceId, teamSpaceId), eq(userInWorkspace.userId, userId)))
-    
-    if(!result){
-      return new Response(JSON.stringify({ message: "워크스페이스 가입 실패" }), {
-        status: 500,
-      });
-    }
-  } catch{
-    return new Response(JSON.stringify({ message: "워크스페이스 가입 실패" }), {
-      status: 500,
-    });
-  }
-
-  try {
-    const result = await db
+    const result: { accept: boolean }[] = await db
       .update(userInWorkspace)
-      .set({ accept : true})
-      .where(and(eq(userInWorkspace.workspaceId, teamSpaceId), eq(userInWorkspace.userId, userId)));
-    
-    console.log("join: result:", result)
+      .set({ accept: true })
+      .where(
+        and(
+          eq(userInWorkspace.workspaceId, teamSpaceId),
+          eq(userInWorkspace.userId, userId),
+        ),
+      )
+      .returning({ accept: userInWorkspace.accept });
+    console.log("join: result:", result, "!");
+    if (result.length === 0) {
+      return new Response(
+        JSON.stringify({ message: "워크스페이스 가입 실패!" }),
+        {
+          status: 500,
+        },
+      );
+    }
   } catch {
     return new Response(JSON.stringify({ message: "워크스페이스 가입 실패" }), {
       status: 500,

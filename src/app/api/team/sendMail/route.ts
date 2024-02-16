@@ -32,7 +32,7 @@ async function sendMail({
 
 export async function POST(req: Request) {
   const request = await req.json(); // body = ReadableStream
-  
+
   const body = {
     to: request.to,
     from: request.from,
@@ -45,7 +45,7 @@ export async function POST(req: Request) {
       () =>
         new Response(JSON.stringify({ message: "메일을 성공적으로 보냈음" }), {
           status: 200,
-        })
+        }),
     )
     .catch((error) => {
       console.error(error);

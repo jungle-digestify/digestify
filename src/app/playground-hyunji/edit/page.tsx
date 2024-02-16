@@ -43,7 +43,7 @@ export default async function Page2({
     ["get-chats-for-chat-list"],
     {
       tags: ["get-chats-for-chat-list"],
-    }
+    },
   );
 
   const user = await currentUser();

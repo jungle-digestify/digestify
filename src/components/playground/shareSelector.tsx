@@ -84,10 +84,6 @@ export default function ShareSelector({
     }
     sonnerToast("공유가 완료되었습니다!", {
       description: "팀 스페이스에서 확인해보세요!",
-      action: {
-        label: "OK",
-        onClick: () => console.log("OK"),
-      },
     });
     return;
   };
@@ -137,8 +133,6 @@ export default function ShareSelector({
           </div>
         </DialogContent>
       </Dialog>
-
-      <Toaster />
     </>
   );
 }

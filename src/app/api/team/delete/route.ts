@@ -5,7 +5,7 @@ import { eq } from "drizzle-orm";
 export async function DELETE(req: Request) {
   const body = await req.json();
   const { teamSpaceId } = body;
-  console.log("delete 요청 api:", body)
+  console.log("delete 요청 api:", body);
   try {
     const result = await db
       .delete(workspace)

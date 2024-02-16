@@ -24,7 +24,7 @@ export default function VideoView2({
   workspaceId: string;
   spaceId: string;
 }) {
-  // console.log("all =", chats);
+  console.log("all =", chats);
   const [showVideo, setShowVideo] = useState(false);
   const [getChats, setChats] = useState([]);
 
@@ -33,24 +33,27 @@ export default function VideoView2({
       setShowVideo(true);
     }
   }, []);
-  function deleteCookie(name:string) {
+  function deleteCookie(name: string) {
     // 만료일을 과거로 설정하여 쿠키 삭제
-    document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie =
+      name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
   }
-  const layoutResize = () =>{
+  const layoutResize = () => {
     // console.log('cookie=', cookies().get(`react-resizable-panels:layout`));
-    var cookies = document.cookie.split(';');
+    var cookies = document.cookie.split(";");
     for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i].trim();
-        // 해당 이름을 가진 쿠키를 찾으면 삭제
-        const name='react-resizable-panels:layout';
-        if (cookie.indexOf(name + "=") === 0) {
-            deleteCookie(name);
-            break;
-        }
+      var cookie = cookies[i].trim();
+      // 해당 이름을 가진 쿠키를 찾으면 삭제
+      const name = "react-resizable-panels:layout";
+      if (cookie.indexOf(name + "=") === 0) {
+        deleteCookie(name);
+        break;
+      }
     }
-    document.cookie = `react-resizable-panels:layout=${JSON.stringify([20,40,40])}`;
-  }
+    document.cookie = `react-resizable-panels:layout=${JSON.stringify([
+      20, 40, 40,
+    ])}`;
+  };
   if (!showVideo) {
     return <></>;
   } else {
@@ -74,7 +77,7 @@ export default function VideoView2({
                     <Link
                       href={`${workspaceId}/${spaceId}/${item.id}`}
                       dangerouslySetInnerHTML={{ __html: item.name }}
-                      onClick={(e)=> layoutResize()}
+                      onClick={(e) => layoutResize()}
                     ></Link>
                   </div>
                 </div>

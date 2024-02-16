@@ -19,7 +19,7 @@ async function reset() {
   const queries = Object.values(tableSchema).map((table) => {
     console.log(`🧨 Preparing delete query for table: ${table.dbName}`);
     return sql.raw(
-      `truncate table "${table.dbName}" restart identity cascade;`
+      `truncate table "${table.dbName}" restart identity cascade;`,
     );
   });
 
