@@ -37,16 +37,18 @@ export function ClientComponent({
   let [getSize,setSize] = useState<number[]>([]);
   const [getToggle, setToggle] = useState(false);
   const [checkLoad, setLoad]= useState(false);
+  const path = '/';
   const onLayout = (sizes: number[]) => {
     // deleteCookie('react-resizable-panels:layout');
     // deleteCookie('react-chatlist-toggle:show');
-    document.cookie = `react-resizable-panels:layout=${JSON.stringify(sizes)}`;
+    
+    document.cookie = `react-resizable-panels:layout=${JSON.stringify(sizes)}; path=${path}`;
     if(sizes[0]<=5){
-      document.cookie = `react-chatlist-toggle:show=${JSON.stringify(false)}`;
+      document.cookie = `react-chatlist-toggle:show=${JSON.stringify(false)}; path=${path}`;
       setToggle(false);
     }
     else{
-      document.cookie = `react-chatlist-toggle:show=${JSON.stringify(true)}`;
+      document.cookie = `react-chatlist-toggle:show=${JSON.stringify(true)}; path=${path}`;
       setToggle(true);
     }
     setSize(sizes);
@@ -54,6 +56,7 @@ export function ClientComponent({
   };
 
   useEffect(()=>{
+    document.cookie = `react-resizable-panels:layout=${JSON.stringify(getSize)}; path=${path}`;
     setLoad(true);
   }, [getSize])
   return (
