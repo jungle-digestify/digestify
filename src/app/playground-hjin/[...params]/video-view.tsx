@@ -92,7 +92,7 @@ export default function VideoView({
   } else {
     return (
       <div
-        className="w-full flex flex-col gap-5 overflow-y-auto"
+        className="w-full flex flex-col gap-5 overflow-y-auto overflow-x-hidden"
         style={{ border: "10px solid rgba(0,0,0,0)", boxSizing: "border-box" }}
       >
         <div

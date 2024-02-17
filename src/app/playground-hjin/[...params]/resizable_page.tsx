@@ -38,8 +38,8 @@ export function ClientComponent({
   const [getToggle, setToggle] = useState(false);
   const [checkLoad, setLoad]= useState(false);
   const onLayout = (sizes: number[]) => {
-    deleteCookie('react-resizable-panels:layout');
-    deleteCookie('react-chatlist-toggle:show');
+    // deleteCookie('react-resizable-panels:layout');
+    // deleteCookie('react-chatlist-toggle:show');
     document.cookie = `react-resizable-panels:layout=${JSON.stringify(sizes)}`;
     if(sizes[0]<=5){
       document.cookie = `react-chatlist-toggle:show=${JSON.stringify(false)}`;
@@ -63,7 +63,7 @@ export function ClientComponent({
         suppressContentEditableWarning={true}
       >
         <ResizablePanelGroup direction="horizontal" onLayout={onLayout}>
-          <ResizablePanel defaultSize={defaultLayout[0]} minSize={5} maxSize={30}>
+          <ResizablePanel defaultSize={defaultLayout[0]} minSize={5} maxSize={35}>
            {checkLoad &&(
             getSize[0]<=5 ? (<div className="listItem flex justify-center my-4"><FaList size={20}/></div>):(<div className="listItem h-full">{children && children[0]}</div>)
            )}
@@ -73,23 +73,23 @@ export function ClientComponent({
             <> {/* 요소가 두개인경우 : 채팅 리스트 + 왼쪽 요약 + 오른쪽 영상  */}
               <ResizablePanel
                 defaultSize={defaultLayout[1]}
-                minSize={10}
-                maxSize={95}
+                minSize={30}
+                maxSize={70}
               >
                 {children && children[1]}
               </ResizablePanel>
               <ResizableHandle withHandle />
               <ResizablePanel
                 defaultSize={defaultLayout[2]}
-                minSize={10}
-                maxSize={95}
+                minSize={30}
+                maxSize={70}
               >
                 {children && children[2]}
               </ResizablePanel>
             </>
           ) : (
             <> {/* 요소가 한개인경우 : show thumbnail  */}
-              <ResizablePanel defaultSize={isVisible ? 80 : 95} minSize={10}>
+              <ResizablePanel defaultSize={100 - defaultLayout[0]} minSize={10}>
                 {children && children[1]}
               </ResizablePanel>
             </>
