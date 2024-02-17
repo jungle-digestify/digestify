@@ -402,9 +402,9 @@ export function MainNav({
   // },[isVisible])
   return (
     <div className="flex items-center space-x-2 lg:space-x-6">
-      <button className="ListBtn" onClick={toggleVisibility}>
+      {/* <button className="ListBtn" onClick={toggleVisibility}>
         리스트
-      </button>
+      </button> */}
       <CustomLink href="/playground-hjin">
         <span className={cn("font-semibold text-2xl", font.className)}>
           Digest

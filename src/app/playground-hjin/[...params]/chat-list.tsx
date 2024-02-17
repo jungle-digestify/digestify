@@ -27,7 +27,7 @@ export default async function ChatList({
   search?: string;
 }) {
   return (
-    <ScrollArea className="h-full">
+    <ScrollArea className="h-full">  {/* 여기서 display:table; min-width: 100%가 들어가서 리스트가 짤림 ㅜ 수정 필요*/}
       <div className="chatlistUp flex w-full h-full">
         <div className="chatlist w-full my-3">
           <div className="flex flex-col mx-1">

@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode, useEffect, useState } from "react";
-import { FaRegCircleXmark } from "react-icons/fa6";
+import { FaL, FaRegCircleXmark } from "react-icons/fa6";
 
 import {
   ResizableHandle,
@@ -9,9 +9,12 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { number } from "zod";
+import { FaList } from "react-icons/fa";
+import SettingsPage from "@/app/playground-auth2/settings/page";
+import { useAmp } from "next/amp";
 
 export function ClientComponent({
-  defaultLayout = [20, 40, 40],
+  defaultLayout = [5, 47.5, 47.5],
   chatId,
   children,
   chatToggle,
@@ -30,34 +33,29 @@ export function ClientComponent({
     document.cookie =
       name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
   }
-
+  
+  let [getSize,setSize] = useState<number[]>([]);
+  const [getToggle, setToggle] = useState(false);
+  const [checkLoad, setLoad]= useState(false);
   const onLayout = (sizes: number[]) => {
+    deleteCookie('react-resizable-panels:layout');
+    deleteCookie('react-chatlist-toggle:show');
     document.cookie = `react-resizable-panels:layout=${JSON.stringify(sizes)}`;
-    // console.log('sizes =', sizes);
+    if(sizes[0]<=5){
+      document.cookie = `react-chatlist-toggle:show=${JSON.stringify(false)}`;
+      setToggle(false);
+    }
+    else{
+      document.cookie = `react-chatlist-toggle:show=${JSON.stringify(true)}`;
+      setToggle(true);
+    }
+    setSize(sizes);
+
   };
 
-  // const toggleVisibility = () => {
-
-  //   setIsVisible(!isVisible);
-  //   console.log('isVisible2 =', isVisible);
-  //   document.cookie = `react-chatlist-toggle:show=${JSON.stringify(!isVisible)}`
-
-  //   const resize:number[] = getSize;
-  //   console.log('getSize =', getSize);
-  //   if(isVisible){ //true
-  //     resize[0]=0;
-  //     resize[1]+=10;
-  //     resize[2]+=10;
-  //   }else{
-  //     resize[0]=20;
-  //     resize[1]-=10;
-  //     resize[2]-=10;
-
-  //   }
-  //   onLayout(resize);
-
-  // };
-
+  useEffect(()=>{
+    setLoad(true);
+  }, [getSize])
   return (
     <div className="w-full h-full flex flex-col">
       <div
@@ -65,17 +63,18 @@ export function ClientComponent({
         suppressContentEditableWarning={true}
       >
         <ResizablePanelGroup direction="horizontal" onLayout={onLayout}>
-          <ResizablePanel defaultSize={defaultLayout[0]}>
-            <div className="h-full">{children && children[0]}</div>
-          </ResizablePanel>
-          <ResizableHandle withHandle disabled />
+          <ResizablePanel defaultSize={defaultLayout[0]} minSize={5} maxSize={30}>
+           {checkLoad &&(
+            getSize[0]<=5 ? (<div className="listItem flex justify-center my-4"><FaList size={20}/></div>):(<div className="listItem h-full">{children && children[0]}</div>)
+           )}
+          </ResizablePanel><ResizableHandle withHandle />
 
-          {children[2] ? (
-            <>
+          {children[2] ? ( 
+            <> {/* 요소가 두개인경우 : 채팅 리스트 + 왼쪽 요약 + 오른쪽 영상  */}
               <ResizablePanel
                 defaultSize={defaultLayout[1]}
                 minSize={10}
-                maxSize={isVisible ? 70 : 90}
+                maxSize={95}
               >
                 {children && children[1]}
               </ResizablePanel>
@@ -83,14 +82,14 @@ export function ClientComponent({
               <ResizablePanel
                 defaultSize={defaultLayout[2]}
                 minSize={10}
-                maxSize={isVisible ? 70 : 90}
+                maxSize={95}
               >
                 {children && children[2]}
               </ResizablePanel>
             </>
           ) : (
-            <>
-              <ResizablePanel defaultSize={80} minSize={10}>
+            <> {/* 요소가 한개인경우 : show thumbnail  */}
+              <ResizablePanel defaultSize={isVisible ? 80 : 95} minSize={10}>
                 {children && children[1]}
               </ResizablePanel>
             </>

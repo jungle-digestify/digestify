@@ -166,3 +166,7 @@
   /* overflow: hidden; */
   /* white-space: nowrap; */
 }
+
+.listItem{
+  animation: fade-in 1s;
+}

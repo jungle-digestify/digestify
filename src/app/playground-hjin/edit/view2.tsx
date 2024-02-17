@@ -51,7 +51,7 @@ export default function VideoView2({
       }
     }
     document.cookie = `react-resizable-panels:layout=${JSON.stringify([
-      20, 40, 40,
+      5, 47.5, 47.5,
     ])}`;
   };
   if (!showVideo) {
