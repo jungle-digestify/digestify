@@ -1,34 +1,56 @@
+"use client";
 import CustomLink from "@/components/playground/custom-link";
 import packageJSON from "@/../package.json";
+import { Copy, Share2, YoutubeIcon } from "lucide-react";
+import Link from "next/link";
+import { Button } from "./ui/button";
+import { toast as sonnerToast } from "sonner";
 
 export default function Index() {
+  const handleCopyClipBoard = () => {
+    try {
+      navigator.clipboard.writeText("http://localhost:3000/playground-hjin");
+      sonnerToast("주소가 복사되었습니다!", {
+        description: "링크를 공유해주세요!",
+        action: {
+          label: "OK",
+          onClick: () => {},
+        },
+      });
+    } catch (error) {
+      sonnerToast("복사에 실패하였습니다!", {
+        description: "다시 시도해 주세요.",
+        action: {
+          label: "OK",
+          onClick: () => {},
+        },
+      });
+    }
+  };
+
   return (
-    <div className="space-y-2">
-      <h1 className="text-3xl font-bold">NextAuth.js Example</h1>
-      <p>
-        This is an example site to demonstrate how to use{" "}
-        <CustomLink href="https://nextjs.authjs.dev">NextAuth.js</CustomLink>{" "}
-        for authentication. Check out the{" "}
-        <CustomLink
-          href="/playground-auth/server-example"
-          className="underline"
+    <div className="space-y-2 flex flex-col p-10 gap-4 items-center">
+      <h1 className="text-3xl font-bold">Welcome to Digest </h1>
+      <p>Digest에 오신 것을 환영합니다!</p>
+      <p>요약하고 싶은 영상을 youtube에서 digest 아이콘을 눌러추가해주세요!</p>
+      <div className="flex flex-row items-center ">
+        <Button
+          variant={"secondary"}
+          className="flex flex-row items-center gap-2"
+          onClick={() => window.open("https://www.youtube.com/")}
         >
-          Server
-        </CustomLink>{" "}
-        and the{" "}
-        <CustomLink
-          href="/playground-auth/client-example"
-          className="underline"
+          <YoutubeIcon className="size-10" />
+          YouTube창 열기
+        </Button>{" "}
+        <Button
+          variant={"secondary"}
+          className="flex flex-row items-center gap-2"
+          onClick={handleCopyClipBoard}
         >
-          Client
-        </CustomLink>{" "}
-        examples to see how to secure pages and get session data.
-      </p>
-      <p>
-        Current{" "}
-        <CustomLink href="https://nextjs.authjs.dev">NextAuth.js</CustomLink>{" "}
-        version: <em>next-auth@{packageJSON.dependencies["next-auth"]}</em>
-      </p>
+          <Copy className="size-8" />
+          주소 복사하기
+        </Button>
+      </div>
     </div>
   );
 }
