@@ -34,10 +34,12 @@ export default function VideoView2({
       setShowVideo(true);
     }
   }, []);
+  const path = "/";
   function deleteCookie(name: string) {
     // 만료일을 과거로 설정하여 쿠키 삭제
+    
     document.cookie =
-      name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      name + `=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; path=${path}`;
   }
   const layoutResize = () => {
     // console.log('cookie=', cookies().get(`react-resizable-panels:layout`));
@@ -53,7 +55,7 @@ export default function VideoView2({
     }
     document.cookie = `react-resizable-panels:layout=${JSON.stringify([
       5, 47.5, 47.5,
-    ])}`;
+    ])}; path=${path}`;
   };
   if (!showVideo) {
     return <></>;

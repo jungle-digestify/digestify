@@ -122,7 +122,7 @@ ORDER BY rank DESC;`)
     ? await searchedChats()
     : await getChats(spaceId);
 
-  console.log("chats", chats);
+  // console.log("chats", chats);
   // console.log("spaceid:", spaceId);
   // console.log("chatId:", chatId);
   const currentSpace = await getSpace(spaceId);
