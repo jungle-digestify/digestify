@@ -449,7 +449,7 @@ export function MainNav({
               className="overflow-y-scroll"
               style={{ maxHeight: "400px" }}
             >
-              <ul className="grid gap-3 p-6 md:w-[500px] lg:w-[500px] lg:grid-cols-[1fr]">
+              <ul className="list-none grid gap-3 p-6 md:w-[500px] lg:w-[500px] lg:grid-cols-[1fr]">
                 {currentUserTeamSpace ? (
                   currentUserTeamSpace.map((teamSpace) => (
                     <Menubar
@@ -457,11 +457,6 @@ export function MainNav({
                       key={teamSpace.id}
                     >
                       <MenubarMenu>
-                        <MenubarTrigger className="sm:w-[10px] lg:w-[10px]">
-                          <Button className="sm:w-[20px] lg:h-[98px] md:h-[98px] bg-white text-primary-foreground text-black hover:bg-black hover:text-white">
-                            ⠿
-                          </Button>
-                        </MenubarTrigger>
                         <ListItem
                           key={teamSpace.id} // 고유한 key prop으로 id 사용
                           href={`/playground-hjin/${teamSpace.id}`} // 팀 스페이스의 Id를 사용하여 href 설정
@@ -470,48 +465,49 @@ export function MainNav({
                         >
                           {teamSpace.description}
                         </ListItem>
+                        <MenubarTrigger className="sm:w-[10px] lg:w-[10px]">
+                          <Button className="sm:w-[20px] lg:h-[98px] md:h-[98px] bg-white text-primary-foreground text-black hover:bg-black hover:text-white">
+                            ⠿
+                          </Button>
+                        </MenubarTrigger>
+
                         <MenubarContent>
-                          <>
-                            <Dialog>
-                              <DialogTrigger asChild>
-                                <Button className="sm:w-[180px] bg-white text-primary-foreground text-black hover:bg-black hover:text-white">
-                                  팀 스페이스 초대
-                                </Button>
-                              </DialogTrigger>
-                              <DialogContent className="sm:max-w-[425px]">
-                                <DialogHeader>
-                                  <DialogTitle>팀 스페이스 초대</DialogTitle>
-                                  <DialogDescription>
-                                    이메일을 입력하여 초대하세요! 메일로
-                                    초대장이 발송됩니다.
-                                  </DialogDescription>
-                                </DialogHeader>
-                                <div className="grid gap-4 py-4">
-                                  <div className="grid grid-cols-4 items-center gap-4">
-                                    <Label
-                                      htmlFor="email"
-                                      className="text-right"
-                                    >
-                                      Email
-                                    </Label>
-                                    <Input
-                                      id="email"
-                                      placeholder="email"
-                                      className="col-span-3"
-                                      onChange={handleEmailChange}
-                                    />
-                                  </div>
+                          <Dialog>
+                            <DialogTrigger asChild>
+                              <Button className="sm:w-[180px] bg-white text-primary-foreground text-black hover:bg-black hover:text-white">
+                                팀 스페이스 초대
+                              </Button>
+                            </DialogTrigger>
+                            <DialogContent className="sm:max-w-[425px]">
+                              <DialogHeader>
+                                <DialogTitle>팀 스페이스 초대</DialogTitle>
+                                <DialogDescription>
+                                  이메일을 입력하여 초대하세요! 메일로 초대장이
+                                  발송됩니다.
+                                </DialogDescription>
+                              </DialogHeader>
+                              <div className="grid gap-4 py-4">
+                                <div className="grid grid-cols-4 items-center gap-4">
+                                  <Label htmlFor="email" className="text-right">
+                                    Email
+                                  </Label>
+                                  <Input
+                                    id="email"
+                                    placeholder="email"
+                                    className="col-span-3"
+                                    onChange={handleEmailChange}
+                                  />
                                 </div>
-                                <DialogFooter>
-                                  <Button
-                                    onClick={() => onClickInvite(teamSpace.id!)}
-                                  >
-                                    초대하기
-                                  </Button>
-                                </DialogFooter>
-                              </DialogContent>
-                            </Dialog>
-                          </>
+                              </div>
+                              <DialogFooter>
+                                <Button
+                                  onClick={() => onClickInvite(teamSpace.id!)}
+                                >
+                                  초대하기
+                                </Button>
+                              </DialogFooter>
+                            </DialogContent>
+                          </Dialog>
                           <MenubarSeparator />
                           {!teamSpace.isHost ? (
                             <AlertDialog>

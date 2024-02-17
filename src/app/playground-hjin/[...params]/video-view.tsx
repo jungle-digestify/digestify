@@ -95,9 +95,7 @@ export default function VideoView({
         className="w-full flex flex-col gap-5 overflow-y-auto overflow-x-hidden"
         style={{ border: "10px solid rgba(0,0,0,0)", boxSizing: "border-box" }}
       >
-        <div
-          style={{ position: "relative", paddingTop: "56.25%", zIndex: "-1" }}
-        >
+        <div style={{ position: "relative", paddingTop: "56.25%" }}>
           <ReactPlayer
             // url='/downloads/8VZvs6O5tZY.mp4'
             ref={playerRef}
