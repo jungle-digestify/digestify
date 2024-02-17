@@ -1,5 +1,5 @@
 "use client";
-import { RecoilRoot } from "recoil";
+// import { RecoilRoot } from "recoil";
 import { MainNav } from "./main-nav";
 
 type TeamSpace = {
@@ -23,14 +23,14 @@ export default function MainNavWrap({
   userId: string | undefined;
 }) {
   return (
-    <RecoilRoot>
-      <MainNav
-        currentUserPersonalSpace={currentUserPersonalSpace}
-        currentUserTeamSpace={currentUserTeamSpace}
-        defaultLayout={defaultLayout}
-        chatToggle={chatToggle}
-        userId={userId}
-      />
-    </RecoilRoot>
+    // <RecoilRoot>
+    <MainNav
+      currentUserPersonalSpace={currentUserPersonalSpace}
+      currentUserTeamSpace={currentUserTeamSpace}
+      defaultLayout={defaultLayout}
+      chatToggle={chatToggle}
+      userId={userId}
+    />
+    // </RecoilRoot>
   );
 }

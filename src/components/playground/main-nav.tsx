@@ -69,26 +69,6 @@ type TeamSpace = {
   isHost: boolean;
 };
 
-export async function sendContactEmail(sender: any) {
-  const response = await fetch("/api/team/sendMail", {
-    method: "POST",
-    body: JSON.stringify(sender),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "서버 요청에 실패함");
-  }
-
-  console.log("response:", response);
-
-  return data;
-}
-
 export function MainNav({
   currentUserPersonalSpace,
   currentUserTeamSpace,
@@ -171,10 +151,14 @@ export function MainNav({
         },
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        throw new Error(data.message || "서버 요청에 실패함");
+        toast({
+          variant: "destructive",
+          title: "탈퇴에 실패하였습니다.",
+          description: "다시 시도해보시겠어요?",
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+        });
+        return;
       }
 
       console.log("response:", response);
@@ -246,6 +230,17 @@ export function MainNav({
     return;
   };
 
+  async function sendContactEmail(sender: any) {
+    const response = await fetch("/api/team/sendMail", {
+      method: "POST",
+      body: JSON.stringify(sender),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return response;
+  }
   const onClickInvite = async (teamSpaceId: string) => {
     const sender = {
       to: guestEmail,
@@ -255,7 +250,31 @@ export function MainNav({
       <p>워크스페이스 id: ${teamSpaceId}</p>`, // 잘 바꾸면 이쁨
       subject: "Digest 워크스페이스에 초대합니다.",
     };
-    sendContactEmail(sender); // api/sendMail 호출
+
+    try {
+      const sendresponse = await sendContactEmail(sender); // api/sendMail 호출
+
+      console.log("sendres:", sendresponse);
+      if (!sendresponse.ok) {
+        sonnerToast("초대에 실패하였습니다", {
+          description:
+            "상대방이 가입되어 있는지,\n메일주소가 맞는지 확인해 주세요",
+          action: {
+            label: "OK",
+            onClick: () => console.log("OK"),
+          },
+        });
+        return;
+      }
+    } catch {
+      toast({
+        variant: "destructive",
+        title: "초대에 실패하였습니다.",
+        description: "다시 시도해보시겠어요?",
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      });
+      return;
+    }
 
     // api/invite 호출
     try {
@@ -272,10 +291,14 @@ export function MainNav({
         },
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        throw new Error(data.message || "서버 요청에 실패함");
+        toast({
+          variant: "destructive",
+          title: "초대에 실패하였습니다.",
+          description: "다시 시도해보시겠어요?",
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+        });
+        return;
       }
 
       console.log("response:", response);
@@ -365,7 +388,7 @@ export function MainNav({
     setIsVisible(!isVisible);
     // console.log('isVisible2 =', isVisible);
     document.cookie = `react-chatlist-toggle:show=${JSON.stringify(
-      !isVisible,
+      !isVisible
     )}`;
 
     if (resize) {
@@ -662,7 +685,7 @@ const ListItem = React.forwardRef<
           ref={ref}
           className={cn(
             "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className,
+            className
           )}
           {...props}
         >

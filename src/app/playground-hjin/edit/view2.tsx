@@ -12,6 +12,7 @@ import { cookies } from "next/headers";
 //scroll
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Link from "next/link";
+import { FaYoutube } from "react-icons/fa";
 
 type SelectChatDto = Pick<SelectChat, "id" | "name" | "videoId">;
 
@@ -83,7 +84,14 @@ export default function VideoView2({
                 </div>
               ))
             ) : (
-              <div>동영상 없음</div>
+              <a
+                href="https://www.youtube.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaYoutube size={30} />
+                요약하고 싶은 youtube 영상에서 digest 아이콘을 눌러주세요!
+              </a>
             )}
           </div>
         </div>

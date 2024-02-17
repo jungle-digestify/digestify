@@ -39,16 +39,15 @@ export async function POST(req: Request) {
     subject: request.subject,
     html: request.html,
   };
-  console.log("invite : ", body);
+  // console.log("invite : ", body);
   return sendMail(body)
     .then(
       () =>
         new Response(JSON.stringify({ message: "메일을 성공적으로 보냈음" }), {
           status: 200,
-        }),
+        })
     )
-    .catch((error) => {
-      console.error(error);
+    .catch(() => {
       return new Response(JSON.stringify({ message: "메일 전송에 실패함" }), {
         status: 500,
       });

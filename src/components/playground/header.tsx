@@ -26,7 +26,7 @@ export default async function Header() {
   }
 
   return (
-    <header className="sticky flex justify-center border-b">
+    <header className="z-[100] sticky flex justify-center border-b">
       <div className="flex items-center justify-between w-full h-16 max-w-3xl px-4 mx-auto sm:px-6">
         <MainNav
           currentUserPersonalSpace={currentUserPersonalSpace}

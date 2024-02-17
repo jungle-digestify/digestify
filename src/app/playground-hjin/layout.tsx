@@ -19,7 +19,9 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
       <body className={`${notoSansKr.className} antialiased`}>
         <div className="flex flex-col justify-between w-full h-full min-h-screen">
           <Header />
-          <main className="flex-auto w-full overflow-y-hidden">{children}</main>
+          <main className="z-0 flex-auto w-full overflow-y-hidden">
+            {children}
+          </main>
           <Toaster />
           <Footer />
         </div>

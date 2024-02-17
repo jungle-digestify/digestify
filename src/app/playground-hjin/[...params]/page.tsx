@@ -100,7 +100,7 @@ export default async function Page({
 FROM messages
 left join chats on messages.chat_id = chats.id
 WHERE vec @@ to_tsquery('config_2_gram_cjk', '${effectiveSearch}') and role = 'system'
-ORDER BY rank DESC;`),
+ORDER BY rank DESC;`)
     );
   };
 
@@ -140,8 +140,8 @@ ORDER BY rank DESC;`),
       and(
         eq(userInWorkspace.userId, user.id),
         eq(userInWorkspace.workspaceId, spaceId),
-        eq(userInWorkspace.accept, true),
-      ),
+        eq(userInWorkspace.accept, true)
+      )
     );
 
   if (isUserDeserveForWorkspace === undefined) {
@@ -186,27 +186,16 @@ ORDER BY rank DESC;`),
         </Suspense>
       ) : (
         <div className="w-full h-full flex flex-col justify-center align-middle items-center">
-          {chats ? (
-            <VideoView2
-              chats={chats}
-              workspaceId={"/playground-hjin/"}
-              spaceId={spaceId}
-            ></VideoView2>
-          ) : (
-            <a
-              href="https://www.youtube.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FaYoutube size={30} />
-              요약하고 싶은 youtube 영상에서 digest 아이콘을 눌러주세요!
-            </a>
-          )}
+          <VideoView2
+            chats={chats}
+            workspaceId={"/playground-hjin/"}
+            spaceId={spaceId}
+          ></VideoView2>
         </div>
       )}
       {/* third children */}
       {chatId && (
-        <div>
+        <div className="w-full h-full flex flex-col">
           <VideoWrapper
             chatId={chatId}
             spaceId={spaceId}
