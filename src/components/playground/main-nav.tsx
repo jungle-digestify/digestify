@@ -535,7 +535,7 @@ export function MainNav({
                   {currentUserTeamSpace ? (
                     currentUserTeamSpace.map((teamSpace) => (
                       <Menubar
-                        className="w-[360px] h-[80px]"
+                        className="w-[360px] h-[60px]"
                         key={teamSpace.id}
                       >
                         <MenubarMenu>
@@ -548,7 +548,7 @@ export function MainNav({
                             {teamSpace.description}
                           </ListItem>
                           <MenubarTrigger className="w-[10px] h-[10px]">
-                            <Button className="w-[80px] h-[70px] bg-white text-primary-foreground text-black hover:bg-black hover:text-white">
+                            <Button className="w-[80px] h-[50px] bg-white text-primary-foreground text-black hover:bg-black hover:text-white">
                               ⠿
                             </Button>
                           </MenubarTrigger>
