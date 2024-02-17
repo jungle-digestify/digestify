@@ -8,11 +8,12 @@ import React from "react";
 import { useState, useRef } from "react";
 import ReactPlayer from "react-player";
 import { cookies } from "next/headers";
+import { Button } from "../ui/button";
+import { FaYoutube } from "react-icons/fa";
 
 //scroll
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Link from "next/link";
-import { FaYoutube } from "react-icons/fa";
 
 type SelectChatDto = Pick<SelectChat, "id" | "name" | "videoId">;
 
@@ -34,12 +35,10 @@ export default function VideoView2({
       setShowVideo(true);
     }
   }, []);
-  const path = "/";
   function deleteCookie(name: string) {
     // 만료일을 과거로 설정하여 쿠키 삭제
-    
     document.cookie =
-      name + `=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; path=${path}`;
+      name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
   }
   const layoutResize = () => {
     // console.log('cookie=', cookies().get(`react-resizable-panels:layout`));
@@ -55,7 +54,7 @@ export default function VideoView2({
     }
     document.cookie = `react-resizable-panels:layout=${JSON.stringify([
       5, 47.5, 47.5,
-    ])}; path=${path}`;
+    ])}`;
   };
   if (!showVideo) {
     return <></>;
@@ -86,14 +85,25 @@ export default function VideoView2({
                 </div>
               ))
             ) : (
-              <a
-                href="https://www.youtube.com"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaYoutube size={30} />
-                요약하고 싶은 youtube 영상에서 digest 아이콘을 눌러주세요!
-              </a>
+              <div className="flex flex-col p-6 gap-6 ">
+                <h1 className="text-3xl font-bold">
+                  워크스페이스에 영상이 없습니다
+                </h1>
+                <p>
+                  요약하고 싶은 영상을 youtube에서 digest 아이콘을 눌러
+                  추가해주세요!
+                </p>
+                <div className="flex flex-row items-center ">
+                  <Button
+                    variant={"secondary"}
+                    className="flex flex-row items-center gap-2 p-0"
+                    onClick={() => window.open("https://www.youtube.com/")}
+                  >
+                    <FaYoutube className="size-9 fill-red-700" />
+                    YouTube창 열기
+                  </Button>{" "}
+                </div>
+              </div>
             )}
           </div>
         </div>

@@ -1,7 +1,8 @@
 "use client";
 import CustomLink from "@/components/playground/custom-link";
 import packageJSON from "@/../package.json";
-import { Copy, Share2, YoutubeIcon } from "lucide-react";
+import { Copy } from "lucide-react";
+import { FaYoutube } from "react-icons/fa";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { toast as sonnerToast } from "sonner";
@@ -32,14 +33,14 @@ export default function Index() {
     <div className="space-y-2 flex flex-col p-10 gap-4 items-center">
       <h1 className="text-3xl font-bold">Welcome to Digest </h1>
       <p>Digest에 오신 것을 환영합니다!</p>
-      <p>요약하고 싶은 영상을 youtube에서 digest 아이콘을 눌러추가해주세요!</p>
-      <div className="flex flex-row items-center ">
+      <p>요약하고 싶은 영상을 youtube에서 digest 아이콘을 눌러 추가해주세요!</p>
+      <div className="flex flex-row items-center gap-4">
         <Button
           variant={"secondary"}
-          className="flex flex-row items-center gap-2"
+          className="flex flex-row items-center gap-2 p-0"
           onClick={() => window.open("https://www.youtube.com/")}
         >
-          <YoutubeIcon className="size-10" />
+          <FaYoutube className="size-9 fill-red-700" />
           YouTube창 열기
         </Button>{" "}
         <Button
@@ -47,7 +48,7 @@ export default function Index() {
           className="flex flex-row items-center gap-2"
           onClick={handleCopyClipBoard}
         >
-          <Copy className="size-8" />
+          <Copy className="size-7" />
           주소 복사하기
         </Button>
       </div>

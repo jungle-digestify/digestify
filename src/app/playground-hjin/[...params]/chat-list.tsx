@@ -27,7 +27,9 @@ export default async function ChatList({
   search?: string;
 }) {
   return (
-    <div className="h-full overflow-y-auto overflow-x-hidden">  {/* 여기서 display:table; min-width: 100%가 들어가서 리스트가 짤림 ㅜ 수정 필요*/}
+    <ScrollArea className="h-full w-full overflow-x-hidden">
+      {" "}
+      {/* 여기서 display:table; min-width: 100%가 들어가서 리스트가 짤림 ㅜ 수정 필요*/}
       <div className="chatlistUp flex w-full h-full">
         <div className="chatlist w-full my-3">
           <div className="flex flex-col mx-1">
@@ -55,14 +57,14 @@ export default async function ChatList({
                   backgroundColor: chatId === chat.id ? "black" : "",
                   color: chatId === chat.id ? "white" : "",
                 }}
-                dangerouslySetInnerHTML={{ __html: '&dot; '+chat.name }}
+                dangerouslySetInnerHTML={{ __html: "&dot; " + chat.name }}
                 scroll={false}
               ></Link>
             ))}
           </div>
         </div>
       </div>
-    </div>
+    </ScrollArea>
   );
 }
 
