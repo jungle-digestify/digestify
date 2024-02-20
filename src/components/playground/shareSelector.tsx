@@ -37,12 +37,13 @@ export default function ShareSelector({
   teamSpaces: TeamSpace[];
   chatId: string;
 }) {
-  if (!teamSpaces) {
-    return <></>;
-  }
   const [selectedWorkspaceId, setSelectedWorkspaceId] = useState(""); // 선택된 workspace의 ID를 저장할 상태
 
   const { toast } = useToast();
+
+  if (!teamSpaces) {
+    return <></>;
+  }
   // 선택된 workspace ID를 처리하는 함수
   const handleSelectChange = (value: any) => {
     setSelectedWorkspaceId(value);

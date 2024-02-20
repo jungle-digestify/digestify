@@ -8,6 +8,8 @@ import { LoginSchema } from "@/zod-schemas";
 import { getUserByEmail } from "@/data/user";
 
 export default {
+  session: { strategy: "jwt" },
+
   cookies: {
     sessionToken: {
       name: "new-authjs.session-token",

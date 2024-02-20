@@ -105,7 +105,7 @@ export const {
 
       if (existingUser.isTwoFactorEnabled) {
         const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(
-          existingUser.id,
+          existingUser.id
         );
 
         if (!twoFactorConfirmation) return false;
@@ -118,6 +118,7 @@ export const {
 
       return true;
     },
+    // @ts-ignore
     async session({ token, session }) {
       if (token.sub && session.user) {
         session.user.id = token.sub;
@@ -157,7 +158,6 @@ export const {
       return token;
     },
   },
-  session: { strategy: "jwt" },
 
   ...authConfig,
 });
