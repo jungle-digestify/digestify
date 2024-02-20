@@ -73,6 +73,8 @@ import ShareSelector from "@/components/playground/shareSelector";
 import DelebeButton from "@/components/playground/delebeButton";
 import { redirect } from "next/navigation";
 import AccessDenied from "@/components/playground/access-denined";
+import { cn } from "@/lib/utils";
+
 export interface TeamSpace {
   id: string | null;
   name: string | null;
@@ -147,16 +149,12 @@ ORDER BY rank DESC;`)
   if (isUserDeserveForWorkspace === undefined) {
     return <AccessDenied />;
   }
-  const layout = cookies().get("react-resizable-panels:layout");
   const toggleList = cookies().get("react-chatlist-toggle:show");
 
   // console.log("cookies =", cookies());
-  let defaultLayout, chatToggle;
+  let chatToggle;
   // console.log("chatToggle =", chatToggle);
-  if (layout) {
-    // console.log('layout =', layout);
-    defaultLayout = JSON.parse(layout.value);
-  }
+
   if (toggleList) {
     chatToggle = JSON.parse(toggleList.value);
   } else {
@@ -164,11 +162,7 @@ ORDER BY rank DESC;`)
   }
 
   return (
-    <ClientComponent
-      defaultLayout={defaultLayout}
-      chatId={chatId}
-      chatToggle={chatToggle}
-    >
+    <ClientComponent chatId={chatId} chatToggle={chatToggle}>
       {/* first children */}
       <Suspense>
         <ChatList
@@ -181,11 +175,25 @@ ORDER BY rank DESC;`)
 
       {/* second children */}
       {chatId ? (
-        <Suspense fallback={<div className="flex-1" />}>
+        <Suspense
+          fallback={
+            <div
+              className={cn(
+                "flex-1",
+                currentSpace.type === "team" && "bg-gray-200"
+              )}
+            />
+          }
+        >
           <ChatContentWrapper chatId={chatId} />
         </Suspense>
       ) : (
-        <div className="w-full h-full flex flex-col justify-center align-middle items-center">
+        <div
+          className={cn(
+            "w-full h-full flex flex-col justify-center align-middle items-center",
+            currentSpace.type === "team" && "bg-stone-200 bg-opacity-60"
+          )}
+        >
           <VideoView2
             chats={chats}
             workspaceId={"/playground-hjin/"}
@@ -195,7 +203,12 @@ ORDER BY rank DESC;`)
       )}
       {/* third children */}
       {chatId && (
-        <div className="w-full h-full flex flex-col">
+        <div
+          className={cn(
+            "w-full h-full flex flex-col",
+            currentSpace.type === "team" && "bg-slate-200"
+          )}
+        >
           <VideoWrapper
             chatId={chatId}
             spaceId={spaceId}

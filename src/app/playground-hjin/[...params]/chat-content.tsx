@@ -26,7 +26,7 @@ export default function ChatContent({
 }) {
   // console.log("initialAssistantResponse:",initialAssistantResponse)
   const [assisnantResponse, setAssistantResponse] = useState(
-    initialAssistantResponse,
+    initialAssistantResponse
   );
   const [isLoading, setIsLoading] = useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
@@ -152,7 +152,7 @@ export default function ChatContent({
 
   return (
     <>
-      <div className="h-full max-w-4xl w-full mx-auto flex-1 px-5 py-5 prose dark:prose-invert overflow-y-auto overflow-x-hidden">
+      <div className="h-full w-full mx-auto flex-1 px-5 py-5 prose dark:prose-invert overflow-y-auto overflow-x-hidden">
         {isEditing ? (
           <Tiptap
             description={
@@ -204,7 +204,7 @@ export default function ChatContent({
             if (isEditing)
               updateSubmit(
                 document.getElementById("markdownHolder " + messageId)!
-                  .innerHTML,
+                  .innerHTML
               );
             setIsEditing(!isEditing);
           }}

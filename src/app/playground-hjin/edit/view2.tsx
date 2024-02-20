@@ -42,20 +42,33 @@ export default function VideoView2({
   }
   const layoutResize = () => {
     // console.log('cookie=', cookies().get(`react-resizable-panels:layout`));
-    var cookies = document.cookie.split(";");
-    for (var i = 0; i < cookies.length; i++) {
-      var cookie = cookies[i].trim();
-      // 해당 이름을 가진 쿠키를 찾으면 삭제
-      const name = "react-resizable-panels:layout";
-      if (cookie.indexOf(name + "=") === 0) {
-        deleteCookie(name);
-        break;
-      }
+    const layoutCookie = document.cookie.match(
+      "(^|;) ?" + "react-resizable-panels:layout" + "=([^;]*)(;|$)"
+    );
+
+    if (layoutCookie === null) {
+      document.cookie = `react-resizable-panels:layout=${JSON.stringify([
+        5, 47.5, 47.5,
+      ])}; path=/`;
+      return [5, 47.5, 47.5];
     }
-    document.cookie = `react-resizable-panels:layout=${JSON.stringify([
-      5, 47.5, 47.5,
-    ])}`;
+    let layout = layoutCookie[2].slice(1, -1)?.split(",").map(Number);
+    if (layout[2]) {
+      document.cookie = `react-resizable-panels:layout=${JSON.stringify(
+        layout
+      )}; path=/`;
+      return layoutCookie;
+    }
+    layout = [layout[0], layout[1] / 2, layout[1] / 2];
+    document.cookie = `react-resizable-panels:layout=${JSON.stringify(
+      layout
+    )}; path=/`;
+    return;
+    // document.cookie = `react-resizable-panels:layout=${JSON.stringify([
+    //   5, 47.5, 47.5,
+    // ])}; path=/`;
   };
+
   if (!showVideo) {
     return <></>;
   } else {

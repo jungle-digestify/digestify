@@ -493,7 +493,7 @@ export function MainNav({
                 <DialogTrigger asChild className="m-auto w-[90%]">
                   <Button variant="outline">팀 스페이스 생성하기</Button>
                 </DialogTrigger>
-                <DialogContent className="max-w-[225px]">
+                <DialogContent className="max-w-[425px]">
                   <DialogHeader>
                     <DialogTitle>팀 스페이스 만들기</DialogTitle>
                     <DialogDescription>
