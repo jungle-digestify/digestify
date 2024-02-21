@@ -10,7 +10,7 @@ import { toast as sonnerToast } from "sonner";
 export default function Index() {
   const handleCopyClipBoard = () => {
     try {
-      navigator.clipboard.writeText("https://cpocs.io/playground-hjin");
+      navigator.clipboard.writeText("https://ymher.shop/playground-hjin");
       sonnerToast("주소가 복사되었습니다!", {
         description: "링크를 공유해주세요!",
         action: {

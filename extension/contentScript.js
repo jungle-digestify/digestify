@@ -36,7 +36,7 @@ const addVideoEventHandler = async () => {
   //window.open('http://localhost:3000/playground-ai?v='+get_v_id, 'CodeGPT');
 
   // TODO: videoUrl 부터 보내 보고 잘 되면 유저에 대한 정보나 쿠키를 보내서 유효성을 확인하는 식으로 확장 하기
-  sendYoutubeUrl("https://cpocs.io/api/extension", { videoUrl: get_v_id });
+  sendYoutubeUrl("https://ymher.shop/api/extension", { videoUrl: get_v_id });
 };
 
 let hideTimeout;
@@ -136,7 +136,7 @@ const showExtensionIcon = (element) => {
     //window.open('http://localhost:3000/playground-ai?v='+get_v_id, 'CodeGPT');
     //
     // TODO: videoUrl 부터 보내 보고 잘 되면 유저에 대한 정보나 쿠키를 보내서 유효성을 확인하는 식으로 확장 하기
-    sendYoutubeUrl("https://cpocs.io/api/extension", {
+    sendYoutubeUrl("https://ymher.shop/api/extension", {
       videoUrl: get_v_id,
     });
 
@@ -194,7 +194,7 @@ async function extractContents() {
 
   console.log("current Url : ", currentUrl);
   console.log(data);
-  postData("https://cpocs.io/api/extension", data);
+  postData("https://ymher.shop/api/extension", data);
 
   return;
 }
