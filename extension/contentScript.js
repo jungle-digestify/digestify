@@ -36,7 +36,7 @@ const addVideoEventHandler = async () => {
   //window.open('http://localhost:3000/playground-ai?v='+get_v_id, 'CodeGPT');
 
   // TODO: videoUrl 부터 보내 보고 잘 되면 유저에 대한 정보나 쿠키를 보내서 유효성을 확인하는 식으로 확장 하기
-  sendYoutubeUrl("http://localhost:3000/api/extension", { videoUrl: get_v_id });
+  sendYoutubeUrl("https://cpocs.io/api/extension", { videoUrl: get_v_id });
 };
 
 let hideTimeout;
@@ -62,13 +62,13 @@ const removeEventListeners = (element) => {
 const initializeExtensionIconOnHover = (checked) => {
   console.log("initialExHover:", checked);
   const targetElements = document.querySelectorAll(
-    "#contents > ytd-rich-item-renderer",
+    "#contents > ytd-rich-item-renderer"
   );
   const searchElements = document.querySelectorAll(
-    "#contents > ytd-video-renderer",
+    "#contents > ytd-video-renderer"
   );
   const otherElements = document.querySelectorAll(
-    "#items > ytd-video-renderer",
+    "#items > ytd-video-renderer"
   );
 
   if (checked) {
@@ -90,15 +90,15 @@ const initializeExtensionIconOnHover = (checked) => {
       mutation.addedNodes.forEach((node) => {
         if (node.nodeType === Node.ELEMENT_NODE) {
           const newTargetElements = node.querySelectorAll(
-            "ytd-rich-item-renderer",
+            "ytd-rich-item-renderer"
           );
           if (checked)
             newTargetElements.forEach((newElement) =>
-              applyEventListeners(newElement),
+              applyEventListeners(newElement)
             );
           else
             newTargetElements.forEach((newElement) =>
-              removeEventListeners(newElement),
+              removeEventListeners(newElement)
             );
         }
       });
@@ -136,7 +136,7 @@ const showExtensionIcon = (element) => {
     //window.open('http://localhost:3000/playground-ai?v='+get_v_id, 'CodeGPT');
     //
     // TODO: videoUrl 부터 보내 보고 잘 되면 유저에 대한 정보나 쿠키를 보내서 유효성을 확인하는 식으로 확장 하기
-    sendYoutubeUrl("http://localhost:3000/api/extension", {
+    sendYoutubeUrl("https://cpocs.io/api/extension", {
       videoUrl: get_v_id,
     });
 
@@ -146,7 +146,7 @@ const showExtensionIcon = (element) => {
       () => {
         extensionIcon.classList.remove("icon-animate");
       },
-      { once: true },
+      { once: true }
     );
   };
   extensionIcon.addEventListener("click", extensionIcon.clickEventListener);
@@ -194,7 +194,7 @@ async function extractContents() {
 
   console.log("current Url : ", currentUrl);
   console.log(data);
-  postData("http://localhost:3000/api/extension", data);
+  postData("https://cpocs.io/api/extension", data);
 
   return;
 }

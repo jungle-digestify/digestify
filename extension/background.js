@@ -1,6 +1,6 @@
 function getCookieToken() {
   const cookie = chrome.cookies.get({
-    url: "http://localhost:3000",
+    url: "https://cpocs.io",
     name: "authjs.session-token",
   });
   console.log("cookie = ", cookie);

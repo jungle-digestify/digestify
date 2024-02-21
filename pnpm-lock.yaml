@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@auth/core':
-    specifier: 0.22.0
-    version: 0.22.0(nodemailer@6.9.9)
+    specifier: 0.27.0
+    version: 0.27.0(nodemailer@6.9.9)
   '@auth/drizzle-adapter':
     specifier: ^0.3.17
     version: 0.3.17(nodemailer@6.9.9)
@@ -189,8 +189,8 @@ dependencies:
     specifier: 14.1.1-canary.66
     version: 14.1.1-canary.66(babel-plugin-macros@3.1.0)(react-dom@18.2.0)(react@18.2.0)
   next-auth:
-    specifier: 5.0.0-beta.8
-    version: 5.0.0-beta.8(next@14.1.1-canary.66)(nodemailer@6.9.9)(react@18.2.0)
+    specifier: 5.0.0-beta.13
+    version: 5.0.0-beta.13(next@14.1.1-canary.66)(nodemailer@6.9.9)(react@18.2.0)
   next-themes:
     specifier: ^0.2.1
     version: 0.2.1(next@14.1.1-canary.66)(react-dom@18.2.0)(react@18.2.0)
@@ -369,24 +369,6 @@ packages:
       '@jridgewell/trace-mapping': 0.3.22
     dev: false
 
-  /@auth/core@0.22.0(nodemailer@6.9.9):
-    resolution: {integrity: sha512-BwngPhtcEtJPV+sfs8pGPZ+RdKnpBeXRk2K2Os10DyMfaL/Vszj2TJU6sRaS38hXzo+xycYX+83olBElqc2Ngw==}
-    peerDependencies:
-      nodemailer: ^6.8.0
-    peerDependenciesMeta:
-      nodemailer:
-        optional: true
-    dependencies:
-      '@panva/hkdf': 1.1.1
-      '@types/cookie': 0.6.0
-      cookie: 0.6.0
-      jose: 5.2.2
-      nodemailer: 6.9.9
-      oauth4webapi: 2.10.3
-      preact: 10.11.3
-      preact-render-to-string: 5.2.3(preact@10.11.3)
-    dev: false
-
   /@auth/core@0.23.0(nodemailer@6.9.9):
     resolution: {integrity: sha512-vReM7RIX4BDj/EKyM6OiYnEw4u0MOEC+c2tB7V0qoZy2JZ/hn1xEuDMJwmdcvZNCjQ6kp4cW/6eTcCcEDsRbEA==}
     peerDependencies:
@@ -405,11 +387,11 @@ packages:
       preact-render-to-string: 5.2.3(preact@10.11.3)
     dev: false
 
-  /@auth/core@0.26.2(nodemailer@6.9.9):
-    resolution: {integrity: sha512-BK+NaUDLcX8AMW/O32wxzk+SE9lr/xvjO4PsTgla9ToHHanoPMl+6pYu2/WoNKnZomdHBWOl/00LFfajuulIVA==}
+  /@auth/core@0.27.0(nodemailer@6.9.9):
+    resolution: {integrity: sha512-3bydnRJIM/Al6mkYmb53MsC+6G8ojw3lLPzwgVnX4dCo6N2lrib6Wq6r0vxZIhuHGjLObqqtUfpeaEj5aeTHFg==}
     peerDependencies:
       '@simplewebauthn/browser': ^9.0.1
-      '@simplewebauthn/server': ^9.0.1
+      '@simplewebauthn/server': ^9.0.2
       nodemailer: ^6.8.0
     peerDependenciesMeta:
       '@simplewebauthn/browser':
@@ -7016,11 +6998,11 @@ packages:
     resolution: {integrity: sha512-kbhcj2SVVR4caaVnGLJKmlk2+f+oLkjqdKeQlmUtz6nGzOpbcobwVIeSURNgraV/v3tlmGIX82OcPCl0K6RbHQ==}
     dev: false
 
-  /next-auth@5.0.0-beta.8(next@14.1.1-canary.66)(nodemailer@6.9.9)(react@18.2.0):
-    resolution: {integrity: sha512-KRO3VBngzuxnfHhacXvp4lKa9afoE73D3Q4EiMSuQIKrg2KVFfB/uTRVro4Pjnhr/TzLqYZoaiJBfGpyhgby2Q==}
+  /next-auth@5.0.0-beta.13(next@14.1.1-canary.66)(nodemailer@6.9.9)(react@18.2.0):
+    resolution: {integrity: sha512-2m2Gq69WQ0YXcHCCpHn2y5z1bxSlqD/XOuAgrdtz49/VIAdTFFeYZz97RYqf6xMF8VGmoG32VUnJ6LzaHk6Fwg==}
     peerDependencies:
       '@simplewebauthn/browser': ^9.0.1
-      '@simplewebauthn/server': ^9.0.1
+      '@simplewebauthn/server': ^9.0.2
       next: ^14
       nodemailer: ^6.6.5
       react: ^18.2.0
@@ -7032,7 +7014,7 @@ packages:
       nodemailer:
         optional: true
     dependencies:
-      '@auth/core': 0.26.2(nodemailer@6.9.9)
+      '@auth/core': 0.27.0(nodemailer@6.9.9)
       next: 14.1.1-canary.66(babel-plugin-macros@3.1.0)(react-dom@18.2.0)(react@18.2.0)
       nodemailer: 6.9.9
       react: 18.2.0
