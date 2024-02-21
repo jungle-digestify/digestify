@@ -12,6 +12,7 @@ import {
   Heading2Icon,
   Heading1Icon,
   PenBoxIcon,
+  Highlighter,
 } from "lucide-react";
 import { Toggle } from "./ui/toggle";
 import BulletList from "@tiptap/extension-bullet-list";
@@ -76,6 +77,21 @@ export function Toolbar({ editor }: Props) {
         onClick={() => editor.chain().focus().toggleStrike().run()}
       >
         <UnderlineIcon className="h-4 w-4" />
+      </ToggleGroupItem>
+      <ToggleGroupItem
+        value="highLight"
+        aria-label="Toggle highLight"
+        size="sm"
+        // className="data-[state=on]:bg-transparent data-[state=on]:text-slate-50 hover:bg-transparent data-[state=on]:outline outline-white mr-1"
+        // pressed={editor.isActive("italic")}
+        onClick={() => editor.chain().focus().toggleHighlight().run()}
+        className={
+          editor.isActive("highlight", { color: "rgba(251, 243, 219, 1)" })
+            ? "is-active"
+            : ""
+        }
+      >
+        <Highlighter className="h-4 w-4" />
       </ToggleGroupItem>
       <ToggleGroupItem
         value="bulletList"

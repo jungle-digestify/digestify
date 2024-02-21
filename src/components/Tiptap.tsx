@@ -3,6 +3,11 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Heading from "@tiptap/extension-heading";
 import { Toolbar } from "@/components/ToolBar";
+import HighLight from "@tiptap/extension-highlight";
+import { Color } from "@tiptap/extension-color";
+import Text from "@tiptap/extension-text";
+import TextStyle from "@tiptap/extension-text-style";
+import React from "react";
 
 export default function Tiptap({
   description,
@@ -16,6 +21,10 @@ export default function Tiptap({
   const editor = useEditor({
     extensions: [
       StarterKit.configure({}),
+      Text,
+      TextStyle,
+      Color,
+      HighLight,
       Heading.configure({
         //heading 이 중복 선언되었다는데 어디?!!
         HTMLAttributes: {

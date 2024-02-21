@@ -9,7 +9,7 @@ import { getUserByEmail } from "@/data/user";
 
 export default {
   session: { strategy: "jwt" },
-
+  basePath: "/api/auth",
   cookies: {
     sessionToken: {
       name: "new-authjs.session-token",

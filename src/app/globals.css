@@ -24,6 +24,9 @@ h2,
 h3 {
   text-wrap: balance;
 }
+hr {
+  padding: 5px;
+}
 
 @layer base {
   :root {
