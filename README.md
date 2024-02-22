@@ -1,3 +1,85 @@
+# DIGEST [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fjungle-digestify&count_bg=%233DC8BC&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=Digest&edge_flat=false)](https://hits.seeyoufarm.com)
+
+<a name="readme-top"></a>
+
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://jungle-digest.site/" target="_blank">
+    <img src="https://github.com/jungle-digestify/digestify/assets/147629257/6fdd44bd-4dd7-497b-bca0-de91c7233fba" alt="Logo" width="" height="">
+
+  </a>
+
+  <p align="center">
+   <i>for Collaboration</i>
+  </p>
+  <p align="center">
+    <b> 크롬 익스텐션을 통해 유튜브 동영상 정보를 받아와 요약하고, 요약본을 협업 스페이스에서 공유할 수 있는 AI 기반 서비스</b>
+  </p>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+
+## 목차
+
+1. [프로젝트 개요](#Digest)
+2. [서비스 소개](#Intro)
+3. [서비스 구조도](#Arch)
+4. [프로젝트 포스터](#Poster)
+
+<!-- ABOUT THE PROJECT -->
+
+<a name="Highlighters"> </a>
+
+## 프로젝트 개요
+
+프로젝트 기간 : 2024.01.14 ~ 2024.02.23
+
+기술 스택 :
+
+| 분류                      | 기술                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Frontend**              | <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=Next.js&logoColor=white"/> <img src="https://img.shields.io/badge/tailwindcss-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white"> <img src="https://img.shields.io/badge/shadcn%2Fui-000?logo=shadcnui&logoColor=fff&style=for-the-badge&color=grey">|
+| **Extension**             | <img src="https://img.shields.io/badge/Extension Manifest v3-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white"> <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> <img src="https://img.shields.io/badge/OpenAI-4479A1?style=for-the-badge&logo=OpenAI&logoColor=white">                                                                                                      |
+| **Backend**               | <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=Next.js&logoColor=white"/> <img src="https://img.shields.io/badge/PM2-2B037A?style=for-the-badge&logo=PM2&logoColor=white"/>                                                                                                                                                                                                                                                                                                                                |
+| **Database**              | <img src="https://img.shields.io/badge/postgresql-4479A1?style=for-the-badge&logo=postgresql&logoColor=white"> <img src="https://img.shields.io/badge/drizzleorm-C5F74F?style=for-the-badge&logo=Drizzle&logoColor=black">                                                                                                         |
+| **Infrastructure/DevOps/API** | <img src="https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=docker&logoColor=white"> <img src="https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white"> <img src="https://img.shields.io/badge/aws_ec2-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white">           |
+
+
+팀원 : [배성재](https://github.com/sungjaebae)(TL/FE,BE,Deploy), [송형진](https://github.com/hyeongjinsong)(BE), [조현지](https://github.com/chohyunji1007)(FE), [진상하](https://github.com/slemdem)(BE), [허용민](https://github.com/JungleHuh)(FE)
+
+웹사이트 : [바로가기](https://jungle-digest.site/)
+
+시연 영상 : [바로가기]()
+
+현장 발표영상 : [바로가기]()
+
+<p align="right">(<a href="#readme-top">맨 위로</a>)</p>
+
+<a name="Intro"> </a>
+
+## 서비스 소개
+
+<h3> DIGEST는 AI 기반 유튜브 요약툴입니다. </h3>
+ 
+- 정보가 넘쳐나는 시대에, __유튜브 정보를 효율적 파악__ 하기 위해 개발되었습니다.
+- 유튜브 영상 옆의 버튼을 누르면, 대시보드에 영상 요약이 바로 뜹니다.
+- 에디터를 이용해 __요약한 정보를 수정 및 하이라이팅__ 할 수 있습니다.
+- __협업 스페이스에 영상 요약본을 공유__ 할 수 있습니다.
+
+ <h3 align="left">주요 기능</h3>
+ 
+#### 1. 크롬 익스텐션를 이용한 
+- 크롬 익스텐션을 통해, 버튼 하나로 유튜브 영상을 요약할 수 있습니다.
+   <table border="0" >
+    <tr>
+        <td><img width="400" height="200" src="https://github.com/jungle-digestify/digestify/assets/147629257/8610371b-51fa-49a1-a4a3-f936d5e7e65d"> </img></td>
+        
+        
+   </tr>
+<!-- 여기 포스터 넣어주세용 -->
+<!-- This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). 
+
 
 <h1>Digest (2022.01.12 - 2022.02.24)</h1>
 
@@ -9,9 +91,19 @@
 ### 🗓️ 프로젝트 기간
 ##     2024.01.14 ~ 2024.02.23
 
-### 바로가기 
+### 🔗 바로가기 
  - 서비스:
  - 발표영상:
+
+   
+### 👨‍👨‍👦‍👦 팀원 소개
+이름	역할
+배성재	개발환경 구축 및 배포,TRPC, Next.Auth 로그인/회원가입 기능 구현, 
+송형진 협업 스페이스 구성, 협업스페이스 초대시 메일 전송 기능 구현, 유튜브 데이터 전송 크롬 익스텐션 구현
+조현지	반응형 UI/UX, React-Player를 사용한 동영상 서비스 구현, 타임 스탬프 구현
+진상하	에디터 구현, DB 설계, 협업 스페이스 구현
+허용민
+
 
 ### 사용 방법
 1. extension 폴더를 다운받아 chrome 확장 프로그램에 추가한다.
@@ -19,9 +111,6 @@
 3. 익스텐션을 켜고, 유튜브에 들어가 요약을 원하는 영상에서 뜨는 익스텐션 아이콘을 누른다.
 4. 페이지로 돌아와 요약된 내용을 확인하고, 텍스트 수정이 가능하다.
 5. 처음 요약 내용은 개인 스페이스에 저장되며, 공유하기를 눌러 팀 스페이스로 공유한다.
-
-<!-- 여기 포스터 넣어주세용 -->
-<!-- This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). 
 
 ## Getting Started
 
