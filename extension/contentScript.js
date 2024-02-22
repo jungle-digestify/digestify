@@ -46,8 +46,19 @@ function onMouseOverHandler() {
 }
 
 function onMouseOutHandler() {
-  hideTimeout = setTimeout(() => hideExtensionIcon(), 5000);
+  hideTimeout = setTimeout(() => hideExtensionIcon(), 4000);
 }
+
+function onMouseOverTargetHandler() {
+  clearTimeout(hideTimeout);
+  showTargetExtensionIcon(this);
+}
+
+
+const applyTargetEventListeners = (element) => {
+  element.addEventListener("mouseover", onMouseOverTargetHandler);
+  element.addEventListener("mouseout", onMouseOutHandler);
+};
 
 const applyEventListeners = (element) => {
   element.addEventListener("mouseover", onMouseOverHandler);
@@ -72,7 +83,7 @@ const initializeExtensionIconOnHover = (checked) => {
   );
 
   if (checked) {
-    targetElements.forEach((element) => applyEventListeners(element));
+    targetElements.forEach((element) => applyTargetEventListeners(element));
     searchElements.forEach((element) => applyEventListeners(element));
     otherElements.forEach((element) => applyEventListeners(element));
     console.log("apply button");
@@ -110,6 +121,10 @@ const initializeExtensionIconOnHover = (checked) => {
 };
 
 const showExtensionIcon = (element) => {
+  if(window.location.href == "https://www.youtube.com/"){
+    showTargetExtensionIcon(element)
+    return;
+  }
   let extensionIcon = document.getElementById("extension-icon");
   if (!extensionIcon) {
     extensionIcon = document.createElement("img");
@@ -118,8 +133,8 @@ const showExtensionIcon = (element) => {
     extensionIcon.style.position = "absolute";
     extensionIcon.style.zIndex = "1000";
     extensionIcon.style.cursor = "pointer";
-    extensionIcon.style.width = "20px"; // 아이콘 크기 조정
-    extensionIcon.style.height = "20px"; // 아이콘 크기 조정
+    extensionIcon.style.width = "50px"; // 아이콘 크기 조정 
+    extensionIcon.style.height = "50px"; // 아이콘 크기 조정
     document.body.appendChild(extensionIcon);
   }
 
@@ -152,14 +167,66 @@ const showExtensionIcon = (element) => {
   extensionIcon.addEventListener("click", extensionIcon.clickEventListener);
 
   const rect = element.getBoundingClientRect();
-  extensionIcon.style.top = `${rect.top + window.scrollY - 25}px`;
-  extensionIcon.style.left = `${rect.right + window.scrollX - 25}px`; // 아이콘 위치 조정
+  extensionIcon.style.top = `${rect.top + window.scrollY - 15}px`;
+  extensionIcon.style.left = `${rect.right + window.scrollX - 10}px`; // 아이콘 위치 조정
+  extensionIcon.style.display = "block";
+};
+
+const showTargetExtensionIcon = (element) => {
+  let extensionIcon = document.getElementById("extension-icon-target");
+  if (!extensionIcon) {
+    extensionIcon = document.createElement("img");
+    extensionIcon.id = "extension-icon-target";
+    extensionIcon.src = chrome.runtime.getURL("/assets/d-icon.png"); // 확장 아이콘 경로
+    extensionIcon.style.position = "absolute";
+    extensionIcon.style.zIndex = "2000";
+    extensionIcon.style.cursor = "pointer";
+    extensionIcon.style.width = "30px"; // 아이콘 크기 조정 
+    extensionIcon.style.height = "30px"; // 아이콘 크기 조정
+    document.body.appendChild(extensionIcon);
+  }
+
+  // 이전에 추가된 이벤트 리스너를 제거
+  extensionIcon.removeEventListener("click", extensionIcon.clickEventListener);
+
+  extensionIcon.clickEventListener = () => {
+    const videoUrl = element.querySelector("a#thumbnail").href;
+    // 콘솔이 아니라 fetch로 백으로 보내야함
+    const get_v = videoUrl.split("?v=");
+
+    const get_v_id = get_v[1];
+    console.log(get_v_id); // 이놈 수정
+    //window.open('http://localhost:3000/playground-ai?v='+get_v_id, 'CodeGPT');
+    //
+    // TODO: videoUrl 부터 보내 보고 잘 되면 유저에 대한 정보나 쿠키를 보내서 유효성을 확인하는 식으로 확장 하기
+    sendYoutubeUrl("https://ymher.shop/api/extension", {
+      videoUrl: get_v_id,
+    });
+
+    extensionIcon.classList.add("icon-animate");
+    extensionIcon.addEventListener(
+      "animationend",
+      () => {
+        extensionIcon.classList.remove("icon-animate");
+      },
+      { once: true }
+    );
+  };
+  extensionIcon.addEventListener("click", extensionIcon.clickEventListener);
+
+  const rect = element.getBoundingClientRect();
+  extensionIcon.style.top = `${rect.top + window.scrollY - 35}px`;
+  extensionIcon.style.left = `${rect.right + window.scrollX - 31}px`; // 아이콘 위치 조정
   extensionIcon.style.display = "block";
 };
 
 const hideExtensionIcon = () => {
   const extensionIcon = document.getElementById("extension-icon");
   if (extensionIcon) {
+    extensionIcon.style.display = "none";
+  }
+  else{
+    const extensionIcon = document.getElementById("extension-icon-target");
     extensionIcon.style.display = "none";
   }
 };
@@ -229,7 +296,7 @@ function getAllText(element) {
       continue; // 정의된 태그 또는 클래스에 해당되면 건너뜁니다.
     }
 
-    if (child.nodeType === Node.TEXT_NODE) {
+    if (child.nodeType === Node.TEXT_NODE) {  
       const trimmedText = child.textContent.trim();
       if (trimmedText.length >= 10) {
         // 10글자 이상인 텍스트만 추가
