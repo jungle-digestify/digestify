@@ -1,4 +1,18 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+<h1>Digest (2022.01.12 - 2022.02.24)</h1>
+
+### 유튜브 영상 요약 및 공유가 가능한 AI기반 서비스
+
+- 크롬 익스텐션을 통한 유튜브 영상 AI 요약 및 요약 수정 
+- 개인 스페이스 또는 팀 스페이스를 통해 요약 공유 가능
+
+### 사용 방법
+1. 페이지에서 회원가입을 한다.
+2. 익스텐션을 키고, 유튜브에 들어가 요약을 원하는 영상에서 뜨는 익스텐션 아이콘을 누른다.
+3. 페이지로 돌아와 요약된 내용을 확인하고, 텍스트 수정이 가능하다.
+4. 처음 요약 내용은 개인 스페이스에 저장되며, 공유하기를 눌러 팀 스페이스로 공유한다.
+   
+<!-- This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). -->
 
 ## Getting Started
 
