@@ -3,7 +3,7 @@ function getCookieToken() {
     url: "https://cpocs.io",
     name: "authjs.session-token",
   });
-  console.log("cookie = ", cookie);
+  // console.log("cookie = ", cookie);
   return cookie;
 }
 

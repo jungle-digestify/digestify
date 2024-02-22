@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 const searchActionCheck = async (formdata: FormData) => {
   "use server";
   const query = formdata.get("search");
-  console.log(query);
+  // console.log(query);
   if (typeof query !== "string") {
     return;
   }

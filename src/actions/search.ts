@@ -16,7 +16,7 @@ export const searchAction = async (values: z.infer<typeof SearchSchema>) => {
 
   const { query } = validatedFields.data;
 
-  console.log(query);
+  // console.log(query);
 
   return { success: "아직 만드는 중" };
 };

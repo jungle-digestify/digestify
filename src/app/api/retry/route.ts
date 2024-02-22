@@ -13,12 +13,12 @@ import fs from "fs";
 import { revalidatePath } from "next/cache";
 
 export const POST = async (req: NextRequest, res: NextResponse) => {
-  console.log("retry Post 요청 들어옴");
+  // console.log("retry Post 요청 들어옴");
   const referer = req.headers.get("referer");
   const path = new URL(referer ?? "/").pathname;
-  console.log("referer:", referer);
+  // console.log("referer:", referer);
 
-  console.log("path:", path);
+  // console.log("path:", path);
 
   const data = await readRequestBody(req);
   const { chatId } = data;
@@ -27,7 +27,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
   const { videoId } = chat;
 
   if (videoId) {
-    console.log("유튜브인 경우");
+    // console.log("유튜브인 경우");
     const { transcript, error } = await fetchTranscript(videoId, "ko");
     let parsed_script = transcript
       .map((entry) => [
@@ -71,7 +71,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
         onStart: async () => {},
         onToken: async (token: string) => {},
         onCompletion: async (completion: string) => {
-          console.log("retry completed, insertDB");
+          // console.log("retry completed, insertDB");
           await db.insert(messages).values([
             {
               chatId,
@@ -84,7 +84,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
               content: completion,
             },
           ]);
-          console.log("messages 들어감");
+          // console.log("messages 들어감");
         },
       });
 
@@ -107,7 +107,7 @@ async function readRequestBody(req: Request) {
 
 // preflight - OPTIONS
 export const OPTIONS = async (req: NextRequest, res: NextResponse) => {
-  console.log("options..");
-  console.log(req);
+  // console.log("options..");
+  // console.log(req);
   return new Response("OK");
 };

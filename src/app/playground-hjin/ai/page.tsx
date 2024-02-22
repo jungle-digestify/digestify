@@ -20,7 +20,7 @@ const lang = "ko"; // Optional, default is 'ko' (English)
 export default async function Page2(all: any) {
   // console.log("all", all)
   const test = async (videoID: string, lang = "ko") => {
-    console.log("videoID = ", videoID);
+    // console.log("videoID = ", videoID);
     if (videoID != undefined) {
       try {
         allscript = "";
@@ -79,7 +79,7 @@ export default async function Page2(all: any) {
         const downloadsDir = path.join(__dirname, "downloads");
         const outputPath = path.join(downloadsDir, videoID + ".mp4");
 
-        console.log("outputPath = ", outputPath);
+        // console.log("outputPath = ", outputPath);
 
         // downloads 폴더가 없으면 생성
         try {

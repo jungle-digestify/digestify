@@ -10,7 +10,7 @@ export default function ChatListBtn() {
   const toggleDropdown = () => {
     // console.log('clicked ');
     setDropdownActive(!isDropdownActive);
-    console.log("isDropdownActive =", isDropdownActive);
+    // console.log("isDropdownActive =", isDropdownActive);
   };
 
   return (

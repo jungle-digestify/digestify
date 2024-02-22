@@ -65,10 +65,6 @@ export default function ChatContentFallback({ chatId }: { chatId: string }) {
     setIsLoading(false);
   };
 
-  const handleClick = (e: MouseEvent) => {
-    console.log(e);
-  };
-
   return (
     <div className="h-full max-w-4xl w-full mx-auto flex-1 px-5 py-5 prose dark:prose-invert overflow-y-auto">
       <p>open ai와의 통신이 실패했습니다 (1분에 최대 3번 질의 가능)</p>

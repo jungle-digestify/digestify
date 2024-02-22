@@ -119,7 +119,7 @@ ORDER BY rank DESC;`)
 
   const spaceId = params.params[0];
   const chatId = params.params[1] ?? null;
-  console.log("adress", search, spaceId, chatId);
+  // console.log("address", search, spaceId, chatId);
   const chats = effectiveSearch
     ? await searchedChats()
     : await getChats(spaceId);
@@ -175,17 +175,15 @@ ORDER BY rank DESC;`)
 
       {/* second children */}
       {chatId ? (
-        <Suspense
-          fallback={
-            <div
-              className={cn(
-                "flex-1",
-                currentSpace.type === "team" && "bg-gray-200"
-              )}
-            />
-          }
-        >
-          <ChatContentWrapper chatId={chatId} />
+        <Suspense>
+          <div
+            className={cn(
+              "h-full",
+              currentSpace.type === "team" && "bg-stone-200 bg-opacity-60"
+            )}
+          >
+            <ChatContentWrapper chatId={chatId} />
+          </div>
         </Suspense>
       ) : (
         <div
@@ -206,7 +204,7 @@ ORDER BY rank DESC;`)
         <div
           className={cn(
             "w-full h-full flex flex-col",
-            currentSpace.type === "team" && "bg-slate-200"
+            currentSpace.type === "team" && "bg-stone-200 bg-opacity-60"
           )}
         >
           <VideoWrapper

@@ -5,7 +5,7 @@ import { headers } from "next/headers";
 export async function GET(req: NextRequest, res: NextResponse) {
   const origin = req.headers.get("origin");
   const session = await auth();
-  console.log(session?.user);
+  // console.log(session?.user);
   if (session?.user) {
     return new Response(JSON.stringify(session.user), {
       status: 200,
@@ -34,9 +34,9 @@ export async function GET(req: NextRequest, res: NextResponse) {
 
 // preflight - OPTIONS
 export const OPTIONS = async (req: NextRequest, res: NextResponse) => {
-  console.log("options..");
+  // console.log("options..");
   const origin = req.headers.get("origin");
-  console.log("origin:", origin);
+  // console.log("origin:", origin);
 
   return new Response("OK", {
     status: 200,

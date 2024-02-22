@@ -93,7 +93,7 @@ export default function ShareSelector({
     <>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="outline" className="gap-2">
+          <Button variant="outline" className="gap-2 min-w-[117px]">
             <Share></Share>공유하기
           </Button>
         </DialogTrigger>

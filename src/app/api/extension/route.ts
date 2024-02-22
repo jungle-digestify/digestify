@@ -12,18 +12,18 @@ import { initialProgrammerMessages } from "@/app/api/message/messages";
 import fs from "fs";
 
 export const POST = async (req: NextRequest, res: NextResponse) => {
-  console.log("Post 요청 들어옴");
+  // console.log("Post 요청 들어옴");
   const origin = req.headers.get("origin");
   // 스패너 돌기 시작
   const user = await currentUser();
 
-  console.log("inside POST:", user);
+  // console.log("inside POST:", user);
   if (!user) {
     return NextResponse.json(
       { error: "not logged in" },
       {
         status: 401,
-      },
+      }
     );
   }
 
@@ -74,7 +74,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
   // // 다운로드 완료
 
   if (videoURL) {
-    console.log("유튜브인 경우");
+    // console.log("유튜브인 경우");
     const { transcript, error } = await fetchTranscript(videoURL, "ko");
     let parsed_script = transcript
       .map((entry) => [
@@ -156,7 +156,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
         } catch (e) {
           console.error(e);
         }
-        console.log("messages 들어감");
+        // console.log("messages 들어감");
       },
     });
 
@@ -175,7 +175,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
     // 유튜브 동영상 말고 그냥 데이터 인 경우
     let url = data.url;
     let contents = data.contents;
-    console.log(url, contents);
+    // console.log(url, contents);
   }
   return new Response("OK", {
     status: 200,

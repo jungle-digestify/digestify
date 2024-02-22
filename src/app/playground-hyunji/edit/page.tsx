@@ -43,12 +43,12 @@ export default async function Page2({
     ["get-chats-for-chat-list"],
     {
       tags: ["get-chats-for-chat-list"],
-    },
+    }
   );
 
   const user = await currentUser();
   const chats = user ? await getChats(user.id) : [];
-  console.log("chats =", chats);
+  // console.log("chats =", chats);
   const chatId = params.chatId?.[0];
 
   const defaultLayout = [20, 80];

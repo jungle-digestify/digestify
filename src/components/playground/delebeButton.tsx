@@ -59,7 +59,7 @@ export default function DelebeButton({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline" className="gap-2">
+        <Button variant="outline" className="gap-2  min-w-[117px]">
           <Trash2></Trash2>삭제하기
         </Button>
       </AlertDialogTrigger>

@@ -29,10 +29,10 @@ export const {
   },
   events: {
     async createUser({ user }) {
-      console.log("user", user);
+      // console.log("user", user);
       if (user.id === undefined) return;
       const existingUser = await getUserById(user.id);
-      console.log("existingUser", existingUser);
+      // console.log("existingUser", existingUser);
       if (!existingUser) return;
       if (!existingUser.defaultWorkspace) {
         const space = await db

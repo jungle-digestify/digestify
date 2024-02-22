@@ -21,7 +21,7 @@ export async function createChat({
 
   const currentUserPersonalSpace = await getCurrentUserPersonalSpace();
   if (!user) {
-    console.log("unauthorized");
+    // console.log("unauthorized");
     throw error("Unauthorized");
   }
 

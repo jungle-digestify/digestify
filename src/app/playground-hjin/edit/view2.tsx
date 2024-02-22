@@ -26,7 +26,7 @@ export default function VideoView2({
   workspaceId: string;
   spaceId: string;
 }) {
-  console.log("all =", chats);
+  // console.log("all =", chats);
   const [showVideo, setShowVideo] = useState(false);
   const [getChats, setChats] = useState([]);
 
