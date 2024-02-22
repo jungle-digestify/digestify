@@ -25,7 +25,7 @@ export const setDefaultLayout = () => {
     const layout = layoutCookie[2].slice(1, -1)?.split(",").map(Number);
     return layout;
   }
-  return;
+  return [5, 47.5, 47.5];
 };
 
 export function ClientComponent({
