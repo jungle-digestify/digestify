@@ -6,7 +6,7 @@ import { chats } from "@/db/schema";
 export async function DELETE(req: Request) {
   const body = await req.json();
   const chatId = body.chatId;
-  console.log("delete 요청 api:", chatId);
+  // console.log("delete 요청 api:", chatId);
   try {
     await db.delete(chats).where(eq(chats.id, chatId));
   } catch {

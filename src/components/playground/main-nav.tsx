@@ -162,7 +162,7 @@ export function MainNav({
         return;
       }
 
-      console.log("response:", response);
+      // console.log("response:", response);
     } catch (error: any) {
       toast({
         variant: "destructive",

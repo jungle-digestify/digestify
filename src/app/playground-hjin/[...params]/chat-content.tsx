@@ -152,7 +152,7 @@ export default function ChatContent({
 
   return (
     <>
-      <div className="h-full w-full mx-auto flex-1 px-5 py-5 prose dark:prose-invert overflow-y-auto overflow-x-hidden">
+      <div className="h-full w-full mx-auto flex-1 px-5 py-5 prose dark:prose-invert overflow-y-auto overflow-x-hidden text-xl">
         {isEditing ? (
           <Tiptap
             description={
@@ -212,11 +212,6 @@ export default function ChatContent({
           <PenBoxIcon></PenBoxIcon>
         </button>
       </div>
-      <ChatInput
-        onSubmit={handleSubmit}
-        isStreaming={isLoading}
-        onStop={handleStop}
-      />
     </>
   );
 }

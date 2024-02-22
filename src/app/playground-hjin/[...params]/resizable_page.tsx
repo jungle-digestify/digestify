@@ -19,14 +19,13 @@ export const setDefaultLayout = () => {
     const layoutCookie = document.cookie.match(
       "(^|;) ?" + "react-resizable-panels:layout" + "=([^;]*)(;|$)"
     );
-    console.log("cookie!", layoutCookie, layoutCookie ? layoutCookie[2] : null);
     if (layoutCookie === null) {
       return [5, 47.5, 47.5];
     }
     const layout = layoutCookie[2].slice(1, -1)?.split(",").map(Number);
     return layout;
   }
-  return [5, 47.5, 47.5];
+  return;
 };
 
 export function ClientComponent({

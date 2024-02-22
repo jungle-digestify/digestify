@@ -9,8 +9,8 @@ export async function POST(req: Request) {
   const spaceId = generateRandomString(16);
   const session = await auth();
 
-  console.log("팀생성 Post 요청");
-  console.log(session);
+  // console.log("팀생성 Post 요청");
+  // console.log(session);
   try {
     const newSpace = await db
       .insert(workspace)

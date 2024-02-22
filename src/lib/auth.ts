@@ -32,7 +32,7 @@ export const getCurrentUserPersonalSpace = async () => {
 export const getCurrentUserTeamSpace = async () => {
   const session = await auth();
   const currentUserPersonalSpace = await getCurrentUserPersonalSpace();
-  console.log("personal:", currentUserPersonalSpace);
+  // console.log("personal:", currentUserPersonalSpace);
 
   const relations = await db // 모든 관계 가져옴
     .select({
@@ -47,12 +47,12 @@ export const getCurrentUserTeamSpace = async () => {
       and(
         eq(userInWorkspace.userId, String(session?.user.id)),
         eq(workspace.type, "team"),
-        eq(userInWorkspace.accept, true),
-      ),
+        eq(userInWorkspace.accept, true)
+      )
     );
   // console.log("relations:",relations)
 
-  console.log("team:", relations);
+  // console.log("team:", relations);
   return relations;
 };
 

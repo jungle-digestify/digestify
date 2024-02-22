@@ -24,19 +24,21 @@ export function ClientComponent({
   const [isVisible, setIsVisible] = useState(chatToggle);
   const [getSize, setSize] = useState<number[]>([]);
 
-  console.log("cookie isVisible1 =", isVisible);
+  // console.log("cookie isVisible1 =", isVisible);
 
   const onLayout = (sizes: number[]) => {
     document.cookie = `react-resizable-panels:layout=${JSON.stringify(sizes)}`;
-    console.log("sizes =", sizes);
+    // console.log("sizes =", sizes);
     setSize(sizes);
   };
 
   const toggleVisibility = () => {
     // console.log('chatToggle =', chatToggle);
     setIsVisible(!isVisible);
-    console.log("isVisible2 =", isVisible);
-    document.cookie = `react-chatlist-toggle:show=${JSON.stringify(!isVisible)}`;
+    // console.log("isVisible2 =", isVisible);
+    document.cookie = `react-chatlist-toggle:show=${JSON.stringify(
+      !isVisible
+    )}`;
 
     const resize: number[] = getSize;
     if (isVisible) {

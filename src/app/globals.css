@@ -25,7 +25,7 @@ h3 {
   text-wrap: balance;
 }
 hr {
-  padding: 5px;
+  padding: 10px;
 }
 
 @layer base {

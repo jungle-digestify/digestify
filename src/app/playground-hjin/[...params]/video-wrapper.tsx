@@ -47,7 +47,7 @@ export default async function VideoWrapper({
     .select()
     .from(messagesTable)
     .where(
-      and(eq(messagesTable.chatId, chatId), eq(messagesTable.role, "system")),
+      and(eq(messagesTable.chatId, chatId), eq(messagesTable.role, "system"))
     )
     .orderBy(desc(messagesTable.createdAt));
 
@@ -106,7 +106,7 @@ export default async function VideoWrapper({
     <>
       <VideoView videoId={chat?.videoId} getTimeLine={getTimeLine} />
       {spaceType === "personal" ? (
-        <div className="flex flex-row p-2 gap-2">
+        <div className="flex flex-row p-2 gap-2 flex-wrap">
           <ShareSelector teamSpaces={teamSpaces} chatId={chatId} />
           <DelebeButton spaceId={spaceId} chatId={chatId} />
         </div>

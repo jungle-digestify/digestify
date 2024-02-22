@@ -13,17 +13,17 @@ export async function POST(req: Request) {
       .where(
         and(
           eq(userInWorkspace.workspaceId, teamSpaceId),
-          eq(userInWorkspace.userId, userId),
-        ),
+          eq(userInWorkspace.userId, userId)
+        )
       )
       .returning({ accept: userInWorkspace.accept });
-    console.log("join: result:", result, "!");
+    // console.log("join: result:", result, "!");
     if (result.length === 0) {
       return new Response(
         JSON.stringify({ message: "워크스페이스 가입 실패!" }),
         {
           status: 500,
-        },
+        }
       );
     }
   } catch {

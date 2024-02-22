@@ -16,7 +16,7 @@ export default async function ChatContentWrapper({
     .select()
     .from(messagesTable)
     .where(
-      and(eq(messagesTable.chatId, chatId), eq(messagesTable.role, "system")),
+      and(eq(messagesTable.chatId, chatId), eq(messagesTable.role, "system"))
     )
     .orderBy(desc(messagesTable.createdAt));
 
@@ -27,7 +27,7 @@ export default async function ChatContentWrapper({
       .where(eq(chats.id, chatId));
     if (chatExit === undefined) {
       return (
-        <div className="w-full h-full flex flex-col justify-center align-middle items-center">
+        <div className="flex flex-col justify-center align-middle items-center">
           <FaRegCircleXmark size={25}></FaRegCircleXmark>존재하지 않습니다
         </div>
       );

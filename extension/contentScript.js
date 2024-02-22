@@ -28,11 +28,11 @@ const newVideoLoaded = async (checked) => {
 
 const addVideoEventHandler = async () => {
   const currentUrl = window.location.href;
-  console.log("Current URL:", currentUrl); // 이놈 수정
+  // console.log("Current URL:", currentUrl); // 이놈 수정
   const get_v = currentUrl.split("?v=");
   const get_v_id = get_v[1];
 
-  console.log("??????????????????? get_v_id = ", get_v_id);
+  // console.log("??????????????????? get_v_id = ", get_v_id);
   //window.open('http://localhost:3000/playground-ai?v='+get_v_id, 'CodeGPT');
 
   // TODO: videoUrl 부터 보내 보고 잘 되면 유저에 대한 정보나 쿠키를 보내서 유효성을 확인하는 식으로 확장 하기
@@ -71,7 +71,7 @@ const removeEventListeners = (element) => {
 };
 
 const initializeExtensionIconOnHover = (checked) => {
-  console.log("initialExHover:", checked);
+  // console.log("initialExHover:", checked);
   const targetElements = document.querySelectorAll(
     "#contents > ytd-rich-item-renderer"
   );
@@ -86,12 +86,12 @@ const initializeExtensionIconOnHover = (checked) => {
     targetElements.forEach((element) => applyTargetEventListeners(element));
     searchElements.forEach((element) => applyEventListeners(element));
     otherElements.forEach((element) => applyEventListeners(element));
-    console.log("apply button");
+    // console.log("apply button");
   } else {
     targetElements.forEach((element) => removeEventListeners(element));
     searchElements.forEach((element) => removeEventListeners(element));
     otherElements.forEach((element) => removeEventListeners(element));
-    console.log("not apply button");
+    // console.log("not apply button");
   }
   const targetContainer = document.querySelector("#contents");
   // if (!targetContainer) return;
@@ -147,7 +147,7 @@ const showExtensionIcon = (element) => {
     const get_v = videoUrl.split("?v=");
 
     const get_v_id = get_v[1];
-    console.log(get_v_id); // 이놈 수정
+    // console.log(get_v_id); // 이놈 수정
     //window.open('http://localhost:3000/playground-ai?v='+get_v_id, 'CodeGPT');
     //
     // TODO: videoUrl 부터 보내 보고 잘 되면 유저에 대한 정보나 쿠키를 보내서 유효성을 확인하는 식으로 확장 하기
@@ -252,15 +252,15 @@ function sendYoutubeUrl(url, data) {
 
 async function extractContents() {
   const currentUrl = window.location.href;
-  console.log("clicked!");
+  // console.log("clicked!");
   let sendData = contentSelect();
   let data = {
     url: currentUrl,
     contents: sendData,
   };
 
-  console.log("current Url : ", currentUrl);
-  console.log(data);
+  // console.log("current Url : ", currentUrl);
+  // console.log(data);
   postData("https://ymher.shop/api/extension", data);
 
   return;
@@ -274,10 +274,10 @@ async function postData(url = "", data = {}) {
     credentials: "include",
   };
 
-  console.log(requestOptions);
+  // console.log(requestOptions);
   const response = await fetch(url, requestOptions);
 
-  console.log(response);
+  // console.log(response);
   return response; // 'opaque' 응답은 내용을 읽을 수 없습니다.
 }
 
@@ -318,7 +318,7 @@ function contentSelect() {
   // }
   const allText = getAllText(document.body); // body 요소부터 시작하여 모든 텍스트 추출
 
-  console.log("보낼 컨텐츠: ", allText);
+  // console.log("보낼 컨텐츠: ", allText);
   return allText;
 }
 
