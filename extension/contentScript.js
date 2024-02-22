@@ -36,7 +36,9 @@ const addVideoEventHandler = async () => {
   //window.open('http://localhost:3000/playground-ai?v='+get_v_id, 'CodeGPT');
 
   // TODO: videoUrl 부터 보내 보고 잘 되면 유저에 대한 정보나 쿠키를 보내서 유효성을 확인하는 식으로 확장 하기
-  sendYoutubeUrl("https://ymher.shop/api/extension", { videoUrl: get_v_id });
+  sendYoutubeUrl("https://digest-jungle.site/api/extension", {
+    videoUrl: get_v_id,
+  });
 };
 
 let hideTimeout;
@@ -53,7 +55,6 @@ function onMouseOverTargetHandler() {
   clearTimeout(hideTimeout);
   showTargetExtensionIcon(this);
 }
-
 
 const applyTargetEventListeners = (element) => {
   element.addEventListener("mouseover", onMouseOverTargetHandler);
@@ -121,8 +122,8 @@ const initializeExtensionIconOnHover = (checked) => {
 };
 
 const showExtensionIcon = (element) => {
-  if(window.location.href == "https://www.youtube.com/"){
-    showTargetExtensionIcon(element)
+  if (window.location.href == "https://www.youtube.com/") {
+    showTargetExtensionIcon(element);
     return;
   }
   let extensionIcon = document.getElementById("extension-icon");
@@ -133,7 +134,7 @@ const showExtensionIcon = (element) => {
     extensionIcon.style.position = "absolute";
     extensionIcon.style.zIndex = "1000";
     extensionIcon.style.cursor = "pointer";
-    extensionIcon.style.width = "50px"; // 아이콘 크기 조정 
+    extensionIcon.style.width = "50px"; // 아이콘 크기 조정
     extensionIcon.style.height = "50px"; // 아이콘 크기 조정
     document.body.appendChild(extensionIcon);
   }
@@ -151,7 +152,7 @@ const showExtensionIcon = (element) => {
     //window.open('http://localhost:3000/playground-ai?v='+get_v_id, 'CodeGPT');
     //
     // TODO: videoUrl 부터 보내 보고 잘 되면 유저에 대한 정보나 쿠키를 보내서 유효성을 확인하는 식으로 확장 하기
-    sendYoutubeUrl("https://ymher.shop/api/extension", {
+    sendYoutubeUrl("https://digest-jungle.site/api/extension", {
       videoUrl: get_v_id,
     });
 
@@ -181,7 +182,7 @@ const showTargetExtensionIcon = (element) => {
     extensionIcon.style.position = "absolute";
     extensionIcon.style.zIndex = "2000";
     extensionIcon.style.cursor = "pointer";
-    extensionIcon.style.width = "30px"; // 아이콘 크기 조정 
+    extensionIcon.style.width = "30px"; // 아이콘 크기 조정
     extensionIcon.style.height = "30px"; // 아이콘 크기 조정
     document.body.appendChild(extensionIcon);
   }
@@ -199,7 +200,7 @@ const showTargetExtensionIcon = (element) => {
     //window.open('http://localhost:3000/playground-ai?v='+get_v_id, 'CodeGPT');
     //
     // TODO: videoUrl 부터 보내 보고 잘 되면 유저에 대한 정보나 쿠키를 보내서 유효성을 확인하는 식으로 확장 하기
-    sendYoutubeUrl("https://ymher.shop/api/extension", {
+    sendYoutubeUrl("https://digest-jungle.site/api/extension", {
       videoUrl: get_v_id,
     });
 
@@ -224,8 +225,7 @@ const hideExtensionIcon = () => {
   const extensionIcon = document.getElementById("extension-icon");
   if (extensionIcon) {
     extensionIcon.style.display = "none";
-  }
-  else{
+  } else {
     const extensionIcon = document.getElementById("extension-icon-target");
     extensionIcon.style.display = "none";
   }
@@ -261,7 +261,7 @@ async function extractContents() {
 
   // console.log("current Url : ", currentUrl);
   // console.log(data);
-  postData("https://ymher.shop/api/extension", data);
+  postData("https://digest-jungle.site/api/extension", data);
 
   return;
 }
@@ -296,7 +296,7 @@ function getAllText(element) {
       continue; // 정의된 태그 또는 클래스에 해당되면 건너뜁니다.
     }
 
-    if (child.nodeType === Node.TEXT_NODE) {  
+    if (child.nodeType === Node.TEXT_NODE) {
       const trimmedText = child.textContent.trim();
       if (trimmedText.length >= 10) {
         // 10글자 이상인 텍스트만 추가

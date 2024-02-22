@@ -3,7 +3,7 @@ import { getActiveTabURL } from "./utils.js";
 async function checkLoginStatus() {
   // 로그인 체크 안하도록 변경
   // console.log("최신입니다");
-  const result = await fetch("https://ymher.shop/api/me", {
+  const result = await fetch("https://digest-jungle.site/api/me", {
     method: "GET",
     credentials: "include",
     headers: {
@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       '<div class="title"><a href="#" id="loginLink">로그인 하러 가기</a></div>';
 
     document.getElementById("loginLink").addEventListener("click", function () {
-      window.open("https://ymher.shop/playground-hjin", "_blank");
+      window.open("https://digest-jungle.site/playground-hjin", "_blank");
     });
 
     return;
