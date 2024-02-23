@@ -6,7 +6,7 @@
 <br />
 <div align="center">
   <a href="https://digest-jungle.site/playground-hjin/" target="_blank">
-    <img src="https://github.com/jungle-digestify/digestify/assets/147629257/6fdd44bd-4dd7-497b-bca0-de91c7233fba" alt="Logo" width="" height="">
+    <img src="https://github.com/jungle-digestify/digestify/assets/147629257/6fdd44bd-4dd7-497b-bca0-de91c7233fba" alt="Logo" width="600" height="">
 
   </a>
 
@@ -14,23 +14,24 @@
    <i>for Collaboration</i>
   </p>
   <p align="center">
-    <b> 크롬 익스텐션을 통해 유튜브 동영상 정보를 받아와 요약하고, 요약본을 협업 스페이스에서 공유할 수 있는 AI 기반 서비스</b>
+    <b> 크롬 익스텐션을 통해 유튜브 동영상 정보를 받아와 요약하고, 요약본을 팀 스페이스에서 공유할 수 있는 AI 기반 서비스</b>
   </p>
 </div>
 
 <!-- TABLE OF CONTENTS -->
+---
 
-## 목차
+## 📒목차
 
 1. [프로젝트 개요](#Digest)
 2. [서비스 소개](#Intro)
-3. [서비스 이용방법](#HowtoUse)
-4. [서비스 구조도](#Arch)
-5. [프로젝트 포스터](#Poster)
+3. [서비스 구조도](#Arch)
+4. [프로젝트 포스터](#Poster)
 
 <!-- ABOUT THE PROJECT -->
+---
 
-<a name="DIGEST"> </a>
+<a name="Digest"> </a>
 
 ## 🗓프로젝트 개요
 
@@ -47,11 +48,11 @@
 | **Infrastructure/DevOps/API** | <img src="https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=docker&logoColor=white"> <img src="https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white"> <img src="https://img.shields.io/badge/aws_ec2-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white">           |
 
 
-👨‍👨‍👦‍👦 팀원 : [배성재](https://github.com/sungjaebae)(TL/FE,BE,Deploy), [송형진](https://github.com/hyeongjinsong)(BE), [조현지](https://github.com/chohyunji1007)(FE), [진상하](https://github.com/slemdem)(BE), [허용민](https://github.com/JungleHuh)(FE)
+👨‍👨‍👦‍👦 팀원 : [배성재](https://github.com/sungjaebae)(BE,Deploy), [송형진](https://github.com/hyeongjinsong)(FE,BE), [조현지](https://github.com/chohyunji1007)(FE), [진상하](https://github.com/slemdem)(BE), [허용민](https://github.com/JungleHuh)(FE)
 
 🌐 웹사이트 : [바로가기](https://digest-jungle.site/playground-hjin/)
 
-📹 시연 영상 : [바로가기]()
+📹 녹화 발표영상 : [바로가기](https://youtu.be/pB0gh4so0_4)
 
 📷 현장 발표영상 : [바로가기]()
 
@@ -59,18 +60,21 @@
 
 <a name="Intro"> </a>
 
-## 서비스 소개
+---
+
+## 🙏서비스 소개
 
 <h3> DIGEST는 AI 기반 유튜브 요약툴입니다. </h3>
  
 - 정보의 홍수 시대에, __유튜브 정보를 효율적 파악__ 하기 위해 개발되었습니다.
 - 유튜브 영상 옆의 버튼을 누르면, 대시보드에 영상 요약이 바로 뜹니다.
 - 에디터를 이용해 __요약한 정보를 수정 및 하이라이팅__ 할 수 있습니다.
-- __협업 스페이스에 영상 요약본을 공유__ 할 수 있습니다.
+- __팀 스페이스에 영상 요약본을 공유__ 할 수 있습니다.
 
  <h3 align="left">주요 기능</h3>
+
  
-#### 1. 크롬 익스텐션를 이용한 원클릭 요약 기능
+### 1. 크롬 익스텐션를 이용한 원클릭 요약 기능
 - 유튜브 홈페이지에서 원클릭으로 요약 내용을 대시보드에 저장할 수 있습니다.
 - 클릭한 영상은 대시보드에 자동으로 들어옵니다.
 <table border="0" >
@@ -81,17 +85,77 @@
 <tr/>
 <table/>
 
-#### 2. 요약된 내용 수정 기능
+### 2. 요약된 내용 수정 기능
 - GPT가 생성한 요약본을 사용자가 직접 수정할 수 있습니다.
 - 하이라이팅 기능, 볼드 기능을 통해 중요한 부분을 강조할 수 있습니다.
 <table border="0" >
 <tr>
-<td><img width="500" height="400" src="https://github.com/jungle-digestify/digestify/assets/147629257/1e37a0c2-f855-4e37-94b0-4485dd3a532f"> </img></td>
-<br/>
+<td><img width="700" height="400" src="https://github.com/jungle-digestify/digestify/assets/147629257/f7c1eb7f-eddb-404d-b62c-56a1ed3cf032"> </img></td>
 <tr/>
 <table/>
 
+### 3. 팀 스페이스를 통한 영상 공유 기능
+- 팀 스페이스를 생성하고, 선택할 수 있습니다.
+<table border="0" >
+<tr>
+<td><img width="700" height="400" src="https://github.com/jungle-digestify/digestify/assets/147629257/7c914017-ab9b-40d8-8a9c-1fa0762ee0cb"> </img></td>
+<tr/>
+<table/>
   
+- 팀 스페이스에 영상이 옮겨진 것을 확인할 수 있습니다.
+<table border="0" >
+<tr>
+<td><img width="700" height="400" src="https://github.com/jungle-digestify/digestify/assets/147629257/0d7d2e09-05bd-4ec5-bb35-46c28cbfead0"> </img></td>
+<tr/>
+<table/>
+
+### 4. 팀 스페이스 초대 기능
+- 이메일을 통해 팀 스페이스에 다른 사용자를 초대할 수 있습니다.
+<table border="0" >
+<tr>
+<td><img width="400" height="200" src="https://github.com/jungle-digestify/digestify/assets/147629257/12a753c2-d2b9-44b7-9c59-1bf292419287"></img><img width="400" height="200" src="https://github.com/jungle-digestify/digestify/assets/147629257/d61fb5f6-9434-42ba-8fdf-28bb32393156"></td>
+<tr/>
+<table/>
+
+- 초대를 받은 사용자는 이메일로 온 id번호를 입력해, 팀 스페이스에 가입할 수 있습니다.
+  <table border="0" >
+<tr>
+<td><img width="400" height="200" src="https://github.com/jungle-digestify/digestify/assets/147629257/63939e1e-168a-477f-be6a-003db2251f3a"></img><img width="400" height="200" src=https://github.com/jungle-digestify/digestify/assets/147629257/aa070645-8be9-48d5-a240-3b37f381ee67"></td>
+<tr/>
+<table/>
+
+### 5. Full Text Search(검색 기능)
+- 사용자가 크롤링한 영상을 손쉽게 검색할 수 있습니다.
+<table border="0" >
+<tr>
+<td><img width="700" height="400" src="https://github.com/jungle-digestify/digestify/assets/147629257/27e0dc29-4420-4556-b4ad-7de43b26881e"></img></td>
+<tr/>
+<table/>
+
+### 6. 전체 영상 모아보기 기능 제공
+- 사용자가 크롤링한 모든 영상을 보기 쉽게 표시해줍니다.
+<table border="0" >
+<tr>
+<td><img width="700" height="400" src="https://github.com/jungle-digestify/digestify/assets/147629257/acdcd375-1681-4250-8ab2-c89b0c0705bf"></img></td>
+<tr/>
+<table/>
+
+---
+<a name="Arch"> </a>
+
+## ✨서비스 구조도
+
+<img width="800" height="400" src = "https://github.com/jungle-digestify/digestify/assets/147629257/70a22ee2-00ab-440a-8bae-db3161ad0b8e">
+
+
+---
+<a name="Poster"> </a>
+
+## 🥳프로젝트 포스터
+
+<img width="800" height="1200" src = "https://github.com/jungle-digestify/digestify/assets/147629257/312be678-c160-4df2-ab19-8429fbefaa89">
+
+
 <!-- 여기 포스터 넣어주세용 -->
 <!-- This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). 
 
