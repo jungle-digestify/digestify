@@ -5,7 +5,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://jungle-digest.site/" target="_blank">
+  <a href="https://digest-jungle.site/playground-hjin/" target="_blank">
     <img src="https://github.com/jungle-digestify/digestify/assets/147629257/6fdd44bd-4dd7-497b-bca0-de91c7233fba" alt="Logo" width="" height="">
 
   </a>
@@ -24,14 +24,15 @@
 
 1. [프로젝트 개요](#Digest)
 2. [서비스 소개](#Intro)
-3. [서비스 구조도](#Arch)
-4. [프로젝트 포스터](#Poster)
+3. [서비스 이용방법](#HowtoUse)
+4. [서비스 구조도](#Arch)
+5. [프로젝트 포스터](#Poster)
 
 <!-- ABOUT THE PROJECT -->
 
-<a name="Highlighters"> </a>
+<a name="DIGEST"> </a>
 
-## 프로젝트 개요
+## 🗓프로젝트 개요
 
 프로젝트 기간 : 2024.01.14 ~ 2024.02.23
 
@@ -46,13 +47,13 @@
 | **Infrastructure/DevOps/API** | <img src="https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=docker&logoColor=white"> <img src="https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white"> <img src="https://img.shields.io/badge/aws_ec2-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white">           |
 
 
-팀원 : [배성재](https://github.com/sungjaebae)(TL/FE,BE,Deploy), [송형진](https://github.com/hyeongjinsong)(BE), [조현지](https://github.com/chohyunji1007)(FE), [진상하](https://github.com/slemdem)(BE), [허용민](https://github.com/JungleHuh)(FE)
+👨‍👨‍👦‍👦 팀원 : [배성재](https://github.com/sungjaebae)(TL/FE,BE,Deploy), [송형진](https://github.com/hyeongjinsong)(BE), [조현지](https://github.com/chohyunji1007)(FE), [진상하](https://github.com/slemdem)(BE), [허용민](https://github.com/JungleHuh)(FE)
 
-웹사이트 : [바로가기](https://jungle-digest.site/)
+🌐 웹사이트 : [바로가기](https://digest-jungle.site/playground-hjin/)
 
-시연 영상 : [바로가기]()
+📹 시연 영상 : [바로가기]()
 
-현장 발표영상 : [바로가기]()
+📷 현장 발표영상 : [바로가기]()
 
 <p align="right">(<a href="#readme-top">맨 위로</a>)</p>
 
@@ -62,24 +63,40 @@
 
 <h3> DIGEST는 AI 기반 유튜브 요약툴입니다. </h3>
  
-- 정보가 넘쳐나는 시대에, __유튜브 정보를 효율적 파악__ 하기 위해 개발되었습니다.
+- 정보의 홍수 시대에, __유튜브 정보를 효율적 파악__ 하기 위해 개발되었습니다.
 - 유튜브 영상 옆의 버튼을 누르면, 대시보드에 영상 요약이 바로 뜹니다.
 - 에디터를 이용해 __요약한 정보를 수정 및 하이라이팅__ 할 수 있습니다.
 - __협업 스페이스에 영상 요약본을 공유__ 할 수 있습니다.
 
  <h3 align="left">주요 기능</h3>
  
-#### 1. 크롬 익스텐션를 이용한 
-- 크롬 익스텐션을 통해, 버튼 하나로 유튜브 영상을 요약할 수 있습니다.
-   <table border="0" >
-    <tr>
-        <td><img width="400" height="200" src="https://github.com/jungle-digestify/digestify/assets/147629257/8610371b-51fa-49a1-a4a3-f936d5e7e65d"> </img></td>
-        
-        
-   </tr>
+#### 1. 크롬 익스텐션를 이용한 원클릭 요약 기능
+- 유튜브 홈페이지에서 원클릭으로 요약 내용을 대시보드에 저장할 수 있습니다.
+- 클릭한 영상은 대시보드에 자동으로 들어옵니다.
+<table border="0" >
+<tr>
+<td><img width="300" height="400" src="https://github.com/jungle-digestify/digestify/assets/147629257/272ec3ec-98ee-4829-96dd-7e8d8d2bd890"> </img></td>
+<br/>
+<td><img width="1000" height="400" src="https://github.com/jungle-digestify/digestify/assets/147629257/ca3090ec-4a2e-4eaa-a63b-d3ac914f7b84"> </img></td>
+<tr/>
+<table/>
+
+#### 2. 요약된 내용 수정 기능
+- GPT가 생성한 요약본을 사용자가 직접 수정할 수 있습니다.
+- 하이라이팅 기능, 볼드 기능을 통해 중요한 부분을 강조할 수 있습니다.
+<table border="0" >
+<tr>
+<td><img width="500" height="400" src="https://github.com/jungle-digestify/digestify/assets/147629257/1e37a0c2-f855-4e37-94b0-4485dd3a532f"> </img></td>
+<br/>
+<tr/>
+<table/>
+
+  
 <!-- 여기 포스터 넣어주세용 -->
 <!-- This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). 
 
+#### 2. 요약한 내용 수정 기능
+- GPT가 요약한 내용을 내장된 에디터를 이용해, 사용자가 직접 수정할 수 있습니다.
 
 <h1>Digest (2022.01.12 - 2022.02.24)</h1>
 
