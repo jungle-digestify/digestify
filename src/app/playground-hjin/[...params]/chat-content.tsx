@@ -25,7 +25,7 @@ export default function ChatContent({
   messageResponseId?: string;
 }) {
   // console.log("initialAssistantResponse:",initialAssistantResponse)
-  const [assisnantResponse, setAssistantResponse] = useState(
+  const [assistantResponse, setAssistantResponse] = useState(
     initialAssistantResponse
   );
   const [isLoading, setIsLoading] = useState(false);
@@ -137,7 +137,7 @@ export default function ChatContent({
     abortControllerRef.current = null;
     setIsLoading(false);
   };
-  // console.log('response = ', assisnantResponse);
+  // console.log('response = ', assistantResponse);
   if (script !== "") {
     handleSubmit(script);
   }
@@ -188,7 +188,7 @@ export default function ChatContent({
               }}
               rehypePlugins={[rehypeRaw]}
             >
-              {assisnantResponse}
+              {assistantResponse}
             </Markdown>
           </div>
         )}
@@ -201,11 +201,7 @@ export default function ChatContent({
               : "hidden"
           }
           onClick={() => {
-            if (isEditing)
-              updateSubmit(
-                document.getElementById("markdownHolder " + messageId)!
-                  .innerHTML
-              );
+            if (isEditing) updateSubmit(assistantResponse);
             setIsEditing(!isEditing);
           }}
         >

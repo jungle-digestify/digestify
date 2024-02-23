@@ -15,17 +15,14 @@ import { useAmp } from "next/amp";
 import React from "react";
 
 export const setDefaultLayout = () => {
-  if (typeof document !== "undefined") {
-    const layoutCookie = document.cookie.match(
-      "(^|;) ?" + "react-resizable-panels:layout" + "=([^;]*)(;|$)"
-    );
-    if (layoutCookie === null) {
-      return [5, 47.5, 47.5];
-    }
-    const layout = layoutCookie[2].slice(1, -1)?.split(",").map(Number);
-    return layout;
+  const layoutCookie = document.cookie.match(
+    "(^|;) ?" + "react-resizable-panels:layout" + "=([^;]*)(;|$)"
+  );
+  if (layoutCookie === null) {
+    return [5, 47.5, 47.5];
   }
-  return [5, 47.5, 47.5];
+  const layout = layoutCookie[2].slice(1, -1)?.split(",").map(Number);
+  return layout;
 };
 
 export function ClientComponent({
