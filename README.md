@@ -48,7 +48,7 @@
 | **Infrastructure/DevOps/API** | <img src="https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=docker&logoColor=white"> <img src="https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white"> <img src="https://img.shields.io/badge/aws_ec2-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white">           |
 
 
-👨‍👨‍👦‍👦 팀원 : [배성재](https://github.com/sungjaebae)(BE,Deploy), [송형진](https://github.com/hyeongjinsong)(FE,BE), [조현지](https://github.com/chohyunji1007)(FE), [진상하](https://github.com/slemdem)(BE), [허용민](https://github.com/JungleHuh)(FE)
+👨‍👨‍👦‍👦 팀원 : [배성재](https://github.com/sungjaebae)(BE,Deploy), [송형진](https://github.com/hyeongjinsong)(FE,BE), [조현지](https://github.com/chohyunji1007)(FE), [진상하](https://github.com/slemdem)(FE,BE), [허용민](https://github.com/JungleHuh)(FE)
 
 🌐 웹사이트 : [바로가기](https://digest-jungle.site/playground-hjin/)
 
